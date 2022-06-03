@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="config\FreeSqlSetup.cs~RFbf4e28c.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FreeSql" Version="2.3.200" />
+    <PackageReference Include="FreeSql.Provider.MySql" Version="2.3.200" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShopWebGisApplicationContract\ShopWebGisApplicationContract.csproj" />
+    <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
+    <ProjectReference Include="..\ShopWebGisDomain\ShopWebGisDomain.csproj" />
+    <ProjectReference Include="..\ShopWebGisIoc\ShopWebGisIoc.csproj" />
+  </ItemGroup>
+
+</Project>
