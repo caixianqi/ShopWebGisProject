@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Nacos.AspNetCore.V2;
 using Serilog;
 using ShopWebGis.Filters;
 using ShopWebGisDomain.config;
@@ -54,7 +55,6 @@ namespace ShopWebGis
             services.AddSingleton(new SubSetting());
             services.AddSingleton<ISubRuleResolver>(new SubRuleResolver(new ConfigurationBuilder().AddJsonFile("subsetting.json", true, true).Build()));
             services.ShopWebGisMongoDBConfigureServices(Configuration);
-            services.ShopWebGisFreeSqlSetup(Configuration);
             services.AddDbContext<ShopWebGisDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("Mysql")));
             services.AddSwaggerGen(c =>
             {
@@ -67,10 +67,10 @@ namespace ShopWebGis
                 c.OrderActionsBy(o => o.RelativePath);
             });
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
-            services.ShopWebGisJwtSetup(Configuration);
-            services.AddXxlJobExecutor(Configuration);
+            services.ShopWebGisJwtSetup(Configuration); // JWT鉴权
+            services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
             services.AddAutoRegistry(); // 自动注册
-            services.XxlJobServiceSetup();
+            services.XxlJobServiceSetup();// XXLJob定时任务注册
             //services.HangFireServiceSetup(Configuration);
             services.AddControllers();
             services.AddControllers(option =>
@@ -79,8 +79,9 @@ namespace ShopWebGis
                 option.Filters.Add(new CustomerExceptionFilter());
             });
             services.AddHttpContextAccessor();
+            services.AddNacosAspNet(Configuration);// Nacos服务注册
             //services.AddHangfireServer();//启动hangfire服务
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
