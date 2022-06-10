@@ -77,19 +77,4 @@ namespace ShopWebGisDomainShare.Extension
             containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
-
-    /// <summary>
-    ///应用层注入
-    /// </summary>
-    public class FreeSqlAutofacSetup : Autofac.Module
-    {
-        protected override void Load(ContainerBuilder containerBuilder)
-        {
-            var basePath = AppContext.BaseDirectory;
-
-            var ApplicationFile = Path.Combine(basePath, "ShopWebGisApplication.dll");
-            var ApplicationFileServices = Assembly.LoadFile(ApplicationFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).Where(x=>x.Name.EndsWith("SubRuleParse")).AsImplementedInterfaces().InstancePerDependency();
-        }
-    }
 }

@@ -8,30 +8,34 @@
 
  *命名空间：ShopWebGisApplicationContract.Login
 
- *文件名：  ILogin
+ *文件名：  LoginProfile
 
  *版本号：  V1.0.0.0
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人： 智慧环保部-蔡显麒
+ *创建人：  智慧环保部-蔡显麒
 
- *创建时间：2022/5/9 15:52:26
+ *创建时间：2022/6/9 16:56:03
 
- *描述：登录，注册等接口
+ *描述：Login AutoMapper
 
 /************************************************************************************/
+
+using AutoMapper;
 using ShopWebGisApplicationContract.Login.Models;
+using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ShopWebGisApplicationContract.Login
 {
-    public interface ILoginApplication
+    public class LoginProfile : Profile
     {
-        string ShopWebGisILogin(UserDto user);
-
-        string ShopWebGisRegister(UserDto user);
+        public LoginProfile()
+        {
+                CreateMap<UserInfo,UserDto>().ReverseMap();
+        }
     }
 }

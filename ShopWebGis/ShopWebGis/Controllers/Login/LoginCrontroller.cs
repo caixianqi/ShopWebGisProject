@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ShopWebGisApplicationContract.Login;
 using ShopWebGisApplicationContract.Login.Models;
 using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.CustomException;
@@ -19,13 +20,15 @@ namespace ShopWebGis.Controllers.Login
     public class LoginCrontroller : ControllerBase
     {
         private readonly IOptions<Jwt> _jwtConfig;
-        public LoginCrontroller(IOptions<Jwt> jwtConfig)
+        private readonly ILoginApplication _loginApplication;
+        public LoginCrontroller(IOptions<Jwt> jwtConfig, ILoginApplication loginApplication)
         {
             _jwtConfig = jwtConfig;
+            _loginApplication = loginApplication;
         }
 
         [HttpGet]
-        public string Login(string userName,string userPassWord)
+        public string Login(string userName, string userPassWord)
         {
             var claims = new[] {
                 new Claim(ClaimTypes.Name,"JWT"),
@@ -46,10 +49,10 @@ namespace ShopWebGis.Controllers.Login
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        //[HttpPost]
-        //public string Regisgter()
-        //{
-
-        //}
+        [HttpPost]
+        public string Regisgter(UserDto user)
+        {
+            return _loginApplication.ShopWebGisRegister(user);
+        }
     }
 }

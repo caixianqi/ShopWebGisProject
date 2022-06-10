@@ -22,8 +22,12 @@
 
 /************************************************************************************/
 
+using AutoMapper;
+using IRepository;
 using ShopWebGisApplicationContract.Login;
 using ShopWebGisApplicationContract.Login.Models;
+using ShopWebGisDomain.User;
+using ShopWebGisDomainShare.CustomException;
 using ShopWebGisFreeSql.InterFace;
 using System;
 using System.Collections.Generic;
@@ -33,14 +37,12 @@ namespace ShopWebGisApplication.Login
 {
     public class LoginApplication : ILoginApplication
     {
-        private readonly ISubRuleResolver _subRuleResolver;
-        public LoginApplication(ISubRuleResolver subRuleResolver)
+        private readonly IMapper _mapper;
+        private readonly IRepository<int, UserInfo> _userRepository;
+        public LoginApplication(IMapper mapper, IRepository<int, UserInfo> userRepository)
         {
-            _subRuleResolver = subRuleResolver;
-        }
-        public bool ShopWebGisILogin()
-        {
-            return _subRuleResolver.GetReturn();
+            _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         public string ShopWebGisILogin(UserDto user)
@@ -48,9 +50,16 @@ namespace ShopWebGisApplication.Login
             throw new NotImplementedException();
         }
 
-        void ILoginApplication.ShopWebGisILogin()
+        public string ShopWebGisRegister(UserDto user)
         {
-            throw new NotImplementedException();
+            var response = "";
+            UserDtoValidator userValidator = new UserDtoValidator();
+            var validateResult = userValidator.Validate(user);
+            if (!validateResult.IsValid)
+            {
+                throw new ShopWebGisCustomException(validateResult.ToString());
+            }
+            return response;
         }
     }
 }

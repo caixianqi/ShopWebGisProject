@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -32,7 +32,6 @@
     <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
     <ProjectReference Include="..\ShopWebGisEntityFrameWorkCore\ShopWebGisEntityFrameWorkCore.csproj" />
     <ProjectReference Include="..\ShopWebGisFreeSql\ShopWebGisFreeSql.csproj" />
-    <ProjectReference Include="..\ShopWebGisHangFire\ShopWebGisHangFire.csproj" />
     <ProjectReference Include="..\ShopWebGisIoc\ShopWebGisIoc.csproj" />
     <ProjectReference Include="..\ShopWebGisJwt\ShopWebGisJwt.csproj" />
     <ProjectReference Include="..\ShopWebGisMongoDB\ShopWebGisMongoDB.csproj" />

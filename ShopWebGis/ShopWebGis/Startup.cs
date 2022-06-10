@@ -1,6 +1,5 @@
 using Autofac;
 using DotXxlJob.Core;
-using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +19,6 @@ using ShopWebGisDomainShare.Extension;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
 using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.InterFace;
-using ShopWebGisHangFire.Config;
 using ShopWebGisIoc;
 using ShopWebGisJwt.config;
 using ShopWebGisMongoDB.MongoDBConfig;
@@ -80,6 +78,7 @@ namespace ShopWebGis
             });
             services.AddHttpContextAccessor();
             services.AddNacosAspNet(Configuration);// Nacos服务注册
+            services.AddAutoMapper(typeof(Startup));
             //services.AddHangfireServer();//启动hangfire服务
 
         }
