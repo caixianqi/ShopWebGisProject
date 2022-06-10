@@ -50,6 +50,7 @@ namespace ShopWebGis.Controllers.Login
         }
 
         [HttpPost]
+        [Route("Regisgter")]
         public string Regisgter(UserDto user)
         {
             return _loginApplication.ShopWebGisRegister(user);

@@ -29,21 +29,21 @@ using System.Text;
 
 namespace ShopWebGisXxlJob
 {
-    public class Rtd: ReturnT
+    public class Rtd : ReturnT
     {
-        public Rtd(int code, string msg):base(code,msg)
+        public Rtd(int code, string msg) : base(code, msg)
         {
 
         }
 
-        public new static void  Success(string msg)
+        public new static Rtd Success(string msg)
         {
-            new Rtd(200, msg);
+            return new Rtd(200, msg);
         }
 
-        public new static void Failed(string msg)
+        public new static Rtd Failed(string msg)
         {
-            new Rtd(500, msg);
+            return new Rtd(500, msg);
         }
     }
 }

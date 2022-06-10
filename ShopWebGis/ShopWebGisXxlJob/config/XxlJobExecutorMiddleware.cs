@@ -51,7 +51,8 @@ namespace ShopWebGisXxlJob.config
 
             if ("POST".Equals(context.Request.Method, StringComparison.OrdinalIgnoreCase)
                 && !string.IsNullOrEmpty(contentType)
-                && contentType.ToLower().StartsWith("application/json"))
+                && contentType.ToLower().StartsWith("application/json")
+                && context.Request.Path.Value.Contains("run")) //防止任何Post请求都进入XXLJob执行器 
             {
                 await _rpcService.HandlerAsync(context.Request, context.Response);
                 return;

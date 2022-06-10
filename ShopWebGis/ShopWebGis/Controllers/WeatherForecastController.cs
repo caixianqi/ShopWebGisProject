@@ -10,6 +10,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using ShopWebGis.Attributes;
+using ShopWebGisApplicationContract.Login.Models;
 using ShopWebGisDomain.User;
 using ShopWebGisFreeSql.Extension;
 using ShopWebGisIoc;

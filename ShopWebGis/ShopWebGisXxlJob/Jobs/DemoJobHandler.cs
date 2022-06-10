@@ -38,7 +38,8 @@ namespace ShopWebGisXxlJob.Jobs
     {
         public override Task<Rtd> Execute(JobContext jobExecuteContext)
         {
-            throw new NotImplementedException();
+            base.log("123");
+            return Task.FromResult(Rtd.Success("完成"));
         }
     }
 }
