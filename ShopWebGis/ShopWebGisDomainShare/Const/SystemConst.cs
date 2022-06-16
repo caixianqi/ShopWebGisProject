@@ -18,7 +18,7 @@
 
  *创建时间：2022/5/30 17:22:44
 
- *描述：
+ *描述：系统常量
 
 /************************************************************************************/
 
@@ -30,6 +30,12 @@ namespace ShopWebGisDomainShare.Const
 {
     public class SystemConst
     {
-        public  const string _defaultBasicTypeName = @"String|Boolean|Double|Int32|Int64|Int16|Single|DateTime|Decimal|Char|Object|Guid";
+        public const string _defaultBasicTypeName = @"String|Boolean|Double|Int32|Int64|Int16|Single|DateTime|Decimal|Char|Object|Guid";
+
+        public static string RegisterFailed = "注册失败:";
+
+        public static string RegisterSuccess = "注册成功!";
+
+        public static string LoginFailed = "登录失败:";
     }
 }

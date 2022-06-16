@@ -181,9 +181,10 @@ namespace ShopWebGisFreeSql.AbstarctClass
                     var parameterExpression = exp as ParameterExpression;
                     //返回
                     return parameterExpression.Name;
-                    default:
+                default:
+                    return null;
                     //抛出
-                    throw new ShopWebGisExpressionException($"GetChildValue - 未对该类型做任何处理typeName = {typeName}");
+                    //throw new ShopWebGisExpressionException($"GetChildValue - 未对该类型做任何处理typeName = {typeName}");
             }
 
         }

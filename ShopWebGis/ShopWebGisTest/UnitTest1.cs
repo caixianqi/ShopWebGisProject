@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Moq;
-using ShopWebGisApplication.Login;
+using ShopWebGisApplication.User;
 using ShopWebGisDomain.User;
 using ShopWebGisFreeSql.InterFace;
 using ShopWebGisFreeSql.SubRule;

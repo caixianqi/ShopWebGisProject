@@ -38,7 +38,7 @@ namespace ShopWebGis.Filters
                 ErrorMessage = "",
                 Success = true
             };
-            if (context.Result != null)
+            if (context.Result!= null)
             {
                 if (context.Result is ObjectResult)
                 {

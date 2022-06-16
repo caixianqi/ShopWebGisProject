@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisApplicationContract.Login
+ *命名空间：ShopWebGisDomainShare.Common
 
- *文件名：  LoginProfile
+ *文件名：  ClaimAttributes
 
  *版本号：  V1.0.0.0
 
@@ -16,26 +16,28 @@
 
  *创建人：  智慧环保部-蔡显麒
 
- *创建时间：2022/6/9 16:56:03
+ *创建时间：2022/6/14 10:43:07
 
- *描述：Login AutoMapper
+ *描述：用户Claim属性
 
 /************************************************************************************/
 
-using AutoMapper;
-using ShopWebGisApplicationContract.Login.Models;
-using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisApplicationContract.Login
+namespace ShopWebGisDomainShare.Common
 {
-    public class LoginProfile : Profile
+    public static class ClaimAttributes
     {
-        public LoginProfile()
-        {
-                CreateMap<UserInfo,UserDto>().ReverseMap();
-        }
+        /// <summary>
+        /// 用户Id
+        /// </summary>
+        public const string UserId = "id";
+
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public const string UserName = "name";
     }
 }

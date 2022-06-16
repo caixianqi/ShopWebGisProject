@@ -215,7 +215,9 @@ namespace Repository
 
         public override Task<TEntity> InsertAsync(TEntity entity)
         {
-            return Task.FromResult(_dbSet.AddAsync(entity).Result.Entity);
+            var Entity = _dbSet.AddAsync(entity).Result.Entity;
+            _dbContext.SaveChanges();
+            return Task.FromResult(Entity);
         }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Nacos.AspNetCore.V2;
 using Serilog;
 using ShopWebGis.Filters;
+using ShopWebGisApplicationContract.Login;
 using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.Extension;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
@@ -69,6 +70,7 @@ namespace ShopWebGis
             services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
             services.AddAutoRegistry(); // 自动注册
             services.XxlJobServiceSetup();// XXLJob定时任务注册
+            services.AddAutoMapper(typeof(LoginProfile).Assembly);
             //services.HangFireServiceSetup(Configuration);
             services.AddControllers();
             services.AddControllers(option =>
@@ -78,7 +80,7 @@ namespace ShopWebGis
             });
             services.AddHttpContextAccessor();
             services.AddNacosAspNet(Configuration);// Nacos服务注册
-            services.AddAutoMapper(typeof(Startup));
+
             //services.AddHangfireServer();//启动hangfire服务
 
         }
@@ -102,16 +104,19 @@ namespace ShopWebGis
                 endpoints.MapControllers();
             });
             app.UseSwagger();
-            app.ServiceRegister(applicationLifetime, Configuration);
-            
+            //app.ServiceRegister(applicationLifetime, Configuration);
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint($"/swagger/V1/swagger.json", "WebApi.Core V1");
                 c.RoutePrefix = "";
             });
-           // app.HangFireConfiguraSetup(Configuration);   //使用hangfire面板
+            // app.HangFireConfiguraSetup(Configuration);   //使用hangfire面板
             //HangFireSetup.HangFireJobsSetup();
             ServiceManager.Init(app.ApplicationServices);
+
+
+
         }
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)

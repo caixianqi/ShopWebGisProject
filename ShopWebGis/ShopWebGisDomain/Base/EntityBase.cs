@@ -50,7 +50,6 @@ namespace ShopWebGisDomain.Base
         /// </summary>
         public bool isSoftDelete { get; set; } = false;
 
-        [Required]
         [Comment("创建用户Id")]
         [Column("createuserid")]
         /// <summary>
@@ -58,7 +57,6 @@ namespace ShopWebGisDomain.Base
         /// </summary>
         public string CreateUserId { get; set; }
 
-        [Required]
         [Comment("创建用户名称")]
         [Column("createusername")]
         /// <summary>
@@ -67,7 +65,6 @@ namespace ShopWebGisDomain.Base
         public string CreateUserName { get; set; }
 
         [Comment("更新操作用户名称")]
-        [Required]
         [Column("updateusername")]
         /// <summary>
         /// 更新操作用户
@@ -75,7 +72,6 @@ namespace ShopWebGisDomain.Base
         public string UpdateUserName { get; set; }
 
         [Comment("更新操作用户Id")]
-        [Required]
         [Column("updateuserid")]
         /// <summary>
         /// 更新操作用户Id

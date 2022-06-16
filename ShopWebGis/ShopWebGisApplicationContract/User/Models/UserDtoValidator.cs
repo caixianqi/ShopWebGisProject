@@ -6,7 +6,7 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisApplicationContract.Login
+ *命名空间：ShopWebGisApplicationContract.Login.Models
 
  *文件名：  UserDtoValidator
 
@@ -16,19 +16,18 @@
 
  *创建人：  智慧环保部-蔡显麒
 
- *创建时间：2022/6/9 17:00:50
+ *创建时间：2022/6/13 16:52:12
 
- *描述：用户验证
+ *描述：用户类相关DTO验证规则
 
 /************************************************************************************/
 
 using FluentValidation;
-using ShopWebGisApplicationContract.Login.Models;
 using System;
-
 using System.Collections.Generic;
 using System.Text;
-namespace ShopWebGisApplicationContract.Login
+
+namespace ShopWebGisApplicationContract.User.Models
 {
     public class UserDtoValidator : AbstractValidator<UserDto>
     {
@@ -37,10 +36,10 @@ namespace ShopWebGisApplicationContract.Login
             RuleFor(x => x.UserName).NotNull().NotEmpty();
             RuleFor(x => x.UserPassword).NotNull().NotEmpty();
             RuleFor(x => x.UserPhone).NotNull().NotEmpty();
-            RuleFor(x => x.Province).NotNull().NotEmpty();
-            RuleFor(x => x.City).NotNull().NotEmpty();
-            RuleFor(x => x.County).NotNull().NotEmpty();
-            RuleFor(x => x.AddressDetail).NotNull().NotEmpty();
+            //RuleFor(x => x.Province).NotNull().NotEmpty();
+            //RuleFor(x => x.City).NotNull().NotEmpty();
+            //RuleFor(x => x.County).NotNull().NotEmpty();
+            //RuleFor(x => x.AddressDetail).NotNull().NotEmpty();
         }
     }
 }

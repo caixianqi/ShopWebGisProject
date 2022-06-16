@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Const\RedisKey\" />
+    <Folder Include="Const\Emun\" />
   </ItemGroup>
 
 </Project>

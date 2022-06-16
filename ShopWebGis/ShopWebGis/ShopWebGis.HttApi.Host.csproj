@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\Login\" />
     <Folder Include="Extension\" />
   </ItemGroup>
 
@@ -48,7 +49,7 @@
     </Content>
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties subsetting_1json__JsonSchema="json" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" subsetting_1json__JsonSchema="json" /></VisualStudio></ProjectExtensions>
 
   <ItemGroup>
     <None Update="..\.dockerignore">

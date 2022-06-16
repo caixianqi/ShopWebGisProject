@@ -69,5 +69,6 @@ namespace ShopWebGisDomainShare.Extension
                 consulClient.Agent.ServiceDeregister(registration.ID).Wait();//服务停止时取消注册
             });
         }
+
     }
 }

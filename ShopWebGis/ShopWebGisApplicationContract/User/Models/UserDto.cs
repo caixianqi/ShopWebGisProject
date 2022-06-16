@@ -26,24 +26,45 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisApplicationContract.Login.Models
+namespace ShopWebGisApplicationContract.User.Models
 {
     public class UserDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
+        /// <summary>
+        /// 用户名
+        /// </summary>
         public string UserName { get; set; }
 
+        /// <summary>
+        /// 用户密码
+        /// </summary>
         public string UserPassword { get; set; }
 
+        /// <summary>
+        /// 用户电话
+        /// </summary>
         public string UserPhone { get; set; }
 
+        /// <summary>
+        /// 用户省份
+        /// </summary>
         public string Province { get; set; }
 
+        /// <summary>
+        /// 用户城市
+        /// </summary>
         public string City { get; set; }
 
+        /// <summary>
+        /// 用户区县
+        /// </summary>
         public string County { get; set; }
 
+        /// <summary>
+        /// 详细地址
+        /// </summary>
         public string AddressDetail { get; set; }
     }
 }

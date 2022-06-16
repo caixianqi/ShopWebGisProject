@@ -42,7 +42,7 @@ namespace ShopWebGisDomainShare.Extension
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerDependency();//注册仓储
+            containerBuilder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerLifetimeScope();//注册仓储
             //获取项目路径
             var basePath = AppContext.BaseDirectory;
 
