@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ShopWebGisApplicationContract.Login;
@@ -35,7 +36,7 @@ namespace ShopWebGis.Controllers.Login
         /// <param name="userPassWord"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<string> Login(string userName, string userPassWord)
+        public async Task<ComplexToken> Login(string userName, string userPassWord)
         {
             return await _loginApplication.ShopWebGisILogin(userName, userPassWord);
         }
@@ -50,6 +51,19 @@ namespace ShopWebGis.Controllers.Login
         public async Task<string> Regisgter([FromBody] UserDto user)
         {
             return await _loginApplication.ShopWebGisRegister(user);
+        }
+
+        [HttpGet("RefreshToken")]
+        [Authorize]
+        /// <summary>
+        /// 刷新Token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public ComplexToken RefreshToken()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            return _loginApplication.RefreshToken(token.Replace("Bearer ",""));
         }
     }
 }

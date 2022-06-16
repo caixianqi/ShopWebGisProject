@@ -36,7 +36,7 @@ namespace ShopWebGisApplicationContract.User
         /// </summary>
         /// <param name="user">User</param>
         /// <returns></returns>
-        Task<string> ShopWebGisILogin(string userName, string userPassWord);
+        Task<ComplexToken> ShopWebGisILogin(string userName, string userPassWord);
 
         /// <summary>
         /// 注册
@@ -44,5 +44,12 @@ namespace ShopWebGisApplicationContract.User
         /// <param name="user">User</param>
         /// <returns></returns>
         Task<string> ShopWebGisRegister(UserDto userDto);
+
+        /// <summary>
+        /// Token刷新
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        ComplexToken RefreshToken(string token);
     }
 }

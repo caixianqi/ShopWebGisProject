@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisDomain.config
+ *命名空间：ShopWebGisApplicationContract.User.Models
 
- *文件名：  JwtConfig
+ *文件名：  ComplexToken
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人：  智慧环保部-蔡显麒
 
- *创建时间：2022/5/9 15:06:05
+ *创建时间：2022/6/16 16:13:56
 
- *描述：
+ *描述：混合Token（双Token）
 
 /************************************************************************************/
 
@@ -26,28 +26,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisDomain.config
+namespace ShopWebGisApplicationContract.User.Models
 {
-    public class Jwt
+    public class ComplexToken
     {
         /// <summary>
-        /// 发布者
+        /// Token
         /// </summary>
-        public string Issuer { get; set; }
-
+        public string AccessToken { get; set; }
+        
         /// <summary>
-        /// Key
+        /// 刷新Token
         /// </summary>
-        public string Key { get; set; }
-
-        /// <summary>
-        /// AccessToken过期时间
-        /// </summary>
-        public int AccessTokenExpires { get; set; }
-
-        /// <summary>
-        /// RefreshToken过期时间
-        /// </summary>
-        public int RefreshTokenExpires { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

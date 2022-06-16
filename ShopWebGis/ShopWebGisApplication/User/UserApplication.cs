@@ -37,6 +37,7 @@ using ShopWebGisFreeSql.InterFace;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,9 +56,11 @@ namespace ShopWebGisApplication.User
             _jwtConfig = jwtConfig;
         }
 
-        public async Task<string> ShopWebGisILogin(string userName, string userPassWord)
-        {
 
+
+        public async Task<ComplexToken> ShopWebGisILogin(string userName, string userPassWord)
+        {
+            ComplexToken complexToken = new ComplexToken();
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName && x.UserPassword == userPassWord);
             if (user == null)
             {
@@ -68,18 +71,7 @@ namespace ShopWebGisApplication.User
                 new Claim(ClaimAttributes.UserId,user.Id.ToString()),
                 new Claim(ClaimAttributes.UserName,user.UserName)
             };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Value.Key));
-
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-               issuer: _jwtConfig.Value.Issuer,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtConfig.Value.Expires),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return CreateToken(claims);
         }
 
         public async Task<string> ShopWebGisRegister(UserDto userDto)
@@ -97,12 +89,53 @@ namespace ShopWebGisApplication.User
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userDto.UserName);
             if (user != null)
             {
-                throw new ShopWebGisCustomException(response + "用户已存在,请修改用户名!");
+                throw new ShopWebGisCustomException(response + "用户已存在,请修改用户名,重新注册!");
             }
             var userInfo = _mapper.Map<UserInfo>(user);
             await _userRepository.InsertAsync(userInfo);
             response = SystemConst.RegisterSuccess;
             return response;
+        }
+
+
+        public ComplexToken RefreshToken(string token)
+        {
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            bool isCan = jwtSecurityTokenHandler.CanReadToken(token);//验证Token格式
+            if (!isCan)
+            {
+                throw new ShopWebGisCustomException("传入访问令牌格式错误!");
+            }
+            var payLoad = jwtSecurityTokenHandler.ReadJwtToken(token).Payload;
+            var claims = payLoad.Claims.ToArray();
+            return CreateToken(claims);
+        }
+
+        /// <summary>
+        /// 创建双Token
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <returns></returns>
+        private ComplexToken CreateToken(Claim[] claims)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Value.Key));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var accessToken = new JwtSecurityToken(
+               issuer: _jwtConfig.Value.Issuer,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jwtConfig.Value.AccessTokenExpires),
+                signingCredentials: credentials);
+
+            var refreshToken = new JwtSecurityToken(
+               issuer: _jwtConfig.Value.Issuer,
+                claims: claims,
+                expires: DateTime.UtcNow.AddDays(_jwtConfig.Value.RefreshTokenExpires),
+                signingCredentials: credentials);
+            ComplexToken complexToken = new ComplexToken();
+            complexToken.AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken);
+            complexToken.RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshToken);
+            return complexToken;
         }
     }
 }
