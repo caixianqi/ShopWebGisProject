@@ -45,7 +45,7 @@ namespace ShopWebGisFreeSql.config
             services.AddScoped<FreeSqlCrudBeforeLog>();
             fsql.Aop.CurdBefore += (s, e) =>
             {               
-                FreeSqlCrudBeforeLog.Current.Value?._logger.LogInformation(e.Sql);//记录AOP
+                FreeSqlCrudBeforeLog.Current.Value?._logger.LogInformation(e.Sql);// AOP记录日志
             };                       
         }
     }
