@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using ShopWebGis.Attributes;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.User;
+using ShopWebGisFreeSql.Aop;
 using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.Extension;
 using ShopWebGisIoc;
@@ -45,10 +46,9 @@ namespace ShopWebGis.Controllers
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test> _testimongoDBRepository;
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test1> _test1imongoDBRepository;
         private readonly IFreeSql _fsql;
-        private readonly CurdAfterLog _curdAfterLog;
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<int, UserInfo> iUserInfoRepository, IDistributedCache distributedCache, IConfiguration configuration, 
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<int, UserInfo> iUserInfoRepository, IDistributedCache distributedCache, IConfiguration configuration,
             IMongoDBRepository<ObjectId, BsonDocument, test> testMongoDBRepository, IMongoDBRepository<ObjectId, BsonDocument, test1> test1MongoDBRepository,
-            IFreeSql fsql, CurdAfterLog curdAfterLog            )
+            IFreeSql fsql)
         {
             _logger = logger;
             _iUserInfoRepository = iUserInfoRepository;
@@ -56,11 +56,10 @@ namespace ShopWebGis.Controllers
             _testimongoDBRepository = testMongoDBRepository;
             _test1imongoDBRepository = test1MongoDBRepository;
             _fsql = fsql;
-            _curdAfterLog = curdAfterLog;
         }
 
         [HttpGet]
-        public async Task< object> Get()
+        public async Task<object> Get()
         {
             //var client = new MongoClient(_shopWebGisDatabaseSettings.ConnectionString);
             //var database = client.GetDatabase(_shopWebGisDatabaseSettings.DatabaseName);
@@ -94,7 +93,8 @@ namespace ShopWebGis.Controllers
             //    var test = item.;
             //}
             //return document;
-            var documents = await _test1imongoDBRepository.GetAllList(x => {
+            var documents = await _test1imongoDBRepository.GetAllList(x =>
+            {
                 x.Sort = Builders<BsonDocument>.Sort.Ascending("type");
             });
             foreach (var item in documents)
@@ -106,7 +106,7 @@ namespace ShopWebGis.Controllers
 
 
         [HttpGet("test")]
-        public  async Task<object> MondoDBOperation()
+        public async Task<object> MondoDBOperation()
         {
             //var client = new MongoClient(_shopWebGisDatabaseSettings.ConnectionString);
             //var database = client.GetDatabase(_shopWebGisDatabaseSettings.DatabaseName);
@@ -157,8 +157,9 @@ namespace ShopWebGis.Controllers
             var sort = Builders<BsonDocument>.Sort.Ascending("type");
             //await _test1imongoDBRepository.GetFirstOrDefault()
             var filter = Builders<BsonDocument>.Filter;
-            var documents = await _test1imongoDBRepository.GetAllList(x=> { 
-                x.Sort= Builders<BsonDocument>.Sort.Ascending("count");
+            var documents = await _test1imongoDBRepository.GetAllList(x =>
+            {
+                x.Sort = Builders<BsonDocument>.Sort.Ascending("count");
                 x.Projection = Builders<BsonDocument>.Projection.Include("name");
             });
             List<test> list = new List<test>();
@@ -170,11 +171,11 @@ namespace ShopWebGis.Controllers
             return list;
         }
 
-         [HttpGet("FreesqlTest")]
+        [HttpGet("FreesqlTest")]
         public void FreesqlTest()
         {
             var test = _fsql.Select<UserInfo>();
-            Expression<Func<UserInfo, bool>> expression = (x => x.Id == 1&&x.isSoftDelete==false&&x.UserPhone=="123");
+            Expression<Func<UserInfo, bool>> expression = (x => x.Id == 1 && x.isSoftDelete == false && x.UserPhone == "123");
             test.SubTableSelect(expression, null);
         }
 
@@ -182,16 +183,15 @@ namespace ShopWebGis.Controllers
         public void FreesqlTest1(string ttttt)
         {
             _logger.LogInformation("123");
-            var test = _fsql.Select<UserInfo>().Where(x=>x.Id==1).ToList();
+            var test = _fsql.Select<UserInfo>().Where(x => x.Id == 1).ToList();
             List<string> vs = new List<string>()
             {
                 "1232",
                 "41123123",
                 "34324"
             };
-            var sql = _curdAfterLog.Sb;
-            Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId=="dddd");
-           // test.SubTableSelect(expression, null);
+            Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId == "dddd");
+            // test.SubTableSelect(expression, null);
         }
     }
 }

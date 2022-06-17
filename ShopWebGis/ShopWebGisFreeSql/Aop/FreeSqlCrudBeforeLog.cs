@@ -22,6 +22,7 @@
 
 /************************************************************************************/
 
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,14 +30,17 @@ using System.Threading;
 
 namespace ShopWebGisFreeSql.Aop
 {
-    public class FreeSqlCrudBefore : IDisposable
+    public class FreeSqlCrudBeforeLog : IDisposable
     {
-        public static AsyncLocal<FreeSqlCrudBefore> Current = new AsyncLocal<FreeSqlCrudBefore>();
+        public static AsyncLocal<FreeSqlCrudBeforeLog> Current = new AsyncLocal<FreeSqlCrudBeforeLog>();
         public StringBuilder Sb { get; } = new StringBuilder();
 
-        public FreeSqlCrudBefore()
+        public ILogger<FreeSqlCrudBeforeLog> _logger;
+
+        public FreeSqlCrudBeforeLog(ILogger<FreeSqlCrudBeforeLog> logger)
         {
             Current.Value = this;
+            _logger = logger;
         }
 
         public void Dispose()

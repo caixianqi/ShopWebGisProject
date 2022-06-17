@@ -41,12 +41,12 @@ namespace ShopWebGisFreeSql.config
              .UseConnectionString(FreeSql.DataType.MySql, configuration.GetConnectionString("Mysql"))
             // .UseAutoSyncStructure(true) //自动同步实体结构到数据库，FreeSql不会扫描程序集，只有CRUD时才会生成表。
             .Build();
-            fsql.Aop.CurdBefore += (s, e) =>
-            {
-                FreeSqlCrudBefore.Current.Value?.Sb.AppendLine($"{e.Sql}");// 记录SQL
-            };
             services.AddSingleton<IFreeSql>(fsql);
-            services.AddScoped<FreeSqlCrudBefore>();
+            services.AddScoped<FreeSqlCrudBeforeLog>();
+            fsql.Aop.CurdBefore += (s, e) =>
+            {               
+                FreeSqlCrudBeforeLog.Current.Value?._logger.LogInformation(e.Sql);//记录AOP
+            };                       
         }
     }
 
