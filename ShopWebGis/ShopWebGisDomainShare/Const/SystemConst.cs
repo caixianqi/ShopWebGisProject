@@ -32,10 +32,10 @@ namespace ShopWebGisDomainShare.Const
     {
         public const string _defaultBasicTypeName = @"String|Boolean|Double|Int32|Int64|Int16|Single|DateTime|Decimal|Char|Object|Guid";
 
-        public static string RegisterFailed = "注册失败:";
+        public const string RegisterFailed = "注册失败:";
 
-        public static string RegisterSuccess = "注册成功!";
+        public const string RegisterSuccess = "注册成功!";
 
-        public static string LoginFailed = "登录失败:";
+        public const string LoginFailed = "登录失败:";
     }
 }

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using ShopWebGis.Attributes;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.User;
+using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.Extension;
 using ShopWebGisIoc;
 using ShopWebGisMongoDB.Base;
@@ -44,10 +45,10 @@ namespace ShopWebGis.Controllers
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test> _testimongoDBRepository;
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test1> _test1imongoDBRepository;
         private readonly IFreeSql _fsql;
+        private readonly CurdAfterLog _curdAfterLog;
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<int, UserInfo> iUserInfoRepository, IDistributedCache distributedCache, IConfiguration configuration, 
             IMongoDBRepository<ObjectId, BsonDocument, test> testMongoDBRepository, IMongoDBRepository<ObjectId, BsonDocument, test1> test1MongoDBRepository,
-            IFreeSql fsql
-            )
+            IFreeSql fsql, CurdAfterLog curdAfterLog            )
         {
             _logger = logger;
             _iUserInfoRepository = iUserInfoRepository;
@@ -55,6 +56,7 @@ namespace ShopWebGis.Controllers
             _testimongoDBRepository = testMongoDBRepository;
             _test1imongoDBRepository = test1MongoDBRepository;
             _fsql = fsql;
+            _curdAfterLog = curdAfterLog;
         }
 
         [HttpGet]
@@ -180,15 +182,16 @@ namespace ShopWebGis.Controllers
         public void FreesqlTest1(string ttttt)
         {
             _logger.LogInformation("123");
-               var test = _fsql.Select<UserInfo>();
+            var test = _fsql.Select<UserInfo>().Where(x=>x.Id==1).ToList();
             List<string> vs = new List<string>()
             {
                 "1232",
                 "41123123",
                 "34324"
             };
+            var sql = _curdAfterLog.Sb;
             Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId=="dddd");
-            test.SubTableSelect(expression, null);
+           // test.SubTableSelect(expression, null);
         }
     }
 }

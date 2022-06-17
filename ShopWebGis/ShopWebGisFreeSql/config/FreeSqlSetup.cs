@@ -24,9 +24,12 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ShopWebGisFreeSql.Aop;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace ShopWebGisFreeSql.config
 {
@@ -38,7 +41,14 @@ namespace ShopWebGisFreeSql.config
              .UseConnectionString(FreeSql.DataType.MySql, configuration.GetConnectionString("Mysql"))
             // .UseAutoSyncStructure(true) //自动同步实体结构到数据库，FreeSql不会扫描程序集，只有CRUD时才会生成表。
             .Build();
+            fsql.Aop.CurdBefore += (s, e) =>
+            {
+                FreeSqlCrudBefore.Current.Value?.Sb.AppendLine($"{e.Sql}");// 记录SQL
+            };
             services.AddSingleton<IFreeSql>(fsql);
+            services.AddScoped<FreeSqlCrudBefore>();
         }
     }
+
+
 }
