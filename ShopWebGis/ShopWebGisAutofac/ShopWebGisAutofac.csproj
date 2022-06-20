@@ -13,4 +13,8 @@
     <ProjectReference Include="..\ShopWebGisMongoDB\ShopWebGisMongoDB.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Aop\" />
+  </ItemGroup>
+
 </Project>
