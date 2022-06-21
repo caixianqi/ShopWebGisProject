@@ -1,0 +1,8 @@
+{
+    "message": "你好",
+    "form_validate":"表单验证失败，请填写必填项！",
+    "Prohibit input except English and numbers":"禁止输入除英文和数字！",
+    "login":"登录",
+    "reset":"重置",
+    "loading":"加载中..."
+  }

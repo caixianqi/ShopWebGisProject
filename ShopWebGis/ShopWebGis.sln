@@ -39,11 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopWebGisMongoDB", "ShopWe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopWebGisIoc", "ShopWebGisIoc\ShopWebGisIoc.csproj", "{CD5794A0-98A2-4661-B746-0644ED3E97F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopWebGisTest", "ShopWebGisTest\ShopWebGisTest.csproj", "{5D256D37-664A-46F7-BFDA-59448A5BDECB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopWebGisXxlJob", "ShopWebGisXxlJob\ShopWebGisXxlJob.csproj", "{77AABB11-A946-4C91-9223-A56F380086DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{6261A617-6013-4905-97A1-F7839E4CED77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{6261A617-6013-4905-97A1-F7839E4CED77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,10 +109,6 @@ Global
 		{CD5794A0-98A2-4661-B746-0644ED3E97F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD5794A0-98A2-4661-B746-0644ED3E97F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD5794A0-98A2-4661-B746-0644ED3E97F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D256D37-664A-46F7-BFDA-59448A5BDECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D256D37-664A-46F7-BFDA-59448A5BDECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D256D37-664A-46F7-BFDA-59448A5BDECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D256D37-664A-46F7-BFDA-59448A5BDECB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77AABB11-A946-4C91-9223-A56F380086DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{77AABB11-A946-4C91-9223-A56F380086DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77AABB11-A946-4C91-9223-A56F380086DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
