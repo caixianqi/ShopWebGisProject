@@ -93,7 +93,9 @@ namespace Repository.Base
             return await Task.FromResult(FirstOrDefault(predicate));
         }
 
-        public abstract TEntity Get(TPrimaryKey id);
+        public abstract TEntity Find(TPrimaryKey id);
+
+        public abstract Task<TEntity> FindAsync(TPrimaryKey id);
 
 
         public abstract IQueryable<TEntity> GetAll();
@@ -120,10 +122,6 @@ namespace Repository.Base
             return await Task.FromResult(GetAllList(predicate));
         }
 
-        public virtual async Task<TEntity> GetAsync(TPrimaryKey id)
-        {
-            return await Task.FromResult(Get(id));
-        }
 
         public abstract int Insert(TEntity entity);
 

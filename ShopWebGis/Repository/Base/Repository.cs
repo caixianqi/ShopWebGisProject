@@ -95,9 +95,14 @@ namespace Repository
             return _dbSet.FirstOrDefault(predicate);
         }
 
-        public override TEntity Get(TPrimaryKey id)
+        public override TEntity Find(TPrimaryKey id)
         {
             return _dbSet.Find(id);
+        }
+
+        public override async Task<TEntity> FindAsync(TPrimaryKey id)
+        {
+            return await _dbSet.FindAsync(id);
         }
 
         public override IQueryable<TEntity> GetAll()

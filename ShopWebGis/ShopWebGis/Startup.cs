@@ -76,7 +76,7 @@ namespace ShopWebGis
             services.AddControllers(option =>
             {
                 option.Filters.Add(new ResultFilter());
-                option.Filters.Add(new CustomerExceptionFilter());
+                option.Filters.Add(typeof(CustomerExceptionFilter));
             });
             services.AddHttpContextAccessor();
             services.AddNacosAspNet(Configuration);// Nacos·þÎñ×¢²á

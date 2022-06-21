@@ -39,7 +39,7 @@ namespace ShopWebGis.Controllers.Login
         /// <param name="grant_type">授权方式</param>
         /// <returns></returns>
         [HttpPost(nameof(Login))]
-        public async Task<ComplexToken> Login(string userName, string userPassWord)
+        public async Task<ComplexToken> Login([FromForm] string userName, [FromForm] string userPassWord)
         {
             return await _loginApplication.ShopWebGisILogin(userName, userPassWord);
 
@@ -79,6 +79,17 @@ namespace ShopWebGis.Controllers.Login
             return RSAHelper.publicKey;
         }
 
+        ///// <summary>
+        ///// 获取信息
+        ///// </summary>
+        ///// <returns></returns>
+        ///// 
+        //[HttpGet(nameof(GetCryptoPublicKey))]
+        //[Authorize]
+        //public async Task<UserDto> GetUserInfo()
+        //{
+
+        //}
 
     }
 }

@@ -43,8 +43,6 @@ _axios.interceptors.request.use(
 // Add a response interceptor
 _axios.interceptors.response.use(
   function (response) {
-    // eslint-disable-next-line no-debugger
-    debugger
     if (
       response.data !== null &&
       response.data.resultCode !== null &&
@@ -68,8 +66,6 @@ _axios.interceptors.response.use(
 )
 
 function login(creds, redirect) {
-  // eslint-disable-next-line no-debugger
-  debugger
   const data = 'userName=' + creds.username + '&userPassWord=' + creds.password
   return _axios.post(LOGIN_URL, data).then((response) => {
     // 保存登陆信息
@@ -86,10 +82,10 @@ function login(creds, redirect) {
 
 function _storeToken(response) {
   const auth = store.state.auth
-
+  debugger
   auth.isLoggedIn = true
-  auth.accessToken = response.AccessToken
-  auth.refreshToken = response.RefreshToken
+  auth.accessToken = response.accessToken
+  auth.refreshToken = response.refreshToken
 
   store.commit('UPDATE_AUTH', auth)
 }

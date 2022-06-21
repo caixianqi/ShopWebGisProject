@@ -51,5 +51,12 @@ namespace ShopWebGisApplicationContract.User
         /// <param name="token"></param>
         /// <returns></returns>
         ComplexToken RefreshToken(string token);
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <returns></returns>
+        Task<UserDto> GetUserInfo(int id);
+
     }
 }

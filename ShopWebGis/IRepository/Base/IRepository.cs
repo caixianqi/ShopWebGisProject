@@ -49,9 +49,10 @@ namespace IRepository
 
         T Query<T>(Func<IQueryable<TEntity>, T> queryMethod);
 
-        TEntity Get(TPrimaryKey id);
+        TEntity Find(TPrimaryKey id);
 
-        Task<TEntity> GetAsync(TPrimaryKey id);
+        Task<TEntity> FindAsync(TPrimaryKey id);
+
 
         TEntity Single(Expression<Func<TEntity, bool>> predicate);
 

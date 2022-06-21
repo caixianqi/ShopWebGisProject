@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using ShopWebGis.Model;
 using ShopWebGisDomainShare.CustomException;
 using System;
@@ -11,8 +12,14 @@ namespace ShopWebGis.Filters
 {
     public class CustomerExceptionFilter : IAsyncExceptionFilter
     {
+        private readonly ILogger<CustomerExceptionFilter> _logger;
+        public CustomerExceptionFilter(ILogger<CustomerExceptionFilter> logger)
+        {
+            _logger = logger;
+        }
         public Task OnExceptionAsync(ExceptionContext context)
         {
+
             var respnse = new ResponseDto<object>
             {
                 ResultCode = context.HttpContext.Response.StatusCode,
@@ -29,10 +36,12 @@ namespace ShopWebGis.Filters
                 }
                 else
                 {
+                    _logger.LogError(context.Exception, context.Exception.Message);
                     // 记录到elasticsearch
                     respnse.ResultCode = 500;
                     respnse.ErrorMessage = "内部发生错误!";
                     context.Result = new JsonResult(respnse);
+
                 }
 
             }

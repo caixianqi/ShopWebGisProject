@@ -95,11 +95,13 @@ export default {
       this.axios
         .get('/User/GetCryptoPublicKey')
         .then((publicKey) => {
+          debugger
           var encrypt = new Crypto()
           encrypt.setPublicKey(publicKey)
+          console.log('encrypt', encrypt)
           var creds = {
             username: this.form.name,
-            password: encrypt.encrypt(this.form.password),
+            password: encodeURIComponent(encrypt.encrypt(this.form.password)),
           }
           return this.$authlogin(creds)
         })
@@ -107,8 +109,6 @@ export default {
           this.gotomainview()
         })
         .catch((error) => {
-          // eslint-disable-next-line no-debugger
-          debugger
           if (error.data) {
             this.$message.error(error.data.error_description)
           } else {

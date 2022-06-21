@@ -15,7 +15,6 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            
 
         }
         #region Expression
@@ -989,4 +988,6 @@ namespace ConsoleApp1
             public int Id { get; set; }
         }
     }
+
+
 }

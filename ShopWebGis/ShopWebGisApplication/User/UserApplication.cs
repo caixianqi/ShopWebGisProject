@@ -24,6 +24,7 @@
 
 using AutoMapper;
 using IRepository;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ShopWebGisApplicationContract.User;
@@ -49,19 +50,25 @@ namespace ShopWebGisApplication.User
         private readonly IMapper _mapper;
         private readonly IRepository<int, UserInfo> _userRepository;
         private readonly IOptions<Jwt> _jwtConfig;
-        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig)
+        private readonly IConfiguration _configuration;
+        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig, IConfiguration configuration)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _jwtConfig = jwtConfig;
+            _configuration = configuration;
         }
 
 
 
         public async Task<ComplexToken> ShopWebGisILogin(string userName, string userPassWord)
         {
+            #region rsa解析出明文，再用明文MD5比较
+            var rsaDecryption = RSAHelper.Decrypt(userPassWord);
+            var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
+            #endregion
             ComplexToken complexToken = new ComplexToken();
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName && x.UserPassword == userPassWord);
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName && x.UserPassword == md5Encryption);
             if (user == null)
             {
                 throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在或者密码错误!");
@@ -136,6 +143,17 @@ namespace ShopWebGisApplication.User
             complexToken.AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken);
             complexToken.RefreshToken = new JwtSecurityTokenHandler().WriteToken(refreshToken);
             return complexToken;
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<UserDto> GetUserInfo(int id)
+        {
+            var user = await _userRepository.FindAsync(id);
+            return _mapper.Map<UserInfo, UserDto>(user);
         }
     }
 }
