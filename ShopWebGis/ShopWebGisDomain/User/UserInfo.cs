@@ -51,7 +51,6 @@ namespace ShopWebGisDomain.User
         public string UserName { get; set; }
         
         [Comment("用户密码")]
-        [StringLength(60)]
         [Required]
         [Column("userpassword")]
         /// <summary>

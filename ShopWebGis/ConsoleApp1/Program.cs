@@ -1,9 +1,13 @@
-﻿using System;
+﻿using ShopWebGisDomainShare.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
+using XC.RSAUtil;
 
 namespace ConsoleApp1
 {
@@ -11,8 +15,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var dataType = DataBaseType.MySql;
-            string sql1 = SqlSugor.GetWhereByLambda<Users>(x => x.Name.StartsWith("test") && x.Id > 2, dataType);
+            
+
         }
         #region Expression
         public abstract class ExpressionVisitor35

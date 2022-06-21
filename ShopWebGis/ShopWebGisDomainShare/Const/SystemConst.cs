@@ -37,5 +37,7 @@ namespace ShopWebGisDomainShare.Const
         public const string RegisterSuccess = "注册成功!";
 
         public const string LoginFailed = "登录失败:";
+
+        public const string InvalidAuthorizationmMode = "无效的授权方式";
     }
 }

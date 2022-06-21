@@ -21,16 +21,20 @@ namespace ShopWebGis.Filters
             };
             if (context.ExceptionHandled == false)
             {
-               if(context.Exception.GetType() == typeof(ShopWebGisCustomException))
+                if (context.Exception.GetType() == typeof(ShopWebGisCustomException))
                 {
                     respnse.ResultCode = 200;
                     respnse.ErrorMessage = context.Exception.Message;
                     context.Result = new JsonResult(respnse);
-                }else
+                }
+                else
                 {
                     // 记录到elasticsearch
+                    respnse.ResultCode = 500;
+                    respnse.ErrorMessage = "内部发生错误!";
+                    context.Result = new JsonResult(respnse);
                 }
-                
+
             }
             // 设置为true，表示异常已经被处理了
             context.ExceptionHandled = true;

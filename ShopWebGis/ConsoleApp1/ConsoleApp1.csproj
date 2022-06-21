@@ -5,4 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="XC.RSAUtil" Version="1.3.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
+  </ItemGroup>
+
 </Project>

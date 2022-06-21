@@ -6,6 +6,8 @@ using ShopWebGisApplicationContract.Login;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.config;
+using ShopWebGisDomainShare.Common;
+using ShopWebGisDomainShare.Const;
 using ShopWebGisDomainShare.CustomException;
 using System;
 using System.Collections.Generic;
@@ -19,12 +21,12 @@ using System.Threading.Tasks;
 namespace ShopWebGis.Controllers.Login
 {
     [ApiController]
-    [Route("api/Login")]
-    public class LoginCrontroller : ControllerBase
+    [Route("api/User")]
+    public class UserCrontroller : ControllerBase
     {
 
         private readonly IUserApplication _loginApplication;
-        public LoginCrontroller(IUserApplication loginApplication)
+        public UserCrontroller(IUserApplication loginApplication)
         {
             _loginApplication = loginApplication;
         }
@@ -34,11 +36,13 @@ namespace ShopWebGis.Controllers.Login
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassWord"></param>
+        /// <param name="grant_type">授权方式</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost(nameof(Login))]
         public async Task<ComplexToken> Login(string userName, string userPassWord)
         {
             return await _loginApplication.ShopWebGisILogin(userName, userPassWord);
+
         }
 
         /// <summary>
@@ -46,14 +50,13 @@ namespace ShopWebGis.Controllers.Login
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("Regisgter")]
-        public async Task<string> Regisgter([FromBody] UserDto user)
+        [HttpPost(nameof(Regisgter))]
+        public async Task<string> Regisgter(UserDto user)
         {
             return await _loginApplication.ShopWebGisRegister(user);
         }
 
-        [HttpGet("RefreshToken")]
+        [HttpGet(nameof(RefreshToken))]
         [Authorize]
         /// <summary>
         /// 刷新Token
@@ -63,7 +66,19 @@ namespace ShopWebGis.Controllers.Login
         public ComplexToken RefreshToken()
         {
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
-            return _loginApplication.RefreshToken(token.Replace("Bearer ",""));
+            return _loginApplication.RefreshToken(token.Replace("Bearer ", ""));
         }
+
+        /// <summary>
+        /// 获取PublicKey
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(nameof(GetCryptoPublicKey))]
+        public string GetCryptoPublicKey()
+        {
+            return RSAHelper.publicKey;
+        }
+
+
     }
 }

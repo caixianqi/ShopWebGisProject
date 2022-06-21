@@ -11,14 +11,14 @@ import router from '@/router'
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  //baseURL: process.env.baseURL || process.env.apiUrl || "/api",
-  // timeout: 60 * 1000, // Timeout
-  //withCredentials: true, // Check cross-site Access-Control
+  baseURL: process.env.baseURL || process.env.apiUrl || '/api',
+  timeout: 60 * 1000, // Timeout
+  withCredentials: true, // Check cross-site Access-Control
 }
 
-let LOGIN_URL = '/token'
+let LOGIN_URL = '/User/Login'
 
-let REFRESH_TOKEN_URL = '/token'
+let REFRESH_TOKEN_URL = '/User/RefreshToken'
 
 let ERROR_CONFLICT_MESSAGE =
   '您的账号在其他地方登录，如果不是你本人操作，请尽快修改登录密码'
@@ -43,13 +43,18 @@ _axios.interceptors.request.use(
 // Add a response interceptor
 _axios.interceptors.response.use(
   function (response) {
-    if (response.data != null && response.data.ErrorCode != null) {
-      if (response.data.ErrorCode !== 0) {
-        return Promise.reject(response.data.Message)
+    // eslint-disable-next-line no-debugger
+    debugger
+    if (
+      response.data !== null &&
+      response.data.resultCode !== null &&
+      response.data.success !== null
+    )
+      if (response.data.ResultCode !== 200 && response.data.success !== true) {
+        return Promise.reject(response.data.errorMessage)
       } else {
-        return response.data.Data
+        return response.data.resultData
       }
-    }
     return response.data
     // Do something with response data//
   },
@@ -63,15 +68,9 @@ _axios.interceptors.response.use(
 )
 
 function login(creds, redirect) {
-  const data =
-    'grant_type=password&username=' +
-    creds.username +
-    '&password=' +
-    creds.password +
-    '&captcha1=' +
-    creds.captcha1 +
-    '&captcha2=' +
-    creds.captcha2
+  // eslint-disable-next-line no-debugger
+  debugger
+  const data = 'userName=' + creds.username + '&userPassWord=' + creds.password
   return _axios.post(LOGIN_URL, data).then((response) => {
     // 保存登陆信息
     _storeToken(response)
@@ -89,16 +88,15 @@ function _storeToken(response) {
   const auth = store.state.auth
 
   auth.isLoggedIn = true
-  auth.accessToken = response.access_token
-  auth.refreshToken = response.refresh_token
+  auth.accessToken = response.AccessToken
+  auth.refreshToken = response.RefreshToken
 
   store.commit('UPDATE_AUTH', auth)
 }
 
 function _isInvalidToken(response) {
   const status = response.status
-  const error = response.statusText
-  return status == 401 && (error == 'invalid_token' || error == 'expired_token')
+  return status == 401
 }
 
 function _refreshToken(config) {
