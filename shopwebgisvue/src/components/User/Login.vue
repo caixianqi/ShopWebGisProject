@@ -106,6 +106,14 @@ export default {
           return this.$authlogin(creds)
         })
         .then(() => {
+          return this.axios('/User/GetUserInfo')
+        })
+        .then((res) => {
+          const user = {
+            userId: res.Id,
+            userName: res.Name,
+          }
+          this.$store.commit('UPDATE_USER', user)
           this.gotomainview()
         })
         .catch((error) => {

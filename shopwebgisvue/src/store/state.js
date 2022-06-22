@@ -9,12 +9,6 @@ let syncedData = {
   user: {
     userId: null,
     userName: null,
-    nickName: null,
-    loginType: null,
-    avatarUrl: null,
-    departName: null,
-    departId: null,
-    departType: null,
   },
 }
 
