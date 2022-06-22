@@ -28,6 +28,8 @@ using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
+using ShopWebGisDomainShare.Const;
+using ShopWebGisDomainShare.CustomException;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,6 +64,11 @@ JyEBeiXu1IQkTPek2wIDAQAB
 -----END PUBLIC KEY-----
 -
 ";
+        /// <summary>
+        /// 加密
+        /// </summary>
+        /// <param name="encryptstring"></param>
+        /// <returns></returns>
         public static string Encrypt(string encryptstring)
         {
             using (TextReader reader = new StringReader(publicKey))
@@ -75,25 +82,36 @@ JyEBeiXu1IQkTPek2wIDAQAB
             }
         }
 
+        /// <summary>
+        /// 解密
+        /// </summary>
+        /// <param name="decryptstring"></param>
+        /// <returns></returns>
         public static string Decrypt(string decryptstring)
         {
             using (TextReader reader = new StringReader(privateKey))
             {
-                dynamic key = new PemReader(reader).ReadObject();
-                var rsaDecrypt = new Pkcs1Encoding(new RsaEngine());
-                if (key is AsymmetricKeyParameter)
+                try
                 {
-                    key = (AsymmetricKeyParameter)key;
-                }
-                else if (key is AsymmetricCipherKeyPair)
-                {
-                    key = ((AsymmetricCipherKeyPair)key).Private;
-                }
-                rsaDecrypt.Init(false, key);  //这里加密是true；解密是false  
+                    dynamic key = new PemReader(reader).ReadObject();
+                    var rsaDecrypt = new Pkcs1Encoding(new RsaEngine());
+                    if (key is AsymmetricKeyParameter)
+                    {
+                        key = (AsymmetricKeyParameter)key;
+                    }
+                    else if (key is AsymmetricCipherKeyPair)
+                    {
+                        key = ((AsymmetricCipherKeyPair)key).Private;
+                    }
+                    rsaDecrypt.Init(false, key);  //这里加密是true；解密是false  
 
-                byte[] entData = Convert.FromBase64String(decryptstring);
-                entData = rsaDecrypt.ProcessBlock(entData, 0, entData.Length);
-                return Encoding.UTF8.GetString(entData);
+                    byte[] entData = Convert.FromBase64String(decryptstring);
+                    entData = rsaDecrypt.ProcessBlock(entData, 0, entData.Length);
+                    return Encoding.UTF8.GetString(entData);
+                }catch(Exception ex)
+                {
+                    throw new ShopWebGisCustomException(SystemConst.Parsefailure);
+                }
             }
         }
 

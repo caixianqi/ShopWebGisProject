@@ -39,5 +39,7 @@ namespace ShopWebGisDomainShare.Const
         public const string LoginFailed = "登录失败:";
 
         public const string InvalidAuthorizationmMode = "无效的授权方式";
+
+        public const string Parsefailure = "解析失败,请重新登录";
     }
 }

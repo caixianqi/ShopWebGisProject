@@ -56,7 +56,7 @@ namespace ShopWebGisApplicationContract.User
         /// 获取用户信息
         /// </summary>
         /// <returns></returns>
-        Task<UserDto> GetUserInfo(int id);
+        IUser GetUserInfo();
 
     }
 }

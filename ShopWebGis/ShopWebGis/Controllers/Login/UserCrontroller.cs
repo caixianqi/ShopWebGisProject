@@ -57,16 +57,15 @@ namespace ShopWebGis.Controllers.Login
         }
 
         [HttpGet(nameof(RefreshToken))]
-        [Authorize]
         /// <summary>
         /// 刷新Token
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public ComplexToken RefreshToken()
+        public ComplexToken RefreshToken(string refreshToken)
         {
-            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
-            return _loginApplication.RefreshToken(token.Replace("Bearer ", ""));
+            //var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            return _loginApplication.RefreshToken(refreshToken);
         }
 
         /// <summary>
@@ -79,17 +78,17 @@ namespace ShopWebGis.Controllers.Login
             return RSAHelper.publicKey;
         }
 
-        ///// <summary>
-        ///// 获取信息
-        ///// </summary>
-        ///// <returns></returns>
-        ///// 
-        //[HttpGet(nameof(GetCryptoPublicKey))]
-        //[Authorize]
-        //public async Task<UserDto> GetUserInfo()
-        //{
-
-        //}
+        /// <summary>
+        /// 获取信息
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet(nameof(GetUserInfo))]
+        [Authorize]
+        public IUser GetUserInfo()
+        {
+            return _loginApplication.GetUserInfo();
+        }
 
     }
 }

@@ -51,19 +51,27 @@ namespace ShopWebGisApplication.User
         private readonly IRepository<int, UserInfo> _userRepository;
         private readonly IOptions<Jwt> _jwtConfig;
         private readonly IConfiguration _configuration;
-        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig, IConfiguration configuration)
+        private readonly IUser _iuser;
+        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig, IConfiguration configuration, IUser iuser)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _jwtConfig = jwtConfig;
             _configuration = configuration;
+            _iuser = iuser;
         }
 
 
-
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userPassWord"></param>
+        /// <returns></returns>
         public async Task<ComplexToken> ShopWebGisILogin(string userName, string userPassWord)
         {
             #region rsa解析出明文，再用明文MD5比较
+
             var rsaDecryption = RSAHelper.Decrypt(userPassWord);
             var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
             #endregion
@@ -80,6 +88,12 @@ namespace ShopWebGisApplication.User
             };
             return CreateToken(claims);
         }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
 
         public async Task<string> ShopWebGisRegister(UserDto userDto)
         {
@@ -104,7 +118,11 @@ namespace ShopWebGisApplication.User
             return response;
         }
 
-
+        /// <summary>
+        /// 刷新Token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public ComplexToken RefreshToken(string token)
         {
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
@@ -150,10 +168,9 @@ namespace ShopWebGisApplication.User
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<UserDto> GetUserInfo(int id)
+        public IUser GetUserInfo()
         {
-            var user = await _userRepository.FindAsync(id);
-            return _mapper.Map<UserInfo, UserDto>(user);
+            return _iuser;
         }
     }
 }

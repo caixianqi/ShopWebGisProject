@@ -96,11 +96,10 @@ function _isInvalidToken(response) {
 }
 
 function _refreshToken(config) {
-  const params =
-    'grant_type=refresh_token&refresh_token=' + store.state.auth.refreshToken
+  const params = 'refreshToken=' + store.state.auth.refreshToken
 
   return _axios
-    .post(REFRESH_TOKEN_URL, params)
+    .get(REFRESH_TOKEN_URL, params)
     .then((resp) => {
       _storeToken(resp)
       return _retry(config)
