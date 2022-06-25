@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ShopWebGisCache.UserCache
 {
@@ -32,6 +33,15 @@ namespace ShopWebGisCache.UserCache
         /// <summary>
         /// 限制登录次数
         /// </summary>
-        void LimitLoginTimes();
+        ///  <param name="isMatch">是否用户名密码正确</param>
+        /// <param name="userName">用户名</param>
+        Task LimitLoginTimes(string userName);
+
+        /// <summary>
+        /// 用户是否冻结
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<bool> UserIsFreeze(string userName);
     }
 }

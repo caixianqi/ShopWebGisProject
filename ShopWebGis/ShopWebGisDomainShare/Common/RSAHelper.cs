@@ -110,7 +110,7 @@ JyEBeiXu1IQkTPek2wIDAQAB
                     return Encoding.UTF8.GetString(entData);
                 }catch(Exception ex)
                 {
-                    throw new ShopWebGisCustomException(SystemConst.Parsefailure);
+                    throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在或者密码错误!");
                 }
             }
         }

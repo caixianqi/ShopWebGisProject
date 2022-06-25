@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Const\Emun\" />
-    <Folder Include="Const\RedisKey\" />
   </ItemGroup>
 
 </Project>

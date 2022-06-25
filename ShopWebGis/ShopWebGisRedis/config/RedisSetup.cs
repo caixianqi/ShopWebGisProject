@@ -22,18 +22,17 @@
 
 /************************************************************************************/
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ShopWebGisDomain.config;
 
 namespace ShopWebGisRedis.config
 {
     public static class RedisSetup
     {
-        public static void ShopWebGisRedisSetup(this IServiceCollection services)
+        public static void ShopWebGisRedisSetup(this IServiceCollection services, IConfiguration configuration)
         {
-
+            services.AddSingleton<IShopWebGisRedisDataBase, ShopWebGisRedisDataBase>();
         }
     }
 }

@@ -77,4 +77,19 @@ namespace ShopWebGisDomainShare.Extension
             containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
+
+    /// <summary>
+    /// Redis应用层注入
+    /// </summary>
+    public class RedisCacheAutofacSetup: Autofac.Module
+    {
+        protected override void Load(ContainerBuilder containerBuilder)
+        {
+            var basePath = AppContext.BaseDirectory;
+
+            var ApplicationFile = Path.Combine(basePath, "ShopWebGisRedis.dll");
+            var ApplicationFileServices = Assembly.LoadFile(ApplicationFile);//直接采用加载文件的方法
+            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).AsImplementedInterfaces().SingleInstance();
+        }
+    }
 }

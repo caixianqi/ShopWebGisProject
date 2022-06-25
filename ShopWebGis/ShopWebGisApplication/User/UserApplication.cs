@@ -29,6 +29,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
+using ShopWebGisCache.UserCache;
 using ShopWebGisDomain.config;
 using ShopWebGisDomain.User;
 using ShopWebGisDomainShare.Common;
@@ -52,13 +53,15 @@ namespace ShopWebGisApplication.User
         private readonly IOptions<Jwt> _jwtConfig;
         private readonly IConfiguration _configuration;
         private readonly IUser _iuser;
-        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig, IConfiguration configuration, IUser iuser)
+        private readonly IUserCache _iuserCache;
+        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig, IConfiguration configuration, IUser iuser, IUserCache userCache)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _jwtConfig = jwtConfig;
             _configuration = configuration;
             _iuser = iuser;
+            _iuserCache = userCache;
         }
 
 
@@ -71,7 +74,6 @@ namespace ShopWebGisApplication.User
         public async Task<ComplexToken> ShopWebGisILogin(string userName, string userPassWord)
         {
             #region rsa解析出明文，再用明文MD5比较
-
             var rsaDecryption = RSAHelper.Decrypt(userPassWord);
             var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
             #endregion
@@ -79,7 +81,11 @@ namespace ShopWebGisApplication.User
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName && x.UserPassword == md5Encryption);
             if (user == null)
             {
-                throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在或者密码错误!");
+                await _iuserCache.LimitLoginTimes(userName);
+            }
+            else
+            {
+                await _iuserCache.UserIsFreeze(userName);
             }
             var claims = new[] {
                 new Claim(ClaimTypes.Name,"JWT"),

@@ -36,10 +36,27 @@ namespace ShopWebGisDomainShare.Const
 
         public const string RegisterSuccess = "注册成功!";
 
-        public const string LoginFailed = "登录失败:";
+        public const string LoginFailed = "登录失败,";
 
         public const string InvalidAuthorizationmMode = "无效的授权方式";
 
         public const string Parsefailure = "解析失败,请重新登录";
+
+        public const string UserHaveBeenLock= "用户已被锁定!";
+
+        /// <summary>
+        /// 限制登录次数
+        /// </summary>
+        public const int LimitLoginTimes = 5;
+
+        /// <summary>
+        /// 限制登录时间间隔(秒)
+        /// </summary>
+        public const int LimitLoginPeriod = 600;
+
+        /// <summary>
+        /// 登录冻结时间间隔(分钟)
+        /// </summary>
+        public const int LoginFreezeTimeSpan = 60;
     }
 }
