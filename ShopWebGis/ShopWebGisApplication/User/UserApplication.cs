@@ -118,7 +118,10 @@ namespace ShopWebGisApplication.User
             {
                 throw new ShopWebGisCustomException(response + "用户已存在,请修改用户名,重新注册!");
             }
-            var userInfo = _mapper.Map<UserInfo>(user);
+            var rsaDecryption = RSAHelper.Decrypt(userDto.UserPassword);
+            var password = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
+            userDto.UserPassword = password;
+            var userInfo = _mapper.Map<UserInfo>(userDto);
             await _userRepository.InsertAsync(userInfo);
             response = SystemConst.RegisterSuccess;
             return response;
