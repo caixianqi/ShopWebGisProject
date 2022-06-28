@@ -95,7 +95,6 @@ export default {
       this.axios
         .get('/User/GetCryptoPublicKey')
         .then((publicKey) => {
-          debugger
           var encrypt = new Crypto()
           encrypt.setPublicKey(publicKey)
           console.log('encrypt', encrypt)
@@ -109,9 +108,10 @@ export default {
           return this.axios('/User/GetUserInfo')
         })
         .then((res) => {
+          debugger
           const user = {
-            userId: res.Id,
-            userName: res.Name,
+            userId: res.id,
+            userName: res.name,
           }
           this.$store.commit('UPDATE_USER', user)
           this.gotomainview()

@@ -24,6 +24,7 @@
 
 using Microsoft.Extensions.Caching.Distributed;
 using ShopWebGisCache.UserCache;
+using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.Const;
 using ShopWebGisDomainShare.Const.CacheKey;
 using ShopWebGisDomainShare.CustomException;
@@ -45,50 +46,52 @@ namespace ShopWebGisRedis.UserCache
         }
         public async Task LimitLoginTimes(string userName)
         {
-            var userNamekey = UserCacheKeys.LimitLoginPrefix + userName;
-            int times = 0;
 
-            if (!await _iShopWebGisRedis.KeyExistsAsync(userNamekey))
+            int times = 0;
+            // 如果缓存不存在，则新增缓存，否则在缓存上加1
+            if ((await _iShopWebGisRedis.HashGetAsync(UserCacheKeys.LimitLoginPrefix, userName)).HasValue == false)
             {
 
-                await _iShopWebGisRedis.StringSetAsync(userNamekey, 1, TimeSpan.FromSeconds(SystemConst.LimitLoginPeriod));
+                await _iShopWebGisRedis.HashSetAsync(UserCacheKeys.LimitLoginPrefix, userName, 1);
             }
             else
             {
-                times = int.Parse(await _iShopWebGisRedis.StringGetAsync(userNamekey));
+                times = int.Parse(await _iShopWebGisRedis.HashGetAsync(UserCacheKeys.LimitLoginPrefix, userName));
                 // 超过错误次数，锁定用户名,否则登录失败次数加1
                 if (times >= SystemConst.LimitLoginTimes)
                 {
-                    await _iShopWebGisRedis.StringSetAsync($"{UserCacheKeys.LimitLoginFreezePrefix + userName}", true, TimeSpan.FromMinutes(SystemConst.LoginFreezeTimeSpan));
+                    await _iShopWebGisRedis.HashSetAsync(UserCacheKeys.LimitLoginFreezePrefix, userName, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     throw new ShopWebGisCustomException($"{SystemConst.UserHaveBeenLock}请等候{SystemConst.LoginFreezeTimeSpan}分钟进行重试。");
                 }
                 else
                 {
-                    await _iShopWebGisRedis.StringIncrementAsync(userNamekey, 1);
+                    await _iShopWebGisRedis.HashSetAsync(UserCacheKeys.LimitLoginPrefix, userName, times + 1);
 
                 }
             }
-            throw new ShopWebGisCustomException($"{SystemConst.LoginFailed},用户名密码不正确,剩余重试次数{ SystemConst.LimitLoginTimes - times  }次");
+            throw new ShopWebGisCustomException($"{SystemConst.LoginFailed},用户名密码不正确,剩余重试次数{ SystemConst.LimitLoginTimes - times - 1  }次");
         }
 
         public async Task<bool> UserIsFreeze(string userName)
         {
-            var freezeRedisValue = await _iShopWebGisRedis.StringGetWithExpiryAsync($"{UserCacheKeys.LimitLoginFreezePrefix}userName");
-            if (freezeRedisValue.Value.HasValue)
+            var freezeRedisValue = await _iShopWebGisRedis.HashGetAsync(UserCacheKeys.LimitLoginFreezePrefix, userName);
+            if (freezeRedisValue.HasValue)
             {
-                double minutes = 0;
-                if (freezeRedisValue.Expiry != null)
+
+                var dateValue = Convert.ToDateTime(freezeRedisValue);
+                var dateDiff = TimeHelper.DateDiff(DateTime.Now, dateValue);
+                if (!(dateDiff.minutes > SystemConst.LoginFreezeTimeSpan))
                 {
-                    minutes = freezeRedisValue.Expiry.Value.TotalMinutes;
+                    throw new ShopWebGisCustomException($"{SystemConst.UserHaveBeenLock}请等候{SystemConst.LoginFreezeTimeSpan - dateDiff.minutes}分钟进行重试。");
                 }
-                throw new ShopWebGisCustomException($"{SystemConst.UserHaveBeenLock}请等候{minutes}分钟进行重试。");
-            }
-            else
-            {
-                //清除限制用户Key
-                await _iShopWebGisRedis.KeyDelete(UserCacheKeys.LimitLoginPrefix + userName);
+                else
+                {
+                    await _iShopWebGisRedis.HashDeleteAsync(UserCacheKeys.LimitLoginFreezePrefix, userName);
+                }
 
             }
+            //清除限制用户Hash key
+            await _iShopWebGisRedis.HashDeleteAsync(UserCacheKeys.LimitLoginPrefix, userName);
             return true;
         }
     }

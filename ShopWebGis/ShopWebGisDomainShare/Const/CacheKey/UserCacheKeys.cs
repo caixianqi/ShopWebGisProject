@@ -33,11 +33,11 @@ namespace ShopWebGisDomainShare.Const.CacheKey
         /// <summary>
         /// cache key 限制用户登录缓存Key前缀
         /// </summary>
-        public const string LimitLoginPrefix = "limitLoginUserName_";
+        public const string LimitLoginPrefix = "limitLogin";
 
         /// <summary>
         /// cache key 冻结用户缓存key前缀
         /// </summary>
-        public const string LimitLoginFreezePrefix = "limitLoginFreeze_";
+        public const string LimitLoginFreezePrefix = "limitLoginFreeze";
     }
 }

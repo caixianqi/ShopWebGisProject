@@ -97,9 +97,26 @@ namespace ShopWebGisRedis.config
             return await _database.KeyDeleteAsync(redisKey);
         }
 
-        public async Task HashSet(RedisKey redisKey, HashEntry[] hashFields)
+        public async Task HashSetAsync(RedisKey redisKey, HashEntry[] hashFields)
         {
             await _database.HashSetAsync(redisKey, hashFields);
         }
+
+        public async Task HashSetAsync(RedisKey redisKey, RedisValue hashField, RedisValue value)
+        {
+            await _database.HashSetAsync(redisKey, hashField, value);
+        }
+
+        public async Task<RedisValue> HashGetAsync(RedisKey redisKey, RedisValue hashField)
+        {
+            return await _database.HashGetAsync(redisKey, hashField);
+        }
+
+        public async Task<bool> HashDeleteAsync(RedisKey redisKey, RedisValue hashField)
+        {
+            return await _database.HashDeleteAsync(redisKey, hashField);
+        }
+
+
     }
 }

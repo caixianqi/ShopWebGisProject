@@ -66,7 +66,7 @@ namespace ShopWebGisRedis.config
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        Task<long> StringIncrementAsync(RedisKey redisKey ,long num);
+        Task<long> StringIncrementAsync(RedisKey redisKey, long num);
 
         /// <summary>
         /// 删除key
@@ -76,14 +76,37 @@ namespace ShopWebGisRedis.config
         Task<bool> KeyDelete(RedisKey redisKey);
 
         /// <summary>
-        /// 设置Hash缓存
+        /// 设置Hash缓存(数组)
         /// </summary>
         /// <param name="redisKey"></param>
         /// <param name="hashFields"></param>
         /// <returns></returns>
-        Task HashSet(RedisKey redisKey, HashEntry[] hashFields);
-        
+        Task HashSetAsync(RedisKey redisKey, HashEntry[] hashFields);
 
-        
+        /// <summary>
+        /// 设置Hash缓存
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="hashField"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task HashSetAsync(RedisKey redisKey, RedisValue hashField, RedisValue value);
+
+        /// <summary>
+        /// 获取Hash缓存
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        Task<RedisValue> HashGetAsync(RedisKey redisKey, RedisValue hashField);
+
+        /// <summary>
+        /// 删除Hash缓存 Key
+        /// </summary>
+        /// <param name="redisKey"></param>
+        /// <param name="hashField"></param>
+        /// <returns></returns>
+        Task<bool> HashDeleteAsync(RedisKey redisKey, RedisValue hashField);
+
     }
 }
