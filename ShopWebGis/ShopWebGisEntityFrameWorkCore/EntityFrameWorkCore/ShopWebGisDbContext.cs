@@ -53,6 +53,8 @@ namespace ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore
 
         public DbSet<RoleInfo> roleInfos { get; set; }
 
+        public DbSet<MenuInfo> menuInfos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //根据配置文件判断是否插入数据种子
