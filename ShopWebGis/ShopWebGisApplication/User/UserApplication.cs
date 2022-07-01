@@ -78,8 +78,12 @@ namespace ShopWebGisApplication.User
             var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
             #endregion
             ComplexToken complexToken = new ComplexToken();
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName && x.UserPassword == md5Encryption);
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName);
             if (user == null)
+            {
+                throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在!");
+            }
+            if (user.UserPassword != md5Encryption)
             {
                 await _iuserCache.LimitLoginTimes(userName);
             }

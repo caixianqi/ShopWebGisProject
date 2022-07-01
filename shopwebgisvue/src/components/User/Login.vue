@@ -108,7 +108,6 @@ export default {
           return this.axios('/User/GetUserInfo')
         })
         .then((res) => {
-          debugger
           const user = {
             userId: res.id,
             userName: res.name,

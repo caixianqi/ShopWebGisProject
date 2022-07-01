@@ -15,10 +15,4 @@ export const CLEAR_ALL_DATA = (state) => {
   // User
   state.user.userId = ''
   state.user.userName = ''
-  state.user.nickName = ''
-  state.user.loginType = ''
-  state.user.departName = ''
-  state.user.departId = ''
-  state.user.avatarUrl = ''
-  state.user.userType = ''
 }

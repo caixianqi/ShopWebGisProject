@@ -22,11 +22,11 @@ namespace ShopWebGis.Controllers.Login
 {
     [ApiController]
     [Route("api/User")]
-    public class UserCrontroller : ControllerBase
+    public class LoginController : ControllerBase
     {
 
         private readonly IUserApplication _loginApplication;
-        public UserCrontroller(IUserApplication loginApplication)
+        public LoginController(IUserApplication loginApplication)
         {
             _loginApplication = loginApplication;
         }
