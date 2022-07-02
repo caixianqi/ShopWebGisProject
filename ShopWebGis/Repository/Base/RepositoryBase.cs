@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Base
 {
-    public abstract class RepositoryBase<TPrimaryKey, TEntity> : IRepository<TPrimaryKey, TEntity> where TEntity :  EntityBase<TPrimaryKey>
+    public abstract class RepositoryBase<TPrimaryKey, TEntity> : IRepository<TPrimaryKey, TEntity> where TEntity : EntityBase<TPrimaryKey>
     {
         public abstract int Count();
 
@@ -98,15 +98,15 @@ namespace Repository.Base
         public abstract Task<TEntity> FindAsync(TPrimaryKey id);
 
 
-        public abstract IQueryable<TEntity> GetAll();
+        public abstract IQueryable<TEntity> GetQuery();
 
-
-        public abstract IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors);
+         
+        public abstract IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>> [] propertySelectors);
 
 
         public virtual List<TEntity> GetAllList()
         {
-            return GetAll().ToList();
+            return GetQuery().ToList();
         }
 
         public abstract List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate);
@@ -126,7 +126,7 @@ namespace Repository.Base
         public abstract int Insert(TEntity entity);
 
         public abstract Task<TEntity> InsertAsync(TEntity entity);
-  
+
 
         public abstract long LongCount();
 
@@ -155,31 +155,29 @@ namespace Repository.Base
             return await Task.FromResult(Single(predicate));
         }
 
-        public abstract void SoftDelete(TEntity entity);
+        public abstract int SoftDelete(TEntity entity);
 
 
-        public abstract void SoftDelete(TPrimaryKey id);
+        public abstract int SoftDelete(TPrimaryKey id);
 
 
-        public abstract void SoftDelete(Expression<Func<TEntity, bool>> predicate);
-      
+        public abstract int SoftDelete(Expression<Func<TEntity, bool>> predicate);
 
-        public virtual Task SoftDeleteAsync(TEntity entity)
+
+        public virtual Task<int> SoftDeleteAsync(TEntity entity)
         {
-            SoftDelete(entity);
-            return Task.CompletedTask;
+
+            return Task.FromResult(SoftDelete(entity));
         }
 
-        public Task SoftDeleteAsync(TPrimaryKey id)
+        public Task<int> SoftDeleteAsync(TPrimaryKey id)
         {
-            SoftDelete(id);
-            return Task.CompletedTask;
+            return Task.FromResult(SoftDelete(id));
         }
 
-        public Task SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<int> SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            SoftDelete(predicate);
-            return Task.CompletedTask;
+            return Task.FromResult(SoftDelete(predicate));
         }
 
         public abstract TEntity Update(TEntity entity);

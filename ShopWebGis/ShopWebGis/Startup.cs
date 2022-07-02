@@ -14,7 +14,6 @@ using Microsoft.OpenApi.Models;
 using Nacos.AspNetCore.V2;
 using Serilog;
 using ShopWebGis.Filters;
-using ShopWebGisApplicationContract.Login;
 using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.Extension;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
@@ -28,6 +27,7 @@ using ShopWebGisXxlJob.config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ShopWebGis
@@ -68,7 +68,7 @@ namespace ShopWebGis
             services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
             services.AddAutoRegistry(); // 自动注册
             services.XxlJobServiceSetup();// XXLJob定时任务注册
-            services.AddAutoMapper(typeof(LoginProfile).Assembly);
+            services.AddAutoMapper(Assembly.Load("ShopWebGisApplicationContract"));
             //services.HangFireServiceSetup(Configuration);
             services.AddControllers();
             services.AddControllers(option =>

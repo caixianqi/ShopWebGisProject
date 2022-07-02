@@ -24,7 +24,6 @@
 
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
-using ShopWebGisApplicationContract.Login;
 using ShopWebGisFreeSql.InterFace;
 using ShopWebGisFreeSql.Resolve;
 using ShopWebGisIoc;

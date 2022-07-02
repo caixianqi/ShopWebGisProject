@@ -6,42 +6,48 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisApplicationContract.User
+ *命名空间：ShopWebGisApplicationContract.User.Models
 
- *文件名：  IUser
+ *文件名：  RoleDto
 
  *版本号：  V1.0.0.0
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人： 智慧环保部-蔡显麒
+ *创建人：  智慧环保部-蔡显麒
 
- *创建时间：2022/6/14 10:57:14
+ *创建时间：2022/7/2 18:31:55
 
- *描述：
+ *描述：角色DTO
 
 /************************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisApplicationContract.User
+namespace ShopWebGisApplicationContract.User.Models
 {
-    public interface IUser
+    public class RoleDto
     {
         /// <summary>
-        /// 用户Id
+        /// Id
         /// </summary>
-        string Id { get; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// 用户名
+        /// 角色名称
         /// </summary>
-        string Name { get; }
+        public string RoleName { get; set; }
 
         /// <summary>
-        /// 角色
+        /// 角色描述
         /// </summary>
-        public IEnumerable<string> Roles {get;}
+        public string RoleDescription { get; set; }
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public int RoleShot { get; set; }
     }
 }

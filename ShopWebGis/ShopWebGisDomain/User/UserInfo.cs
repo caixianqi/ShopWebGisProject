@@ -39,7 +39,7 @@ namespace ShopWebGisDomain.User
     {
         public UserInfo(int Id) : base(Id)
         {
-
+            Roles = new List<RoleInfo>();
         }
         [Required]
         [StringLength(25)]
@@ -72,5 +72,10 @@ namespace ShopWebGisDomain.User
         /// </summary>
         
         public Address Address { get; set; }
+
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public List<RoleInfo> Roles { get; set; }
     }
 }

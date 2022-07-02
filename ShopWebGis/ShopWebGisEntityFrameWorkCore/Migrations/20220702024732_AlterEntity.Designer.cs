@@ -2,50 +2,22 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
 
 namespace ShopWebGisEntityFrameWorkCore.Migrations
 {
     [DbContext(typeof(ShopWebGisDbContext))]
-    partial class ShopWebGisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702024732_AlterEntity")]
+    partial class AlterEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.13");
-
-            modelBuilder.Entity("MenuInfoRoleInfo", b =>
-                {
-                    b.Property<int>("MenusId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MenusId", "RolesId");
-
-                    b.HasIndex("RolesId");
-
-                    b.ToTable("MenuInfoRoleInfo");
-                });
-
-            modelBuilder.Entity("RoleInfoUserInfo", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleInfoUserInfo");
-                });
 
             modelBuilder.Entity("ShopWebGisDomain.User.MenuInfo", b =>
                 {
@@ -83,6 +55,9 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         .HasColumnName("parentId")
                         .HasComment("父菜单Id");
 
+                    b.Property<int?>("RoleInfoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Sort")
                         .HasColumnType("int")
                         .HasColumnName("sort")
@@ -115,6 +90,8 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         .HasComment("是否删除");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleInfoId");
 
                     b.ToTable("menu");
 
@@ -172,12 +149,17 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         .HasColumnName("updateusername")
                         .HasComment("更新操作用户名称");
 
+                    b.Property<int?>("UserInfoId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("isSoftDelete")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("issoftdelete")
                         .HasComment("是否删除");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserInfoId");
 
                     b.ToTable("role");
                 });
@@ -252,34 +234,18 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         .HasComment("用户");
                 });
 
-            modelBuilder.Entity("MenuInfoRoleInfo", b =>
+            modelBuilder.Entity("ShopWebGisDomain.User.MenuInfo", b =>
                 {
-                    b.HasOne("ShopWebGisDomain.User.MenuInfo", null)
-                        .WithMany()
-                        .HasForeignKey("MenusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ShopWebGisDomain.User.RoleInfo", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Menus")
+                        .HasForeignKey("RoleInfoId");
                 });
 
-            modelBuilder.Entity("RoleInfoUserInfo", b =>
+            modelBuilder.Entity("ShopWebGisDomain.User.RoleInfo", b =>
                 {
-                    b.HasOne("ShopWebGisDomain.User.RoleInfo", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ShopWebGisDomain.User.UserInfo", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Roles")
+                        .HasForeignKey("UserInfoId");
                 });
 
             modelBuilder.Entity("ShopWebGisDomain.User.UserInfo", b =>
@@ -322,6 +288,16 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         });
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("ShopWebGisDomain.User.RoleInfo", b =>
+                {
+                    b.Navigation("Menus");
+                });
+
+            modelBuilder.Entity("ShopWebGisDomain.User.UserInfo", b =>
+                {
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

@@ -37,7 +37,8 @@ namespace ShopWebGisDomain.User
     {
         public RoleInfo(int Id) : base(Id)
         {
-
+            Menus = new List<MenuInfo>();
+            Users = new List<UserInfo>();
         }
 
         /// <summary>
@@ -53,10 +54,20 @@ namespace ShopWebGisDomain.User
         [StringLength(1000)]
         public string RoleDescription { get; set; }
 
-        [Required]        
+        [Required]
         /// <summary>
         /// 角色排序
         /// </summary>
         public int RoleShot { get; set; }
+
+        /// <summary>
+        /// 用户
+        /// </summary>
+        public List<UserInfo> Users { get; set; }
+
+        /// <summary>
+        /// 菜单
+        /// </summary>
+        public List<MenuInfo> Menus { get; set; }
     }
 }

@@ -24,6 +24,7 @@
 
 using AutoMapper;
 using IRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -78,7 +79,7 @@ namespace ShopWebGisApplication.User
             var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
             #endregion
             ComplexToken complexToken = new ComplexToken();
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userName);
+            var user = await _userRepository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.UserName == userName);
             if (user == null)
             {
                 throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在!");
@@ -91,12 +92,20 @@ namespace ShopWebGisApplication.User
             {
                 await _iuserCache.UserIsFreeze(userName);
             }
+
             var claims = new[] {
                 new Claim(ClaimTypes.Name,"JWT"),
                 new Claim(ClaimAttributes.UserId,user.Id.ToString()),
-                new Claim(ClaimAttributes.UserName,user.UserName)
+                new Claim(ClaimAttributes.UserName,user.UserName),
+
             };
-            return CreateToken(claims);
+            // 添加角色
+            var claimList = claims.ToList();
+            foreach (var role in user.Roles)
+            {
+                claimList.Add(new Claim(ClaimTypes.Role, role.RoleName));
+            }
+            return CreateToken(claimList.ToArray());
         }
 
         /// <summary>
@@ -184,6 +193,44 @@ namespace ShopWebGisApplication.User
         public IUser GetUserInfo()
         {
             return _iuser;
+        }
+
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public async Task<IList<UserDto>> GetUserList(string query)
+        {
+            IList<UserDto> list = new List<UserDto>();
+            var data = await _userRepository.GetAllListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.UserName.Contains(query) || x.UserPhone.Contains(query));
+            if (data.Any())
+            {
+                var users = _mapper.Map<IList<UserInfo>, IList<UserDto>>(data);
+                list = users;
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<int> DeleteUser(int id)
+        {
+            return _userRepository.SoftDeleteAsync(id);
+        }
+
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        public Task<UserInfo> UpdateUser(UserDto userDto)
+        {
+            var user = _mapper.Map<UserDto, UserInfo>(userDto);
+            return _userRepository.UpdateAsync(user);
         }
     }
 }

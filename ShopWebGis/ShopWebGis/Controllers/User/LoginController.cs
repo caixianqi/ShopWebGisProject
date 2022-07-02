@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ShopWebGisApplicationContract.Login;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.config;
@@ -88,6 +87,17 @@ namespace ShopWebGis.Controllers.Login
         public IUser GetUserInfo()
         {
             return _loginApplication.GetUserInfo();
+        }
+
+        [HttpGet(nameof(GetUserList))]
+        [Authorize]
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IList<UserDto>> GetUserList(string query)
+        {
+            return await _loginApplication.GetUserList(query);
         }
 
     }

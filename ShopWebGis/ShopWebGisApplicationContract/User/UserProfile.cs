@@ -29,11 +29,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisApplicationContract.Login
+namespace ShopWebGisApplicationContract.User
 {
-    public class LoginProfile : Profile
+    public class UserProfile : Profile
     {
-        public LoginProfile()
+        public UserProfile()
         {
             CreateMap<UserDto, UserInfo>().ReverseMap();
         }

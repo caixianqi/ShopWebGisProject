@@ -22,6 +22,7 @@
 
 /************************************************************************************/
 using ShopWebGisApplicationContract.User.Models;
+using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -57,6 +58,24 @@ namespace ShopWebGisApplicationContract.User
         /// </summary>
         /// <returns></returns>
         IUser GetUserInfo();
+
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
+        Task<IList<UserDto>> GetUserList(string query);
+
+        /// <summary>
+        /// 删除用户
+        /// </summary>
+        /// <returns></returns>
+        Task<int> DeleteUser(int id);
+
+        /// <summary>
+        /// 更新用户
+        /// </summary>
+        /// <returns></returns>
+        Task<UserInfo> UpdateUser(UserDto userDto);
 
     }
 }

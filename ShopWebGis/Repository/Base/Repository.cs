@@ -38,10 +38,10 @@ namespace Repository
 {
     public class Repository<TPrimaryKey, TEntity> : RepositoryBase<TPrimaryKey, TEntity> where TEntity : EntityBase<TPrimaryKey>
     {
-        public  readonly DbContext _dbContext;
-        private readonly DbSet<TEntity> _dbSet;
+        public readonly DbContext _dbContext;
+        private  DbSet<TEntity> _dbSet;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public Repository(IUnitOfWork unitOfWork,IHttpContextAccessor httpContextAccessor)
+        public Repository(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = unitOfWork.GetDbContext();
             _dbSet = _dbContext.Set<TEntity>();
@@ -105,23 +105,26 @@ namespace Repository
             return await _dbSet.FindAsync(id);
         }
 
-        public override IQueryable<TEntity> GetAll()
+        public override IQueryable<TEntity> GetQuery()
         {
             return _dbSet;
         }
 
-        public override IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
+        public override IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>> [] propertySelectors)
         {
-            foreach (var selector in propertySelectors)
+            var Queryable = _dbSet.AsQueryable();
+            foreach (var propertySelector in propertySelectors)
             {
-                _dbSet.Include(selector);
+                Queryable = Queryable.Include(propertySelector);
             }
-            return _dbSet;
+             
+            return Queryable;
         }
 
         public override List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.ToList();
+            Func<TEntity, bool> func = predicate.Compile();
+            return _dbSet.Where(func).ToList();
         }
 
         public override int Insert(TEntity entity)
@@ -187,14 +190,15 @@ namespace Repository
             return updateEntity.Entity;
         }
 
-        public override void SoftDelete(TEntity entity)
+        public override int SoftDelete(TEntity entity)
         {
             entity.isSoftDelete = true;
             _dbSet.Update(entity);
-            _dbContext.SaveChanges();
+            return _dbContext.SaveChanges();
+
         }
 
-        public override void SoftDelete(TPrimaryKey id)
+        public override int SoftDelete(TPrimaryKey id)
         {
             var entity = _dbSet.Find(id);
             if (entity == null)
@@ -203,11 +207,11 @@ namespace Repository
             }
             entity.isSoftDelete = true;
             _dbSet.Update(entity);
-            _dbContext.SaveChanges();
+            return _dbContext.SaveChanges();
 
         }
 
-        public override void SoftDelete(Expression<Func<TEntity, bool>> predicate)
+        public override int SoftDelete(Expression<Func<TEntity, bool>> predicate)
         {
             var entities = _dbSet.Where(predicate);
             foreach (var entity in entities)
@@ -215,7 +219,7 @@ namespace Repository
                 entity.isSoftDelete = true;
             }
             _dbSet.UpdateRange(entities);
-            _dbContext.SaveChanges();
+            return _dbContext.SaveChanges();
         }
 
         public override Task<TEntity> InsertAsync(TEntity entity)

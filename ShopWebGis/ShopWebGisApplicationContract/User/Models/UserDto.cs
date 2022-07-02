@@ -66,5 +66,6 @@ namespace ShopWebGisApplicationContract.User.Models
         /// 详细地址
         /// </summary>
         public string AddressDetail { get; set; }
+
     }
 }

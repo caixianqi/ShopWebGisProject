@@ -35,7 +35,7 @@ namespace IRepository
     {
         #region Select/Get/Query
 
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetQuery();
 
         IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors);
 
@@ -111,17 +111,17 @@ namespace IRepository
 
         #region SoftDelete
 
-        void SoftDelete(TEntity entity);
+        int SoftDelete(TEntity entity);
 
-        Task SoftDeleteAsync(TEntity entity);
+        Task<int> SoftDeleteAsync(TEntity entity);
 
-        void SoftDelete(TPrimaryKey id);
+        int SoftDelete(TPrimaryKey id);
 
-        Task SoftDeleteAsync(TPrimaryKey id);
+        Task<int> SoftDeleteAsync(TPrimaryKey id);
 
-        void SoftDelete(Expression<Func<TEntity, bool>> predicate);
+        int SoftDelete(Expression<Func<TEntity, bool>> predicate);
 
-        Task SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate);
         #endregion
 
         #region Aggregates

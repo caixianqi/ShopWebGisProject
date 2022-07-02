@@ -37,7 +37,7 @@ namespace ShopWebGisDomain.User
     {
         public MenuInfo(int Id) : base(Id)
         {
-
+            Roles = new List<RoleInfo>();
         }
 
         [Required]
@@ -62,5 +62,10 @@ namespace ShopWebGisDomain.User
         [Column("url")]
         [Comment("Url 对应前端路由")]
         public string Url { get; set; }
+
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public List<RoleInfo> Roles { get; set; }
     }
 }

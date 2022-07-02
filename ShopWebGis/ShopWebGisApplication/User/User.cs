@@ -27,11 +27,13 @@ using ShopWebGisApplicationContract.User;
 using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
 namespace ShopWebGisApplication.User
 {
-    public class User:IUser
+    public class User : IUser
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         public User(IHttpContextAccessor httpContextAccessor)
@@ -65,6 +67,18 @@ namespace ShopWebGisApplication.User
                     return id.Value;
                 }
                 return "";
+            }
+        }
+
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public IEnumerable<string> Roles
+        {
+            get
+            {
+                var roles = _httpContextAccessor?.HttpContext?.User?.FindAll(ClaimTypes.Role).Select(x => x.Value);
+                return roles;
             }
         }
     }

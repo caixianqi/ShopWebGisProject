@@ -8,7 +8,7 @@
 
  *命名空间：ShopWebGisApplicationContract.User
 
- *文件名：  IUser
+ *文件名：  IRoleApplication
 
  *版本号：  V1.0.0.0
 
@@ -16,32 +16,26 @@
 
  *创建人： 智慧环保部-蔡显麒
 
- *创建时间：2022/6/14 10:57:14
+ *创建时间：2022/7/2 11:03:59
 
- *描述：
+ *描述：角色应用
 
 /************************************************************************************/
+using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ShopWebGisApplicationContract.User
 {
-    public interface IUser
+    public interface IRoleApplication
     {
         /// <summary>
-        /// 用户Id
+        /// 获取角色
         /// </summary>
-        string Id { get; }
-
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// 角色
-        /// </summary>
-        public IEnumerable<string> Roles {get;}
+        /// <param name="name"></param>
+        /// <returns></returns>
+        Task<List<RoleInfo>> GetRoleList(string name);
     }
 }
