@@ -82,7 +82,6 @@ function login(creds, redirect) {
 
 function _storeToken(response) {
   const auth = store.state.auth
-  debugger
   auth.isLoggedIn = true
   auth.accessToken = response.accessToken
   auth.refreshToken = response.refreshToken

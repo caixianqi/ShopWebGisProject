@@ -5,6 +5,7 @@
     :element-loading-text="$t('loading')"
   >
     <div class="login_box">
+      <div class="login_title"><p>购物平台系统</p></div>
       <div class="avatar_box">
         <img src="../../assets/img/logo.png" />
       </div>
@@ -15,13 +16,18 @@
         :rules="loginFormRules"
       >
         <el-form-item prop="name">
-          <el-input v-model="form.name" placeholder="用户名"></el-input>
+          <el-input
+            v-model="form.name"
+            placeholder="用户名"
+            prefix-icon="el-icon-user-solid"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
             v-model="form.password"
             type="password"
             placeholder="密码"
+            show-password
           ></el-input>
         </el-form-item>
         <el-form-item class="btns">
@@ -97,7 +103,6 @@ export default {
         .then((publicKey) => {
           var encrypt = new Crypto()
           encrypt.setPublicKey(publicKey)
-          console.log('encrypt', encrypt)
           var creds = {
             username: this.form.name,
             password: encodeURIComponent(encrypt.encrypt(this.form.password)),
@@ -122,7 +127,9 @@ export default {
             this.$message.error(error)
           }
         })
-      this.fullscreenLoading = false
+        .finally(() => {
+          this.fullscreenLoading = false
+        })
     },
     gotomainview() {
       this.$router.push({
@@ -179,6 +186,17 @@ export default {
   .btns {
     display: flex;
     justify-content: flex-end;
+  }
+}
+.login_title {
+  left: 50%;
+  height: 130px;
+  width: 210px;
+  position: absolute;
+  transform: translate(-50%, -130%);
+  p {
+    font-size: 34px;
+    color: #fff;
   }
 }
 </style>

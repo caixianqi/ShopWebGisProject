@@ -5,7 +5,7 @@
   >
     <el-header>
       <div>
-        <img src="@/assets/img/shop.jpg" />
+        <img src="@/assets/img/default.jpg" />
         <span>Portal</span>
       </div>
       <el-button type="info" @click="logout()">退出</el-button>
@@ -30,6 +30,7 @@
           :collapse-transition="false"
           :collapse="isCollapse"
           :router="true"
+          theme="dark"
         >
           <el-submenu
             :index="item.MenuId"

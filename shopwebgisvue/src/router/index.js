@@ -19,10 +19,9 @@ VueRouter.prototype.replace = function replace(location) {
 
 Vue.use(VueRouter)
 const Login = (resolve) => require(['@/components/User/Login'], resolve)
-// const Home = (resolve) => require(['@/components/Home'], resolve)
-// const Welcome = (resolve) => require(['@/components/Welcome'], resolve)
+const Home = (resolve) => require(['@/components/Home'], resolve)
+//const Welcome = (resolve) => require(['@/components/Welcome'], resolve)
 // const Register = (resolve) => require(['@/components/login/Register'], resolve)
-
 const router = new VueRouter({
   routes: [
     {
@@ -42,7 +41,7 @@ const router = new VueRouter({
       component: Login,
     },
     // {
-    //   path: '/register',
+    //   path: '/register',Welcome
     //   name: 'register',
     //   meta: {
     //     keepAlive: true,
@@ -51,25 +50,25 @@ const router = new VueRouter({
     //   },
     //   component: Register,
     // },
-    // {
-    //   path: '/home',
-    //   name: 'home',
-    //   meta: {
-    //     keepAlive: true,
-    //     title: '主页面',
-    //   },
-    //   component: Home,
-    //   redirect: {
-    //     name: 'welcome',
-    //   },
-    //   children: [
-    //     {
-    //       path: 'welcome',
-    //       name: 'welcome',
-    //       component: Welcome,
-    //     },
-    //   ],
-    // },
+    {
+      path: '/home',
+      name: 'home',
+      meta: {
+        keepAlive: true,
+        title: '主页面',
+      },
+      component: Home,
+      redirect: {
+        name: 'welcome',
+      },
+      // children: [
+      //   {
+      //     path: 'welcome',
+      //     name: 'welcome',
+      //     component: Welcome,
+      //   },
+      // ],
+    },
     ...ProductRouterFromModule(),
   ],
 })

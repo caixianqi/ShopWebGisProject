@@ -6,6 +6,7 @@ import i18n from './i18n'
 import CommonComponent from './packages'
 import router from './router'
 import store from './store'
+import '@/assets/css/global.css'
 Vue.use(CommonComponent)
 Vue.config.productionTip = false
 
