@@ -72,6 +72,13 @@ namespace ShopWebGisApplicationContract.User
         Task<int> DeleteUser(int id);
 
         /// <summary>
+        /// 禁用用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<int> DisableUser(int id);
+
+        /// <summary>
         /// 更新用户
         /// </summary>
         /// <returns></returns>

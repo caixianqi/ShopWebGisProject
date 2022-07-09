@@ -18,7 +18,7 @@
 
  *创建时间：2022/6/9 16:56:03
 
- *描述：Login AutoMapper
+ *描述：User AutoMapper
 
 /************************************************************************************/
 
@@ -36,6 +36,7 @@ namespace ShopWebGisApplicationContract.User
         public UserProfile()
         {
             CreateMap<UserDto, UserInfo>().ReverseMap();
+            CreateMap<MenuDto, MenuInfo>().ReverseMap();
         }
     }
 }

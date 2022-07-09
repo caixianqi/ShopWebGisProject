@@ -56,11 +56,12 @@ const router = new VueRouter({
       meta: {
         keepAlive: true,
         title: '主页面',
+        allowAnonymous: false,
       },
       component: Home,
-      redirect: {
-        name: 'welcome',
-      },
+      // redirect: {
+      //   name: 'welcome',
+      // },
       // children: [
       //   {
       //     path: 'welcome',
@@ -95,6 +96,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.allowAnonymous) {
     return next()
   }
+  debugger
   const auth = router.app.$options.store.state.auth
   if (!auth.isLoggedIn) {
     if (to.name === 'login') {
@@ -111,7 +113,6 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  next()
 })
 
 export default router

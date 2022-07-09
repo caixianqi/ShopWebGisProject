@@ -24,6 +24,7 @@
 
 using AutoMapper;
 using IRepository;
+using IRepository.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -83,6 +84,10 @@ namespace ShopWebGisApplication.User
             if (user == null)
             {
                 throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在!");
+            }
+            if (user.isSoftDelete)
+            {
+                throw new ShopWebGisCustomException(SystemConst.UserHasBeenDisabled);
             }
             if (user.UserPassword != md5Encryption)
             {
@@ -203,7 +208,7 @@ namespace ShopWebGisApplication.User
         public async Task<IList<UserDto>> GetUserList(string query)
         {
             IList<UserDto> list = new List<UserDto>();
-            var data = await _userRepository.GetAllListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.UserName.Contains(query) || x.UserPhone.Contains(query));
+            var data = await _userRepository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.UserName.Contains(query) || x.UserPhone.Contains(query));
             if (data.Any())
             {
                 var users = _mapper.Map<IList<UserInfo>, IList<UserDto>>(data);
@@ -229,8 +234,23 @@ namespace ShopWebGisApplication.User
         /// <returns></returns>
         public Task<UserInfo> UpdateUser(UserDto userDto)
         {
-            var user = _mapper.Map<UserDto, UserInfo>(userDto);
-            return _userRepository.UpdateAsync(user);
+            return _userRepository.UpdateActionAsync(userDto.Id, x =>
+            {
+                x.UserPassword = userDto.UserPassword;
+                x.UserName = userDto.UserName;
+
+            });
+        }
+
+        /// <summary>
+        /// 禁用用户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<int> DisableUser(int id)
+        {
+            var count = _userRepository.SoftDeleteAsync(id);
+            return count;
         }
     }
 }

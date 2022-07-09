@@ -38,7 +38,7 @@ namespace ShopWebGisDomainShare.Extension
         /// <param name="expr1"></param>
         /// <param name="expr2"></param>
         /// <returns></returns>
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
+        public static Expression<Func<T, bool>> Merge<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
         {
             //声明传递参数（也就是上面表达式树里面的参数s）
             ParameterExpression s = Expression.Parameter(typeof(T), "s");

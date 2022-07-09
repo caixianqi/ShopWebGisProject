@@ -20,9 +20,6 @@ let LOGIN_URL = '/User/Login'
 
 let REFRESH_TOKEN_URL = '/User/RefreshToken'
 
-let ERROR_CONFLICT_MESSAGE =
-  '您的账号在其他地方登录，如果不是你本人操作，请尽快修改登录密码'
-
 const _axios = axios.create(config)
 
 axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '/api'
@@ -120,51 +117,11 @@ function logout() {
   })
 }
 
-function GetData(apiUrl, params) {
-  if (!isNull(params)) {
-    var queryString = null
-    for (var key in params) {
-      queryString += '&' + key + '=' + encodeURIComponent(params[key])
-    }
-    apiUrl += '?' + queryString.substr(1)
-  }
-  return _axios.get(apiUrl).then(
-    function (response) {
-      return response
-    },
-    function (errorResponse) {
-      if (
-        errorResponse.status == 409 &&
-        errorResponse.statusText == 'unauthorized'
-      ) {
-        logout()
-        return Promise.reject(ERROR_CONFLICT_MESSAGE)
-      }
-
-      if (errorResponse.status === 401) {
-        alert('您没有权限访问该资源.')
-        return
-      }
-      return Promise.reject(errorResponse.statusText)
-    }
-  )
-}
-
-/**
- * 判断一个变量是否是undefined或者null
- * @param o 需要进行判断的变量
- * @returns {boolean} 如果是undified或者null，则返回true，否则返回 false
- */
-function isNull(o) {
-  return o === undefined || o === null
-}
-
 Plugin.install = function (Vue) {
   Vue.prototype.axios = _axios
   Vue.prototype.$authlogin = login
   Vue.prototype.$authlogout = logout
   window.axios = _axios
-  Vue.prototype.$GetData = GetData
   Object.defineProperties(Vue.prototype, {
     $axios: {
       get() {

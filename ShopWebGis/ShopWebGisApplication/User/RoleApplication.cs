@@ -22,7 +22,8 @@
 
 /************************************************************************************/
 
-using IRepository;
+
+using IRepository.Base;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisDomain.User;
 using System;
@@ -39,9 +40,9 @@ namespace ShopWebGisApplication.User
         {
             _roleRepository = repository;
         }
-        public Task<List<RoleInfo>> GetRoleList(string name)
+        public async Task<List<RoleInfo>> GetRoleList(string name)
         {
-            
+            return await _roleRepository.GetAvailableListAsync(x => x.RoleName == name);
         }
     }
 }

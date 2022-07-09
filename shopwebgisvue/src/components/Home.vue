@@ -3,55 +3,51 @@
     class="home_container"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
-    <el-header>
-      <div>
-        <img src="@/assets/img/default.jpg" />
-        <span>Portal</span>
-      </div>
-      <el-button type="info" @click="logout()">退出</el-button>
-    </el-header>
-    <el-container>
-      <el-aside :width="!isCollapse ? '200px' : '64px'">
-        <el-button
-          type="info"
-          plain
-          class="collapseButton"
-          :autofocus="isCollapse"
-          @click="toggleCollapse"
-          >{{ !isCollapse ? '收起' : '展开' }}</el-button
+    <el-aside :width="!isCollapse ? '200px' : '64px'">
+      <el-button
+        type="info"
+        plain
+        class="collapseButton"
+        :autofocus="isCollapse"
+        @click="toggleCollapse"
+        >{{ !isCollapse ? '收起' : '展开' }}</el-button
+      >
+      <el-menu
+        default-active="2"
+        class="el-menu-vertical-demo"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#409eff"
+        :unique-opened="true"
+        :collapse-transition="false"
+        :collapse="isCollapse"
+        :router="true"
+        theme="dark"
+      >
+        <el-submenu
+          :index="item.MenuId"
+          v-for="item in menulist"
+          :key="item.MenuId"
         >
-        <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#409eff"
-          :unique-opened="true"
-          :collapse-transition="false"
-          :collapse="isCollapse"
-          :router="true"
-          theme="dark"
-        >
-          <el-submenu
-            :index="item.MenuId"
-            v-for="item in menulist"
-            :key="item.MenuId"
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>{{ item.MenuDesc }}</span>
+          </template>
+          <el-menu-item
+            :index="'/' + subItem.FormUrl"
+            v-for="subItem in item.SubMenu"
+            :key="subItem.MenuId"
           >
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>{{ item.MenuDesc }}</span>
-            </template>
-            <el-menu-item
-              :index="'/' + subItem.FormUrl"
-              v-for="subItem in item.SubMenu"
-              :key="subItem.MenuId"
-            >
-              <i class="el-icon-menu"></i>
-              <span slot="title">{{ subItem.MenuDesc }}</span>
-            </el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-aside>
+            <i class="el-icon-menu"></i>
+            <span slot="title">{{ subItem.MenuDesc }}</span>
+          </el-menu-item>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
+    <el-container>
+      <el-header>
+        <header-top></header-top>
+      </el-header>
       <el-main>
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
@@ -122,23 +118,7 @@ export default {
 //   position: relative;
 // }
 .el-header {
-  background-color: #696969;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #ffffff;
-  font-size: 20px;
-  img {
-    width: 50px;
-    border-radius: 5px;
-  }
-  > div {
-    display: flex;
-    align-items: center;
-    span {
-      margin-left: 15px;
-    }
-  }
+  padding: 0 0;
 }
 .el-aside {
   background-color: rgb(84, 92, 100);

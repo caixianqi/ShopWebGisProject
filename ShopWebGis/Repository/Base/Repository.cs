@@ -23,210 +23,196 @@
 /************************************************************************************/
 
 using IRepository;
+using IRepository.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Repository.Base;
 using ShopWebGisDomain.Base;
+using ShopWebGisDomainShare.CustomException;
+using ShopWebGisDomainShare.Extension;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository
+namespace Repository.Base
 {
-    public class Repository<TPrimaryKey, TEntity> : RepositoryBase<TPrimaryKey, TEntity> where TEntity : EntityBase<TPrimaryKey>
+    public class Repository<TPrimaryKey, TEntity> : IRepository<TPrimaryKey, TEntity> where TEntity : EntityBase<TPrimaryKey>
     {
-        public readonly DbContext _dbContext;
-        private  DbSet<TEntity> _dbSet;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public Repository(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        private readonly DbContext _dbContext;
+        private DbSet<TEntity> _dbSet;
+        public Repository(IUnitOfWork unitOfWork)
         {
             _dbContext = unitOfWork.GetDbContext();
             _dbSet = _dbContext.Set<TEntity>();
-            _httpContextAccessor = httpContextAccessor;
         }
 
-        public override int Count()
+        public virtual void AttachIfNot(TEntity entity)
         {
-            return _dbSet.Count();
-        }
-
-        public override int Count(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _dbSet.Count(predicate);
-        }
-
-        public override void Delete(TEntity entity)
-        {
-            _dbSet.Remove(entity);
-            _dbContext.SaveChanges();
-        }
-
-        public override void Delete(TPrimaryKey id)
-        {
-            var entity = _dbSet.Find(id);
-            if (entity == null)
+            var entry = _dbContext.ChangeTracker.Entries().FirstOrDefault(x => x.Entity == entity);
+            if (entry != null)
             {
-                throw new Exception("xxx");
+                return;
             }
-            _dbSet.Remove(entity);
-            _dbContext.SaveChanges();
+            _dbContext.Attach(entity);
         }
 
-        public override void Delete(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> SaveAsync()
         {
-            var entities = _dbSet.Where(predicate);
-            foreach (var enttiy in entities)
+            return await _dbContext.SaveChangesAsync();
+        }
+
+
+        public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            var iQueryAble = _dbSet.AsQueryable();
+            foreach (var propertySelector in propertySelectors)
             {
-                _dbSet.Remove(enttiy);
+                iQueryAble = _dbSet.Include(propertySelector);
             }
-            _dbContext.SaveChanges();
+            return iQueryAble;
         }
 
-        public override TEntity FirstOrDefault(TPrimaryKey id)
+        public async Task<List<TEntity>> GetAvailableListAsync()
         {
-            throw new NotImplementedException();
+            return await _dbSet.Where(x => x.isSoftDelete == true).ToListAsync();
         }
 
-        public override TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.FirstOrDefault(predicate);
+            return await _dbSet.Where(predicate.Merge((x => x.isSoftDelete == true))).ToListAsync();
         }
 
-        public override TEntity Find(TPrimaryKey id)
-        {
-            return _dbSet.Find(id);
-        }
-
-        public override async Task<TEntity> FindAsync(TPrimaryKey id)
+        public async Task<TEntity> FindAsync([NotNull] TPrimaryKey id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public override IQueryable<TEntity> GetQuery()
+        public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet;
+            return await _dbSet.SingleAsync(predicate);
         }
 
-        public override IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>> [] propertySelectors)
+
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var Queryable = _dbSet.AsQueryable();
-            foreach (var propertySelector in propertySelectors)
-            {
-                Queryable = Queryable.Include(propertySelector);
-            }
-             
-            return Queryable;
+            return await _dbSet.FirstOrDefaultAsync(predicate);
         }
 
-        public override List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> InsertAsync(TEntity entity)
         {
-            Func<TEntity, bool> func = predicate.Compile();
-            return _dbSet.Where(func).ToList();
+            await _dbSet.AddAsync(entity);
+            return await SaveAsync();
         }
 
-        public override int Insert(TEntity entity)
+        public async Task<int> InsertRangeAsync(IList<TEntity> list)
         {
-            _dbSet.Add(entity);
-            return _dbContext.SaveChanges();
+            await _dbSet.AddRangeAsync(list);
+            return await SaveAsync();
         }
 
-        public override long LongCount()
+        public async Task<int> UpdateAsync(TEntity entity)
         {
-            return _dbSet.LongCount();
+            //AttachIfNot(entity);
+            //_dbContext.Entry(entity).State = EntityState.Modified;
+            _dbSet.Update(entity);
+            return await SaveAsync();
         }
 
-        public override long LongCount(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> UpdateRangeAsync(IList<TEntity> list)
         {
-            return _dbSet.LongCount(predicate);
+            //foreach (var enitty in list)
+            //{
+            //    _dbContext.Entry(enitty).State = EntityState.Modified;
+            //}
+            _dbSet.UpdateRange(list);
+            return await SaveAsync();
         }
 
-        public override T Query<T>(Func<IQueryable<TEntity>, T> queryMethod)
+        public async Task<int> DeleteAsync(TEntity entity)
         {
-            if (queryMethod == null)
-            {
-                throw new Exception("XXX");
-            }
-            return queryMethod.Invoke(_dbSet);
+            _dbSet.Remove(entity);
+            return await SaveAsync();
         }
 
-        public override TEntity Single(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> DeleteAsync([NotNull] TPrimaryKey id)
         {
-            return _dbSet.Single(predicate);
-        }
-
-        public override TEntity Update(TEntity entity)
-        {
-            var updateEntity = _dbSet.Update(entity);
-            _dbContext.SaveChanges();
-            return updateEntity.Entity;
-        }
-
-        public override TEntity Update(TPrimaryKey id, Action<TEntity> updateAction)
-        {
-            var entity = _dbSet.Find(id);
+            // 先查后删
+            var entity = await _dbSet.FindAsync(id);
             if (entity == null)
             {
-                throw new Exception("xxx");
+                throw new ShopWebGisCustomException($"{typeof(TEntity).Name}-{id}不存在,无法进行追踪删除!");
             }
-            updateAction?.Invoke(entity);
-            var updateEntity = _dbSet.Update(entity);
-            _dbContext.SaveChanges();
-            return updateEntity.Entity;
+            _dbSet.Remove(entity);
+            return await SaveAsync();
         }
 
-        public override async Task<TEntity> UpdateAsync(TPrimaryKey id, Func<TEntity, Task> updateAction)
+        public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = _dbSet.Where(predicate);
+            _dbSet.RemoveRange(entities);
+            return await SaveAsync();
+        }
+
+
+        public async Task<int> SoftDeleteAsync([NotNull] TPrimaryKey id)
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity == null)
             {
-                throw new Exception("xxx");
+                throw new ShopWebGisCustomException($"{typeof(TEntity).Name}-{id}不存在,无法进行追踪禁用!");
             }
-            updateAction?.Invoke(entity);
-            var updateEntity = _dbSet.Update(entity);
-            _dbContext.SaveChanges();
-            return updateEntity.Entity;
+            entity.isSoftDelete = false;
+            return await SaveAsync();
         }
 
-        public override int SoftDelete(TEntity entity)
-        {
-            entity.isSoftDelete = true;
-            _dbSet.Update(entity);
-            return _dbContext.SaveChanges();
-
-        }
-
-        public override int SoftDelete(TPrimaryKey id)
-        {
-            var entity = _dbSet.Find(id);
-            if (entity == null)
-            {
-                throw new Exception("xxx");
-            }
-            entity.isSoftDelete = true;
-            _dbSet.Update(entity);
-            return _dbContext.SaveChanges();
-
-        }
-
-        public override int SoftDelete(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var entities = _dbSet.Where(predicate);
             foreach (var entity in entities)
             {
                 entity.isSoftDelete = true;
             }
-            _dbSet.UpdateRange(entities);
-            return _dbContext.SaveChanges();
+            return await SaveAsync();
         }
 
-        public override Task<TEntity> InsertAsync(TEntity entity)
+        public async Task<int> CountAsync()
         {
-            var Entity = _dbSet.AddAsync(entity).Result.Entity;
-            _dbContext.SaveChanges();
-            return Task.FromResult(Entity);
+            return await _dbSet.CountAsync();
+        }
+
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.CountAsync(predicate);
+        }
+
+        public async Task<long> LongCountAsync()
+        {
+            return await _dbSet.LongCountAsync();
+        }
+
+        public async Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.LongCountAsync(predicate);
+        }
+
+        public Task<int> DeleteRangeAsync(IList<TEntity> list)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<TEntity> UpdateActionAsync([NotNull] TPrimaryKey id, Action<TEntity> action)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            if (entity == null)
+            {
+                throw new ShopWebGisCustomException($"{typeof(TEntity).Name}-{id}不存在,无法进行追踪更新!");
+            }
+            action?.Invoke(entity);
+            await SaveAsync();
+            return entity;
         }
     }
 }

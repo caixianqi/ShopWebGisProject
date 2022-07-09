@@ -23,8 +23,8 @@
 /************************************************************************************/
 
 using Autofac;
-using IRepository;
-using Repository;
+using IRepository.Base;
+using Repository.Base;
 using ShopWebGisDomain.User;
 using ShopWebGisMongoDB.Base;
 using System;

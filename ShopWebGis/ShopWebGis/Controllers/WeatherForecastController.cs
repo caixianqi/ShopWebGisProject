@@ -1,4 +1,5 @@
-﻿using IRepository;
+﻿
+using IRepository.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;

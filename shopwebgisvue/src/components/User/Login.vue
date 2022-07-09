@@ -133,7 +133,7 @@ export default {
     },
     gotomainview() {
       this.$router.push({
-        path: this.$route.query.redirect || '/home',
+        path: this.$route.query.redirect || '/menu',
       })
     },
   },

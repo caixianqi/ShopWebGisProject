@@ -22,14 +22,52 @@
 
 /************************************************************************************/
 
+using AutoMapper;
+using IRepository;
+using IRepository.Base;
 using ShopWebGisApplicationContract.User;
+using ShopWebGisApplicationContract.User.Models;
+using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ShopWebGisApplication.User
 {
-    public class MenuApplication: IMenuApplication
+    public class MenuApplication : IMenuApplication
     {
+        private readonly IRepository<int, MenuInfo> _repository;
+        private readonly IMapper _mapper;
+        public MenuApplication(IRepository<int, MenuInfo> repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+        public async Task<int> AddMenu(MenuDto menuDto)
+        {
+            var menu = _mapper.Map<MenuDto, MenuInfo>(menuDto);
+            return await _repository.InsertAsync(menu);
+        }
+
+        public async Task<int> DeleteMenu(int Id)
+        {
+            return await _repository.SoftDeleteAsync(Id);
+        }
+
+        public Task<int> DsiableMenu(MenuDto menuDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<MenuDto> GetMenu(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<MenuDto>> GetMenuList(string query)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

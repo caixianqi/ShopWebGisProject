@@ -27,15 +27,21 @@
     </div>
     <el-dialog title="菜单" :visible.sync="dialogVisible" width="30%">
       <div>
-        <el-form ref="form" :model="form" label-width="100px" label-suffix="：">
-          <el-form-item label="菜单名称">
+        <el-form
+          ref="form"
+          :model="form"
+          label-width="100px"
+          label-suffix="："
+          :rules="rules"
+        >
+          <el-form-item label="菜单名称" prop="name" required>
             <el-input v-model="form.name"></el-input>
           </el-form-item>
-          <el-form-item label="父菜单"> </el-form-item>
-          <el-form-item label="菜单路由">
+          <el-form-item label="父菜单" prop="parentId"> </el-form-item>
+          <el-form-item label="菜单路由" prop="url" required>
             <el-input v-model="form.url"></el-input
           ></el-form-item>
-          <el-form-item label="排序">
+          <el-form-item label="排序" prop="sort" required>
             <el-input-number
               v-model="form.sort"
               :min="1"
@@ -43,7 +49,9 @@
             ></el-input-number>
           </el-form-item>
           <el-form-item class="btn">
-            <el-button type="primary" @click="onSubmit">创建</el-button>
+            <el-button type="primary" @click="preSubmit('form')"
+              >创建</el-button
+            >
             <el-button @click="cancel">取消</el-button>
           </el-form-item>
         </el-form>
@@ -81,12 +89,28 @@ export default {
         name: '',
         sort: 1,
         url: '',
+        parentId: '',
       },
       dialogVisible: false,
       querystr: '',
+      rules: {
+        name: [{ required: true, message: '请填写菜单名称', trigger: 'blur' }],
+        sort: [{ required: true, message: '请填写菜单顺序', trigger: 'blur' }],
+        url: [{ required: true, message: '请填写路由', trigger: 'blur' }],
+      },
     }
   },
   methods: {
+    preSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.onSubmit()
+        } else {
+          this.$message.error(this.$t('form_validate'))
+          return false
+        }
+      })
+    },
     onSubmit() {
       console.log('submit!')
     },
@@ -95,6 +119,7 @@ export default {
     },
     search() {},
     cancel() {
+      this.$refs.form.resetFields()
       this.dialogVisible = false
     },
   },

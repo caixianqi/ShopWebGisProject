@@ -44,6 +44,8 @@ namespace ShopWebGisDomainShare.Const
 
         public const string UserHaveBeenLock= "用户已被锁定!";
 
+        public const string UserHasBeenDisabled = "用户已被禁用";
+
         /// <summary>
         /// 限制登录次数
         /// </summary>
