@@ -232,14 +232,15 @@ namespace ShopWebGisApplication.User
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns></returns>
-        public Task<UserInfo> UpdateUser(UserDto userDto)
+        public async Task<UserDto> UpdateUser(UserDto userDto)
         {
-            return _userRepository.UpdateActionAsync(userDto.Id, x =>
+            var user = await _userRepository.UpdateActionAsync(userDto.Id, x =>
             {
                 x.UserPassword = userDto.UserPassword;
                 x.UserName = userDto.UserName;
                 x.UserPhone = userDto.UserPhone;
             });
+            return _mapper.Map<UserInfo, UserDto>(user);
         }
 
         /// <summary>

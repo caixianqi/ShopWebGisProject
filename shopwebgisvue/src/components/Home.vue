@@ -13,25 +13,22 @@
         >{{ !isCollapse ? '收起' : '展开' }}</el-button
       >
       <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#409eff"
+        default-active="home"
+        background-color="#324057"
+        text-color="#bfcbd9"
+        active-text-color="#20a0ff"
         :unique-opened="true"
         :collapse-transition="false"
         :collapse="isCollapse"
         :router="true"
-        theme="dark"
       >
-        <el-submenu
-          :index="item.MenuId"
-          v-for="item in menulist"
-          :key="item.MenuId"
+        <el-menu-item index="home"
+          ><i class="el-icon-menu"></i>首页</el-menu-item
         >
+        <el-submenu :index="item.id" v-for="item in menulist" :key="item.id">
           <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>{{ item.MenuDesc }}</span>
+            <i class="el-icon-document"></i>
+            <span>{{ item.name }}</span>
           </template>
           <el-menu-item
             :index="'/' + subItem.FormUrl"
@@ -92,9 +89,10 @@ export default {
       this.fullscreenLoading = true
       var that = this
       this.axios
-        .get('/api/PortalMenu/UserMenu/Web')
+        .get('/Menu/GetMenuList')
         .then((res) => {
           that.menulist = res
+          that.menulist.forEach((x) => (x.id = x.id.toString()))
         })
         .catch((error) => {
           this.$message.error(error)
@@ -121,25 +119,16 @@ export default {
   padding: 0 0;
 }
 .el-aside {
-  background-color: rgb(84, 92, 100);
-  .el-menu {
-    border-right: none;
-    word-wrap: break-word;
-  }
-}
-.el-footer {
-  background-color: #696969;
+  background-color: #324057;
 }
 .el-main {
   background-color: #f5f5f5;
 }
-.el-icon-menu {
-  margin-right: 10px;
+/deep/ .el-submenu__title {
+  padding: 0 150px;
 }
-.el-menu-item {
-  span {
-    word-wrap: break-word;
-  }
+/deep/ .el-menu-item {
+  padding: 0 150px;
 }
 .collapseButton {
   width: 100%;

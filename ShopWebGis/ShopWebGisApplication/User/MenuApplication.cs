@@ -55,7 +55,7 @@ namespace ShopWebGisApplication.User
             return await _repository.SoftDeleteAsync(Id);
         }
 
-        public async Task<int> DsiableMenu(int Id)
+        public async Task<int> DisableMenu(int Id)
         {
             return await _repository.SoftDeleteAsync(Id);
         }
@@ -70,6 +70,16 @@ namespace ShopWebGisApplication.User
         {
             var menuList = await _repository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query));
             return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList);
+        }
+
+        public async Task<MenuDto> UpdateMenu(MenuDto menuDto)
+        {
+            var menu = await _repository.UpdateActionAsync(menuDto.Id, x =>
+             {
+                 x.Name = menuDto.Name;
+                 x.Sort = menuDto.Sort;
+             });
+            return _mapper.Map<MenuInfo, MenuDto>(menu);
         }
     }
 }

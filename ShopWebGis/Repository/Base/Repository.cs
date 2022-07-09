@@ -82,7 +82,8 @@ namespace Repository.Base
 
         public async Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbSet.Where(predicate.Merge((x => x.isSoftDelete == true))).ToListAsync();
+            var expression = predicate.Merge((x => x.isSoftDelete == false));
+            return await _dbSet.Where(expression).ToListAsync();
         }
 
         public async Task<TEntity> FindAsync([NotNull] TPrimaryKey id)
@@ -149,7 +150,7 @@ namespace Repository.Base
             {
                 throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
             }
-            return effectRows; 
+            return effectRows;
         }
 
         public async Task<int> DeleteAsync([NotNull] TPrimaryKey id)

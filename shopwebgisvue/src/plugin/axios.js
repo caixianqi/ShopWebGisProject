@@ -92,10 +92,11 @@ function _isInvalidToken(response) {
 }
 
 function _refreshToken(config) {
-  const params = 'refreshToken=' + store.state.auth.refreshToken
+  debugger
+  const params = '?refreshToken=' + store.state.auth.refreshToken
 
   return _axios
-    .get(REFRESH_TOKEN_URL, params)
+    .get(REFRESH_TOKEN_URL + params)
     .then((resp) => {
       _storeToken(resp)
       return _retry(config)

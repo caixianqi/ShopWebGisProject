@@ -32,7 +32,7 @@ using System.Text;
 
 namespace ShopWebGisDomain
 {
-    public abstract class BasicModel<T>: EntityBase<T>
+    public abstract class BasicModel<T> : EntityBase<T>
     {
         protected BasicModel(T Id) : base(Id)
         {
@@ -43,14 +43,14 @@ namespace ShopWebGisDomain
         /// </summary>
         [Column("createtime")]
         [Comment("创建时间")]
-        public DateTime CreateTime { get; set; }
+        public DateTime? CreateTime { get; set; }
 
         /// <summary>
         /// 修改时间
         /// </summary>
         [Column("updatetime")]
         [Comment("修改时间")]
-        public DateTime UpdateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
 
     }
 }

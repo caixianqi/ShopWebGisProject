@@ -7,7 +7,7 @@ export default [
     meta: {
       keepAlive: true,
       allowAnonymous: true,
-      title: '菜单',
+      title: ['菜单管理', '菜单'],
     },
     component: Menu,
   },

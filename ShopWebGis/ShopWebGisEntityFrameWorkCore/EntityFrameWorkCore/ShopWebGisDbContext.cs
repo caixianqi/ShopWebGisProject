@@ -37,6 +37,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore
 {
@@ -111,6 +113,48 @@ namespace ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore
             return effectRows;
         }
 
+        public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
 
+            var adminUser = userInfos.Where(x => x.UserName == "admin").First();
+            var userId = _user.Id;
+            var userName = _user.Name;
+            if (string.IsNullOrWhiteSpace(userId) && string.IsNullOrWhiteSpace(userName))
+            {
+                userId = adminUser.Id.ToString();
+                userName = adminUser.UserName;
+            }
+            //自动修改 CreateTime,UpdateTime,UserId,UserName
+            var entityEntries = ChangeTracker.Entries().ToList();
+            foreach (var entry in entityEntries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    if (Entry(entry.Entity).Property("CreateTime") != null)
+                        Entry(entry.Entity).Property("CreateTime").CurrentValue = DateTime.Now;
+                    if (Entry(entry.Entity).Property("CreateUserId") != null)
+                        Entry(entry.Entity).Property("CreateUserId").CurrentValue = userId;
+                    if (Entry(entry.Entity).Property("CreateUserName") != null)
+                        Entry(entry.Entity).Property("CreateUserName").CurrentValue = userName;
+
+                }
+                if (entry.State == EntityState.Modified)
+                {
+                    if (Entry(entry.Entity).Property("UpdateTime") != null)
+                        Entry(entry.Entity).Property("Upd.ateTime").CurrentValue = DateTime.Now;
+                    if (Entry(entry.Entity).Property("UpdateUserId") != null)
+                        Entry(entry.Entity).Property("UpdateUserId").CurrentValue = userId;
+                    if (Entry(entry.Entity).Property("UpdateUserName") != null)
+                        Entry(entry.Entity).Property("UpdateUserName").CurrentValue = userName;
+
+                }
+            }
+            var effectRows = await base.SaveChangesAsync(cancellationToken);
+            if (entityEntries.Where(x => x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted).Count() > 0 && effectRows <= 0)
+            {
+                throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
+            }
+            return effectRows;
+        }
     }
 }

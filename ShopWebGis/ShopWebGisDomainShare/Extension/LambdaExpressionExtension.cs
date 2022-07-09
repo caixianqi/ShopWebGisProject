@@ -41,14 +41,14 @@ namespace ShopWebGisDomainShare.Extension
         public static Expression<Func<T, bool>> Merge<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
         {
             //声明传递参数（也就是上面表达式树里面的参数s）
-            ParameterExpression s = Expression.Parameter(typeof(T), "s");
+            ParameterExpression x = Expression.Parameter(typeof(T), "x");
             //统一管理参数，保证参数一致，否则会报错 变量未定义
-            MyExpressionVisitor visitor = new MyExpressionVisitor(s);
+            MyExpressionVisitor visitor = new MyExpressionVisitor(x);
             //表达式树内容
             Expression body1 = visitor.Visit(expr1.Body);
             Expression body2 = visitor.Visit(expr2.Body);
             //合并表达式
-            return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(body1, body2), expr1.Parameters);
+            return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(body1, body2), x);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace ShopWebGisDomainShare.Extension
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
         {
             //声明传递参数（也就是上面表达式树里面的参数s）
-            ParameterExpression s = Expression.Parameter(typeof(T), "s");
+            ParameterExpression s = Expression.Parameter(typeof(T), "x");
             //统一管理参数，保证参数一致，否则会报错 变量未定义
             MyExpressionVisitor visitor = new MyExpressionVisitor(s);
             //表达式树内容

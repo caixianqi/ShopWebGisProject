@@ -36,7 +36,7 @@ namespace ShopWebGisApplicationContract.User.Models
 
         public string Url { get; set; }
 
-        public string Sort { get; set; }
+        public int Sort { get; set; }
 
         public int ParentId { get; set; }
 

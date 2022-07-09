@@ -25,7 +25,12 @@
         <el-table-column prop="address" label="地址"> </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="菜单" :visible.sync="dialogVisible" width="30%">
+    <el-dialog
+      title="菜单"
+      :visible.sync="dialogVisible"
+      width="30%"
+      v-loading="loading"
+    >
       <div>
         <el-form
           ref="form"
@@ -49,10 +54,8 @@
             ></el-input-number>
           </el-form-item>
           <el-form-item class="btn">
-            <el-button type="primary" @click="preSubmit('form')"
-              >创建</el-button
-            >
-            <el-button @click="cancel">取消</el-button>
+            <el-button type="primary" @click="onSubmit('form')">创建</el-button>
+            <el-button @click="cancel">清空</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -89,7 +92,7 @@ export default {
         name: '',
         sort: 1,
         url: '',
-        parentId: '',
+        parentId: 0,
       },
       dialogVisible: false,
       querystr: '',
@@ -98,21 +101,32 @@ export default {
         sort: [{ required: true, message: '请填写菜单顺序', trigger: 'blur' }],
         url: [{ required: true, message: '请填写路由', trigger: 'blur' }],
       },
+      loading: false,
     }
   },
   methods: {
-    preSubmit(formName) {
+    onSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.onSubmit()
+          this.loading = true
+          this.axios
+            .post('/Menu/AddMenu', this.form)
+            .then(() => {
+              this.$refs[formName].resetFields()
+              this.$message.success('新增成功!')
+              this.dialogVisible = false
+            })
+            .catch((error) => {
+              this.$message.error(error)
+            })
+            .finally(() => {
+              this.loading = false
+            })
         } else {
           this.$message.error(this.$t('form_validate'))
           return false
         }
       })
-    },
-    onSubmit() {
-      console.log('submit!')
     },
     showDialogVisible() {
       this.dialogVisible = true
@@ -120,7 +134,6 @@ export default {
     search() {},
     cancel() {
       this.$refs.form.resetFields()
-      this.dialogVisible = false
     },
   },
 }

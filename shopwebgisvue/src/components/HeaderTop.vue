@@ -2,9 +2,11 @@
   <div class="header_container">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index">{{
-        item.title
-      }}</el-breadcrumb-item>
+      <el-breadcrumb-item
+        v-for="(item, index) in $route.meta.title"
+        :key="index"
+        >{{ item }}</el-breadcrumb-item
+      >
     </el-breadcrumb>
     <el-dropdown @command="handleCommand">
       <img src="@/assets/img/default.jpg" class="avator" />
@@ -21,9 +23,7 @@ export default {
   data() {
     return {}
   },
-  mounted() {
-    console.log(this.$route.meta)
-  },
+  mounted() {},
   methods: {
     handleCommand(command) {
       if (command === 'home') {
@@ -33,7 +33,6 @@ export default {
       } else {
         this.$message.error('暂无提供修改用户信息界面,请勿点击!')
       }
-      this.$message('click on item ' + command)
     },
   },
 }
@@ -45,13 +44,12 @@ export default {
   background-color: #eff2f7;
   height: 60px;
   align-items: center;
-  width: 100%;
   padding-left: 20px;
 }
 .avator {
   border-radius: 50%;
   height: 36px;
   width: 40px;
-  margin-right: 20px;
+  margin-right: 40px;
 }
 </style>

@@ -92,7 +92,7 @@ namespace ShopWebGis.Controllers.Login
         [HttpGet(nameof(GetUserList))]
         [Authorize]
         /// <summary>
-        /// 获取用户
+        /// 获取用户列表
         /// </summary>
         /// <returns></returns>
         public async Task<IList<UserDto>> GetUserList(string query)

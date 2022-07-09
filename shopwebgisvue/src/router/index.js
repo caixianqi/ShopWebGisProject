@@ -55,7 +55,7 @@ const router = new VueRouter({
       name: 'home',
       meta: {
         keepAlive: true,
-        title: '主页面',
+        title: ['主页'],
         allowAnonymous: false,
       },
       component: Home,
@@ -96,7 +96,6 @@ router.beforeEach((to, from, next) => {
   if (to.meta.allowAnonymous) {
     return next()
   }
-  debugger
   const auth = router.app.$options.store.state.auth
   if (!auth.isLoggedIn) {
     if (to.name === 'login') {

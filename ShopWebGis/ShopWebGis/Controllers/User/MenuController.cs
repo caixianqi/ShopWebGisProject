@@ -20,24 +20,48 @@ namespace ShopWebGis.HttApi.Host.Controllers
             _menuApplication = menuApplication;
         }
 
+        [HttpGet(nameof(GetMenuList))]
         /// <summary>
         /// 获取菜单列表
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public async Task<IList<MenuDto>> GetMenuList(string query)
+        public async Task<IList<MenuDto>> GetMenuList(string Query)
         {
-            return await _menuApplication.GetMenuList(query);
+            return await _menuApplication.GetMenuList(Query);
         }
 
+        [HttpPost(nameof(AddMenu))]
         /// <summary>
         /// 添加菜单
         /// </summary>
         /// <param name="menuDto"></param>
         /// <returns></returns>
-        public async Task<int> AddMenu(MenuDto menuDto)
+        public async Task<int> AddMenu(MenuDto MenuDto)
         {
-            return await _menuApplication.AddMenu(menuDto);
+            return await _menuApplication.AddMenu(MenuDto);
+        }
+
+        [HttpDelete(nameof(DisableMenu))]
+        /// <summary>
+        /// 禁用菜单
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<int> DisableMenu(int Id)
+        {
+            return await _menuApplication.DisableMenu(Id);
+        }
+
+        [HttpPut(nameof(UpdateMenu))]
+        /// <summary>
+        /// 修改菜单
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public async Task<MenuDto> UpdateMenu(MenuDto MenuDto)
+        {
+            return await _menuApplication.UpdateMenu(MenuDto);
         }
     }
 }
