@@ -65,7 +65,7 @@ namespace ShopWebGisDomain.ValueObject
         [StringLength(25)]
         [Column("province")]
         [Comment("省份")]
-        public string Province { get;  set; }
+        public string Province { get; set; }
 
         /// <summary>
         /// 市县
@@ -73,7 +73,7 @@ namespace ShopWebGisDomain.ValueObject
         [StringLength(25)]
         [Column("city")]
         [Comment("城市")]
-        public string City { get;  set; }
+        public string City { get; set; }
 
         /// <summary>
         /// 镇
@@ -81,7 +81,7 @@ namespace ShopWebGisDomain.ValueObject
         [StringLength(25)]
         [Column("county")]
         [Comment("区县镇")]
-        public string County { get;  set; }
+        public string County { get; set; }
 
         /// <summary>
         /// 详细地址
@@ -89,7 +89,18 @@ namespace ShopWebGisDomain.ValueObject
         [StringLength(200)]
         [Column("addressdetail")]
         [Comment("详细地址")]
-        public string AddressDetail { get;  set; }
+        public string AddressDetail { get; set; }
         #endregion
+
+        /// <summary>
+        /// 重写tostring 方法
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            var str = new string[] { Province, City, County, AddressDetail };
+
+            return string.Join(",", str);
+        }
     }
 }

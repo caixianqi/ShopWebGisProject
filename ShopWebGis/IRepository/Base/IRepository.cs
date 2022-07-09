@@ -24,6 +24,7 @@
 using ShopWebGisDomain.Base;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -66,7 +67,7 @@ namespace IRepository.Base
 
         #region Insert
 
-        Task<int> InsertAsync(TEntity entity);
+        Task<int> InsertAsync([NotNull]TEntity entity);
 
         Task<int> InsertRangeAsync(IList<TEntity> list);
 
@@ -99,7 +100,7 @@ namespace IRepository.Base
 
 
 
-
+        // 软删除
         Task<int> SoftDeleteAsync(TPrimaryKey id);
 
 

@@ -27,6 +27,7 @@ using IRepository.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ShopWebGisDomain.Base;
+using ShopWebGisDomainShare.Const;
 using ShopWebGisDomainShare.CustomException;
 using ShopWebGisDomainShare.Extension;
 using System;
@@ -64,7 +65,6 @@ namespace Repository.Base
             return await _dbContext.SaveChangesAsync();
         }
 
-
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
         {
             var iQueryAble = _dbSet.AsQueryable();
@@ -101,16 +101,26 @@ namespace Repository.Base
             return await _dbSet.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<int> InsertAsync(TEntity entity)
+        public async Task<int> InsertAsync([NotNull] TEntity entity)
         {
             await _dbSet.AddAsync(entity);
-            return await SaveAsync();
+            var eddectRows = await SaveAsync();
+            if (eddectRows <= 0)
+            {
+                throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
+            }
+            return eddectRows;
         }
 
         public async Task<int> InsertRangeAsync(IList<TEntity> list)
         {
             await _dbSet.AddRangeAsync(list);
-            return await SaveAsync();
+            var eddectRows = await SaveAsync();
+            if (eddectRows <= 0)
+            {
+                throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
+            }
+            return eddectRows;
         }
 
         public async Task<int> UpdateAsync(TEntity entity)
@@ -134,7 +144,12 @@ namespace Repository.Base
         public async Task<int> DeleteAsync(TEntity entity)
         {
             _dbSet.Remove(entity);
-            return await SaveAsync();
+            var effectRows = await SaveAsync();
+            if (effectRows <= 0)
+            {
+                throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
+            }
+            return effectRows; 
         }
 
         public async Task<int> DeleteAsync([NotNull] TPrimaryKey id)

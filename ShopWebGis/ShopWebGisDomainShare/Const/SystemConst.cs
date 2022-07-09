@@ -42,9 +42,11 @@ namespace ShopWebGisDomainShare.Const
 
         public const string Parsefailure = "解析失败,请重新登录";
 
-        public const string UserHaveBeenLock= "用户已被锁定!";
+        public const string UserHaveBeenLock = "用户已被锁定!";
 
         public const string UserHasBeenDisabled = "用户已被禁用";
+
+        public const string NotAffectedRow = "无影响行数!";
 
         /// <summary>
         /// 限制登录次数

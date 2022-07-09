@@ -238,7 +238,7 @@ namespace ShopWebGisApplication.User
             {
                 x.UserPassword = userDto.UserPassword;
                 x.UserName = userDto.UserName;
-
+                x.UserPhone = userDto.UserPhone;
             });
         }
 

@@ -28,6 +28,7 @@
             type="password"
             placeholder="密码"
             show-password
+            @keyup.enter.native="Prelogin('form')"
           ></el-input>
         </el-form-item>
         <el-form-item class="btns">

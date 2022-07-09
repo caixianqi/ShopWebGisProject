@@ -43,7 +43,7 @@ namespace ShopWebGisApplicationContract.User
         /// </summary>
         /// <param name="menuDto"></param>
         /// <returns></returns>
-        Task<int> DsiableMenu(MenuDto menuDto);
+        Task<int> DsiableMenu(int Id);
 
         /// <summary>
         /// 删除菜单

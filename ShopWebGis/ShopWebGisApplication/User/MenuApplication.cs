@@ -55,19 +55,21 @@ namespace ShopWebGisApplication.User
             return await _repository.SoftDeleteAsync(Id);
         }
 
-        public Task<int> DsiableMenu(MenuDto menuDto)
+        public async Task<int> DsiableMenu(int Id)
         {
-            throw new NotImplementedException();
+            return await _repository.SoftDeleteAsync(Id);
         }
 
-        public Task<MenuDto> GetMenu(int Id)
+        public async Task<MenuDto> GetMenu(int Id)
         {
-            throw new NotImplementedException();
+            var menu = await _repository.FindAsync(Id);
+            return _mapper.Map<MenuInfo, MenuDto>(menu);
         }
 
-        public Task<IList<MenuDto>> GetMenuList(string query)
+        public async Task<IList<MenuDto>> GetMenuList(string query)
         {
-            throw new NotImplementedException();
+            var menuList = await _repository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query));
+            return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList);
         }
     }
 }

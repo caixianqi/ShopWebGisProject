@@ -77,5 +77,7 @@ namespace ShopWebGisDomain.Base
         /// 更新操作用户Id
         /// </summary>
         public string UpdateUserId { get; set; }
+
+
     }
 }
