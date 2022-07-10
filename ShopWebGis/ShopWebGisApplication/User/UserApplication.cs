@@ -232,13 +232,27 @@ namespace ShopWebGisApplication.User
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns></returns>
-        public async Task<UserDto> UpdateUser(UserDto userDto)
+        public async Task<UserDto> UpdateUser(UserUpdateDto userDto)
         {
-            var user = await _userRepository.UpdateActionAsync(userDto.Id, x =>
+            #region rsa解析出明文，再用明文MD5比较
+            var originalPassword = RSAMD5Decrypt(userDto.OriginalPassword);
+            var newPassword = RSAMD5Decrypt(userDto.UserPassword);
+            var originalUser = await _userRepository.FindAsync(int.Parse(_iuser.Id));
+            if (originalUser == null)
             {
-                x.UserPassword = userDto.UserPassword;
-                x.UserName = userDto.UserName;
-                x.UserPhone = userDto.UserPhone;
+                throw new ShopWebGisCustomException("用户不存在!");
+            }
+            else
+            {
+                if (originalUser.UserPassword != originalPassword)
+                {
+                    throw new ShopWebGisCustomException("原始密码不正确，请重试!");
+                }
+            }
+            #endregion
+            var user = await _userRepository.UpdateActionAsync(int.Parse(_iuser.Id), x =>
+            {
+                x.UserPassword = newPassword;
             });
             return _mapper.Map<UserInfo, UserDto>(user);
         }
@@ -252,6 +266,14 @@ namespace ShopWebGisApplication.User
         {
             var count = _userRepository.SoftDeleteAsync(id);
             return count;
+        }
+
+        private string RSAMD5Decrypt(string str)
+        {
+
+            var rsaDecryption = RSAHelper.Decrypt(str);
+            var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
+            return md5Encryption;
         }
     }
 }

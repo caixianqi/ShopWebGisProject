@@ -141,7 +141,7 @@ namespace ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore
                 if (entry.State == EntityState.Modified)
                 {
                     if (Entry(entry.Entity).Property("UpdateTime") != null)
-                        Entry(entry.Entity).Property("Upd.ateTime").CurrentValue = DateTime.Now;
+                        Entry(entry.Entity).Property("UpdateTime").CurrentValue = DateTime.Now;
                     if (Entry(entry.Entity).Property("UpdateUserId") != null)
                         Entry(entry.Entity).Property("UpdateUserId").CurrentValue = userId;
                     if (Entry(entry.Entity).Property("UpdateUserName") != null)

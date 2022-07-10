@@ -30,6 +30,7 @@ using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,7 +70,7 @@ namespace ShopWebGisApplication.User
         public async Task<IList<MenuDto>> GetMenuList(string query)
         {
             var menuList = await _repository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query));
-            return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList);
+            return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList.OrderBy(x => x.Sort).ToList());
         }
 
         public async Task<MenuDto> UpdateMenu(MenuDto menuDto)

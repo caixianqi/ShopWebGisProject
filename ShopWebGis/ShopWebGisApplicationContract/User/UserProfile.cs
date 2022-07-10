@@ -37,6 +37,7 @@ namespace ShopWebGisApplicationContract.User
         {
             CreateMap<UserDto, UserInfo>().ReverseMap();
             CreateMap<MenuDto, MenuInfo>().ReverseMap();
+            CreateMap<UserUpdateDto, UserInfo>();
         }
     }
 }

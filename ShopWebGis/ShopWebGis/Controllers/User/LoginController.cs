@@ -100,5 +100,17 @@ namespace ShopWebGis.Controllers.Login
             return await _loginApplication.GetUserList(query);
         }
 
+        [HttpPut(nameof(ModifyUser))]
+        [Authorize]
+        /// <summary>
+        /// 修改用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task<UserDto> ModifyUser(UserUpdateDto user)
+        {
+            return await _loginApplication.UpdateUser(user);
+        }
+
     }
 }

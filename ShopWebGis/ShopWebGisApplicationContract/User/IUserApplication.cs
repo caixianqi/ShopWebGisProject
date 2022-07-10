@@ -82,7 +82,8 @@ namespace ShopWebGisApplicationContract.User
         /// 更新用户
         /// </summary>
         /// <returns></returns>
-        Task<UserDto> UpdateUser(UserDto userDto);
+        Task<UserDto> UpdateUser(UserUpdateDto userDto);
+
 
     }
 }
