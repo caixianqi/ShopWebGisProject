@@ -27,7 +27,6 @@
         </el-table>
       </div>
     </el-row>
-
     <el-dialog
       title="菜单"
       :visible.sync="dialogVisible"

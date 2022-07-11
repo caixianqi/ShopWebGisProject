@@ -92,7 +92,6 @@ function _isInvalidToken(response) {
 }
 
 function _refreshToken(config) {
-  debugger
   const params = '?refreshToken=' + store.state.auth.refreshToken
 
   return _axios
