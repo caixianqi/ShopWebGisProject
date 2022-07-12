@@ -63,6 +63,10 @@ namespace ShopWebGisDomain.User
         [Comment("Url 对应前端路由")]
         public string Url { get; set; }
 
+        [Column("icon")]
+        [Comment("菜单图标")]
+        public string IconClass { get; set; }
+
         /// <summary>
         /// 角色
         /// </summary>

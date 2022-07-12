@@ -6,7 +6,6 @@ export default [
     name: 'menu',
     meta: {
       keepAlive: true,
-      allowAnonymous: true,
       title: ['菜单管理', '菜单'],
     },
     component: Menu,

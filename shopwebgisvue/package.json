@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
-    "element-ui": "^2.15.9",
+    "element-ui": "^2.15.8",
     "eslint-plugin-prettier": "^4.0.0",
     "jsencrypt": "^3.2.1",
     "less": "^3.0.4",
@@ -46,8 +46,7 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {
-  }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",

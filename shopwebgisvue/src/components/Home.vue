@@ -27,16 +27,16 @@
         >
         <el-submenu :index="item.id" v-for="item in menulist" :key="item.id">
           <template slot="title">
-            <i class="el-icon-document"></i>
+            <i :class="item.iconClass"></i>
             <span>{{ item.name }}</span>
           </template>
           <el-menu-item
-            :index="'/' + subItem.FormUrl"
-            v-for="subItem in item.SubMenu"
-            :key="subItem.MenuId"
+            :index="'/' + subItem.url"
+            v-for="subItem in item.children"
+            :key="subItem.id"
           >
-            <i class="el-icon-menu"></i>
-            <span slot="title">{{ subItem.MenuDesc }}</span>
+            <i :class="subItem.iconClass"></i>
+            <span slot="title">{{ subItem.name }}</span>
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -85,7 +85,7 @@ export default {
       this.fullscreenLoading = true
       var that = this
       this.axios
-        .get('/Menu/GetMenuList')
+        .get('/Menu/GetTreeList')
         .then((res) => {
           that.menulist = res
           that.menulist.forEach((x) => (x.id = x.id.toString()))

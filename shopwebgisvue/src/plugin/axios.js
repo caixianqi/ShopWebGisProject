@@ -100,8 +100,8 @@ function _refreshToken(config) {
       _storeToken(resp)
       return _retry(config)
     })
-    .catch((err) => {
-      return Promise.reject(err)
+    .catch(() => {
+      logout()
     })
 }
 

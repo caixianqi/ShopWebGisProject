@@ -43,5 +43,6 @@ namespace ShopWebGisDomainShare.Common
             TimeSpan ts = ts1.Subtract(ts2).Duration();
             return (ts.TotalDays, ts.TotalHours, ts.TotalMinutes, ts.TotalSeconds);
         }
+
     }
 }

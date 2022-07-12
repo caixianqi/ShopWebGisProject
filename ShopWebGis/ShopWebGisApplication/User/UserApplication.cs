@@ -159,6 +159,10 @@ namespace ShopWebGisApplication.User
                 throw new ShopWebGisCustomException("传入访问令牌格式错误!");
             }
             var payLoad = jwtSecurityTokenHandler.ReadJwtToken(token).Payload;
+            if (payLoad.Exp < DateTimeOffset.Now.ToUnixTimeSeconds())
+            {
+                throw new ShopWebGisCustomException("传入访问令牌格已过期，请重新登录!");
+            }
             var claims = payLoad.Claims.ToArray();
             return CreateToken(claims);
         }
@@ -182,7 +186,7 @@ namespace ShopWebGisApplication.User
             var refreshToken = new JwtSecurityToken(
                issuer: _jwtConfig.Value.Issuer,
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(_jwtConfig.Value.RefreshTokenExpires),
+                expires: DateTime.UtcNow.AddMinutes(_jwtConfig.Value.RefreshTokenExpires),
                 signingCredentials: credentials);
             ComplexToken complexToken = new ComplexToken();
             complexToken.AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken);

@@ -40,6 +40,8 @@ namespace ShopWebGisApplicationContract.User.Models
 
         public int ParentId { get; set; }
 
+        public string IconClass { get; set; }
+
         /// <summary>
         /// 子节点
         /// </summary>
