@@ -40,6 +40,9 @@ namespace ShopWebGisApplicationContract.User.Models
 
         public int ParentId { get; set; }
 
-        public List<MenuDto> childs = new List<MenuDto>();
+        /// <summary>
+        /// 子节点
+        /// </summary>
+        public IList<MenuDto> children { get; set; }
     }
 }

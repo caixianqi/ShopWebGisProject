@@ -73,6 +73,7 @@ namespace ShopWebGisApplication.User
             return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList.OrderBy(x => x.Sort).ToList());
         }
 
+
         public async Task<MenuDto> UpdateMenu(MenuDto menuDto)
         {
             var menu = await _repository.UpdateActionAsync(menuDto.Id, x =>
@@ -81,6 +82,19 @@ namespace ShopWebGisApplication.User
                  x.Sort = menuDto.Sort;
              });
             return _mapper.Map<MenuInfo, MenuDto>(menu);
+        }
+
+        public async Task<IList<MenuDto>> GetTreeList(int parentId)
+        {
+            IList<MenuDto> datas = new List<MenuDto>();
+            var menuList = await _repository.GetAvailableListAsync(x => x.ParentId == parentId.ToString());
+            foreach (var memu in menuList)
+            {
+                var memuDto = _mapper.Map<MenuInfo, MenuDto>(memu);
+                memuDto.children = await GetTreeList(memuDto.Id);
+                datas.Add(memuDto);
+            }
+            return datas;
         }
     }
 }

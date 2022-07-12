@@ -63,5 +63,15 @@ namespace ShopWebGis.HttApi.Host.Controllers
         {
             return await _menuApplication.UpdateMenu(MenuDto);
         }
+
+        /// <summary>
+        /// 获取树形菜单列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(nameof(GetTreeList))]
+        public async Task<IList<MenuDto>> GetTreeList()
+        {
+            return await _menuApplication.GetTreeList(0);
+        }
     }
 }

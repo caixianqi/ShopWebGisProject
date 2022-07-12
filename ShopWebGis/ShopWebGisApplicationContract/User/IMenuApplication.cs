@@ -72,5 +72,13 @@ namespace ShopWebGisApplicationContract.User
         /// <param name="menuDto"></param>
         /// <returns></returns>
         Task<MenuDto> UpdateMenu(MenuDto menuDto);
+
+        /// <summary>
+        /// 获取树形菜单
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="parentId">父节点Id</param>
+        Task<IList<MenuDto>> GetTreeList(int parentId);
+
     }
 }
