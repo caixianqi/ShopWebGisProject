@@ -1,13 +1,19 @@
 const Menu = (resolve) => require(['@/module/Menu'], resolve)
+const Home = (resolve) => require(['@/components/Home'], resolve)
 
 export default [
   {
-    path: '/menu',
-    name: 'menu',
-    meta: {
-      keepAlive: true,
-      title: ['菜单管理', '菜单'],
-    },
-    component: Menu,
+    path: '/home',
+    component: Home,
+    children: [
+      {
+        name: 'menu',
+        path: 'menu',
+        component: Menu,
+        meta: {
+          title: ['菜单管理', '菜单'],
+        },
+      },
+    ],
   },
 ]

@@ -1,9 +1,7 @@
 <template>
   <el-container style="height: 100%">
-    <el-aside>123</el-aside>
     <el-container>
-      <el-header></el-header>
-      <el-main>
+      <el-header>
         <el-row>
           <el-col :span="3"
             ><el-input placeholder="菜单名:" v-model="querystr" clearable>
@@ -12,7 +10,7 @@
           <el-col :span="2">
             <el-button type="primary" icon="el-icon-search">查询</el-button>
           </el-col>
-          <el-col :span="2">
+          <el-col :span="1">
             <el-button
               type="primary"
               icon="el-icon-plus"
@@ -20,15 +18,33 @@
               >新增</el-button
             >
           </el-col>
-        </el-row>
+        </el-row></el-header
+      >
+      <el-main>
         <el-row>
           <div>
-            <el-table :data="tableData" stripe style="width: 100%">
+            <el-table :data="tableData" style="width: 100%" :border="true">
               <el-table-column prop="date" label="日期" width="180">
               </el-table-column>
               <el-table-column prop="name" label="姓名" width="180">
               </el-table-column>
               <el-table-column prop="address" label="地址"> </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="primary"
+                    @click="handleEdit(scope.row)"
+                    >编辑<i class="el-icon-edit el-icon--right"
+                  /></el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.row)"
+                    >删除<i class="el-icon-delete el-icon--right" />
+                  </el-button>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
         </el-row>
@@ -72,6 +88,7 @@
                             ref="treeMenuRef"
                             :check-on-click-node="true"
                             show-checkbox
+                            :check-strictly="true"
                           ></el-tree
                         ></el-dropdown-item>
                       </el-dropdown-menu> </el-dropdown></el-col
@@ -216,17 +233,27 @@ export default {
     // 获取选中菜单的Id以及Name
     getMenuCurrentKey() {
       this.menuName = ''
-      const keys = this.$refs.treeMenuRef.getCheckedKeys()
-      keys.forEach((key) => {
-        const menu = this.data.find((x) => x.id === key)
-        this.menuName += menu.name + '/'
+      // const keys = this.$refs.treeMenuRef.getCheckedKeys()
+
+      const keys = this.$refs.treeMenuRef.getCheckedKeys(false)
+      const nodes = this.$refs.treeMenuRef.getCheckedNodes()
+      nodes.forEach((node) => {
+        const menu = node.name
+        this.menuName += menu + '/'
       })
-      this.parentIdList = this.$refs.treeMenuRef.getCheckedKeys(true)
+      this.parentIdList = keys
     },
     // 弹出框回调
     dialogClose() {
       this.$refs.form.resetFields()
       this.menuName = ''
+    },
+    // 编辑菜单
+    handleEdit(row) {
+      console.log(row)
+    },
+    handleDelete(row) {
+      console.log(row)
     },
   },
 }
@@ -248,5 +275,8 @@ export default {
 .el-dropdown-link {
   cursor: pointer;
   color: #409eff;
+}
+.el-main {
+  padding-top: 0;
 }
 </style>

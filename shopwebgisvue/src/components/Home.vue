@@ -68,7 +68,11 @@ export default {
   //写一个钩子，从登录页面进来的提示登录成功！
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      if (from.name && from.name === 'login') {
+      if (
+        from.name &&
+        from.name === 'login' &&
+        vm.$store.state.auth.isLoggedIn
+      ) {
         vm.$message.success('登录成功！')
       }
     })
