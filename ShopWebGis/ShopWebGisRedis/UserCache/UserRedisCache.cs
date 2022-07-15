@@ -23,6 +23,7 @@
 /************************************************************************************/
 
 using Microsoft.Extensions.Caching.Distributed;
+using ShopWebGisCache;
 using ShopWebGisCache.UserCache;
 using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.Const;
@@ -39,8 +40,8 @@ namespace ShopWebGisRedis.UserCache
 {
     public class UserRedisCache : IUserCache
     {
-        private readonly IShopWebGisRedisDataBase _iShopWebGisRedis;
-        public UserRedisCache(IShopWebGisRedisDataBase iShopWebGisRedis)
+        private readonly IShopWebGisCache _iShopWebGisRedis;
+        public UserRedisCache(IShopWebGisCache iShopWebGisRedis)
         {
             _iShopWebGisRedis = iShopWebGisRedis;
         }

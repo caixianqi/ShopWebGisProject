@@ -24,6 +24,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShopWebGisCache;
 using ShopWebGisDomain.config;
 
 namespace ShopWebGisRedis.config
@@ -32,7 +33,7 @@ namespace ShopWebGisRedis.config
     {
         public static void ShopWebGisRedisSetup(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<IShopWebGisRedisDataBase, ShopWebGisRedisDataBase>();
+            services.AddSingleton<IShopWebGisCache, ShopWebGisRedisDataBase>();
         }
     }
 }

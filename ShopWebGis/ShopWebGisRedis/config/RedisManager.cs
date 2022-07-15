@@ -36,7 +36,7 @@ namespace ShopWebGisRedis.config
         public RedisManager(ConfigurationOptions configurationOptions)
         {
             _redisConnect = RedisConnect(configurationOptions);
-            _redisConnect.GetDatabase();
+            //_redisConnect.GetDatabase();
         }
 
         private ConnectionMultiplexer RedisConnect(ConfigurationOptions configurationOptions)

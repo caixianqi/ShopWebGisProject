@@ -24,6 +24,7 @@
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ShopWebGisCache;
 using ShopWebGisDomain.config;
 using StackExchange.Redis;
 using System;
@@ -33,7 +34,7 @@ using System.Threading.Tasks;
 
 namespace ShopWebGisRedis.config
 {
-    public class ShopWebGisRedisDataBase : IShopWebGisRedisDataBase
+    public class ShopWebGisRedisDataBase : IShopWebGisCache
     {
         private readonly IDatabase _database;
         private readonly ILogger<ShopWebGisRedisDataBase> _logger;

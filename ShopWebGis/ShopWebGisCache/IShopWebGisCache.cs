@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisRedis.config
+ *命名空间：ShopWebGisCache
 
- *文件名：  IRedisManager
+ *文件名：  IShopWebGisCache
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人： 智慧环保部-蔡显麒
 
- *创建时间：2022/6/24 23:26:49
+ *创建时间：2022/7/14 9:27:47
 
- *描述：Redis 通用接口
+ *描述：Cache操作接口
 
 /************************************************************************************/
 using StackExchange.Redis;
@@ -27,9 +27,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopWebGisRedis.config
+namespace ShopWebGisCache
 {
-    public interface IShopWebGisRedisDataBase
+    public interface IShopWebGisCache
     {
         /// <summary>
         /// 获取String缓存
