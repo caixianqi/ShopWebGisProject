@@ -16,4 +16,8 @@
     <Folder Include="Const\Emun\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ShopWebGisDomain\ShopWebGisDomain.csproj" />
+  </ItemGroup>
+
 </Project>

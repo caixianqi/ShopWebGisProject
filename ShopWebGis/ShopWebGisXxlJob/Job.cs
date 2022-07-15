@@ -33,6 +33,7 @@ namespace ShopWebGisXxlJob
 {
     public abstract class Job : AbstractJobHandler
     {
+
         private JobContext jobContext;
         public override Task<ReturnT> Execute(JobExecuteContext context)
         {

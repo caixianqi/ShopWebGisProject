@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
     <ProjectReference Include="..\ShopWebGisDomain\ShopWebGisDomain.csproj" />
   </ItemGroup>
 

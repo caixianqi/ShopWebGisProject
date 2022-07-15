@@ -4,11 +4,13 @@
       <el-header>
         <el-row>
           <el-col :span="3"
-            ><el-input placeholder="菜单名:" v-model="querystr" clearable>
+            ><el-input placeholder="菜单名:" v-model="queryStr" clearable>
             </el-input
           ></el-col>
           <el-col :span="2">
-            <el-button type="primary" icon="el-icon-search">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="doQuery"
+              >查询</el-button
+            >
           </el-col>
           <el-col :span="1">
             <el-button
@@ -21,15 +23,59 @@
         </el-row></el-header
       >
       <el-main>
-        <el-row>
+        <el-row v-if="tableData.length > 0" v-loading="tableLoading">
           <div>
-            <el-table :data="tableData" style="width: 100%" :border="true">
-              <el-table-column prop="date" label="日期" width="180">
+            <el-table
+              :data="tableData"
+              :border="true"
+              stripe
+              size="medium "
+              :header-cell-style="{ color: '#fff', backgroundColor: '#409EFF' }"
+              style="
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12),
+                  0 0 6px rgba(0, 0, 0, 0.04);
+              "
+            >
+              <el-table-column
+                prop="name"
+                label="菜单名"
+                width="180"
+                header-align="center"
+                align="center"
+              >
               </el-table-column>
-              <el-table-column prop="name" label="姓名" width="180">
+              <el-table-column
+                prop="url"
+                label="菜单地址"
+                width="180"
+                header-align="center"
+                align="center"
+              >
               </el-table-column>
-              <el-table-column prop="address" label="地址"> </el-table-column>
-              <el-table-column label="操作">
+              <el-table-column
+                prop="sort"
+                label="排序"
+                header-align="center"
+                align="center"
+                width="80"
+              >
+              </el-table-column>
+              <el-table-column
+                label="图标"
+                header-align="center"
+                align="center"
+                width="80"
+              >
+                <template slot-scope="scope">
+                  <i :class="scope.row.iconClass"></i>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                header-align="center"
+                align="center"
+              >
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
@@ -47,7 +93,20 @@
               </el-table-column>
             </el-table>
           </div>
+          <div class="pagination">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-sizes="[10, 20, 50]"
+              :page-size="10"
+              layout="prev, jumper, next,sizes "
+              :total="1000"
+            >
+            </el-pagination>
+          </div>
         </el-row>
+        <el-row v-else><el-empty description="暂无数据"></el-empty></el-row>
         <el-dialog
           title="菜单"
           :visible.sync="dialogVisible"
@@ -129,28 +188,7 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      tableData: [],
       form: {
         name: '',
         sort: 1,
@@ -159,24 +197,29 @@ export default {
         iconClass: '',
       },
       dialogVisible: false,
-      querystr: '',
       rules: {
         name: [{ required: true, message: '请填写菜单名称', trigger: 'blur' }],
         sort: [{ required: true, message: '请填写菜单顺序', trigger: 'blur' }],
         url: [{ required: true, message: '请填写路由', trigger: 'blur' }],
       },
       loading: false,
+      tableLoading: false,
       data: [],
       defaultProps: {
         children: 'children',
         label: 'name',
       },
       treeMenuListUrl: '/Menu/GetTreeList',
+      MenuListUrl: '/Menu/GetMenuList',
       menuName: '',
       parentIdList: [],
+      queryStr: '', // 搜索条件
+      currentPage: 1,
+      currentSize: 20,
     }
   },
   mounted() {
+    this.doQuery()
     this.getTreeMenuList()
   },
   methods: {
@@ -187,7 +230,6 @@ export default {
             this.$message.error('只能选择单个菜单节点!')
             return
           }
-          debugger
           this.form.parentId = this.parentIdList[0]
           this.loading = true
           this.axios
@@ -255,6 +297,33 @@ export default {
     handleDelete(row) {
       console.log(row)
     },
+    // 搜索框查询
+    doQuery() {
+      this.tableLoading = true
+      const param = {
+        Query: this.queryStr,
+        pageSize: this.currentSize,
+        pageIndex: this.currentPage,
+      }
+      this.$get(this.MenuListUrl, param)
+        .then((res) => {
+          this.tableData = res
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
+        .finally(() => {
+          this.tableLoading = false
+        })
+    },
+    handleSizeChange(val) {
+      this.currentSize = val
+      this.doQuery()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.doQuery()
+    },
   },
 }
 </script>
@@ -278,5 +347,9 @@ export default {
 }
 .el-main {
   padding-top: 0;
+}
+.pagination {
+  display: flex;
+  flex-direction: row-reverse;
 }
 </style>

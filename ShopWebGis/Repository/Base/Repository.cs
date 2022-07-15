@@ -27,6 +27,8 @@ using IRepository.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ShopWebGisDomain.Base;
+using ShopWebGisDomain.config;
+using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.Const;
 using ShopWebGisDomainShare.CustomException;
 using ShopWebGisDomainShare.Extension;
@@ -84,6 +86,17 @@ namespace Repository.Base
         {
             var expression = predicate.Merge((x => x.isSoftDelete == false));
             return await _dbSet.Where(expression).ToListAsync();
+        }
+
+        public async Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 0, int pageSize = 20)
+        {
+            return await _dbSet.ToPagedListAsync(pageIndex, pageSize);
+        }
+
+        public async Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 0, int pageSize = 20)
+        {
+            var expression = predicate.Merge((x => x.isSoftDelete == false));
+            return await _dbSet.Where(expression).ToPagedListAsync(pageIndex, pageSize);
         }
 
         public async Task<TEntity> FindAsync([NotNull] TPrimaryKey id)
@@ -230,5 +243,7 @@ namespace Repository.Base
             await SaveAsync();
             return entity;
         }
+
+
     }
 }

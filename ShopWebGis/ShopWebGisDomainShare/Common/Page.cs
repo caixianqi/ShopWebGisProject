@@ -26,31 +26,48 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisDomain.config
+namespace ShopWebGisDomainShare.Common
 {
 
     public class Page<T>
     {
+
         /// <summary>
-        /// 当前页
+        /// 页码
         /// </summary>
         public int PageIndex { get; set; }
+
+        /// <summary>
+        /// 页容量
+        /// </summary>
+        public int PageSize { get; set; }
+
+        /// <summary>
+        /// 总条数
+        /// </summary>
+        public int TotalCount { get; set; }
+
         /// <summary>
         /// 总页数
         /// </summary>
         public int TotalPages { get; set; }
+
         /// <summary>
-        /// 集合总数
+        /// 当前页集合
         /// </summary>
-        public int TotalRows { get; set; }
+        public IEnumerable<T> Items { get; set; }
+
         /// <summary>
-        /// 每页项数
+        /// 是否有上一页
         /// </summary>
-        public int PageSize { get; set; }
+        public bool HasPrevPages { get; set; }
+
         /// <summary>
-        /// 集合
+        /// 是否有下一页
         /// </summary>
-        public IList<T> LsList { get; set; }
+        public bool HasNextPages { get; set; }
+
+
 
     }
 }

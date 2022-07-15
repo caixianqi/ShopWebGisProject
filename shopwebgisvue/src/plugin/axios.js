@@ -4,6 +4,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
+import qs from 'qs'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -117,10 +118,18 @@ function logout() {
   })
 }
 
+function getData(url, param) {
+  if (Object.prototype.toString.call(param) === '[object Object]') {
+    url += '?' + qs.stringify(param)
+  }
+  return _axios.get(url)
+}
+
 Plugin.install = function (Vue) {
   Vue.prototype.axios = _axios
   Vue.prototype.$authlogin = login
   Vue.prototype.$authlogout = logout
+  Vue.prototype.$get = getData
   window.axios = _axios
   Object.defineProperties(Vue.prototype, {
     $axios: {

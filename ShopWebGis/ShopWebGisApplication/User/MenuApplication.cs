@@ -69,7 +69,7 @@ namespace ShopWebGisApplication.User
 
         public async Task<IList<MenuDto>> GetMenuList(string query)
         {
-            var menuList = await _repository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query));
+            var menuList = await _repository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query.Trim()));
             return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList.OrderBy(x => x.Sort).ToList());
         }
 
