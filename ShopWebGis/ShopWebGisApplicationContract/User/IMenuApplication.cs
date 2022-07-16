@@ -22,6 +22,7 @@
 
 /************************************************************************************/
 using ShopWebGisApplicationContract.User.Models;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -57,7 +58,7 @@ namespace ShopWebGisApplicationContract.User
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<IList<MenuDto>> GetMenuList(string query);
+        Task<Page<MenuDto>> GetMenuList(string query, int pageIndex, int pageSize);
 
         /// <summary>
         /// 获取菜单详情

@@ -55,7 +55,7 @@ namespace ShopWebGisDomainShare.Common
         /// <summary>
         /// 当前页集合
         /// </summary>
-        public IEnumerable<T> Items { get; set; }
+        public IEnumerable<T> Datas { get; set; }
 
         /// <summary>
         /// 是否有上一页

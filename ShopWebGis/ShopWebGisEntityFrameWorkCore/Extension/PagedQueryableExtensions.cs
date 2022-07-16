@@ -37,20 +37,20 @@ namespace ShopWebGisDomainShare.Extension
     {
         public static async Task<Page<TEntity>> ToPagedListAsync<TEntity>(this IQueryable<TEntity> entities,
             int pageIndex = 1, int pageSize = 20, CancellationToken cancellationToken = default)
-            
+
         {
             if (pageIndex <= 0)
                 throw new InvalidOperationException($"{nameof(pageIndex)} must be a positive integer greater than 0.");
 
             var totalCount = await entities.CountAsync(cancellationToken);
-            var items = await entities.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+            var datas = await entities.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
             var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
             return new Page<TEntity>
             {
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                Items = items,
+                Datas = datas,
                 TotalCount = totalCount,
                 TotalPages = totalPages,
                 HasNextPages = pageIndex < totalPages,

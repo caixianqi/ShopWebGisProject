@@ -8,6 +8,7 @@ import router from './router'
 import store from './store'
 import '@/assets/css/global.css'
 import components from './components'
+import './assets/icon/iconfont.css'
 Vue.use(components)
 Vue.use(CommonComponent)
 Vue.config.productionTip = false

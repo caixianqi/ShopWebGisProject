@@ -27,7 +27,7 @@
         >
         <el-submenu :index="item.id" v-for="item in menulist" :key="item.id">
           <template slot="title">
-            <i :class="item.iconClass"></i>
+            <i :class="item.iconClass + ' icon'"></i>
             <span>{{ item.name }}</span>
           </template>
           <el-menu-item
@@ -132,6 +132,14 @@ export default {
 }
 .collapseButton {
   width: 100%;
+}
+.iconfont {
+  font-size: 18px;
+}
+.icon {
+  margin-right: 15px;
+  display: inline-block;
+  width: 24px;
 }
 </style>
 >

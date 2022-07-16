@@ -25,6 +25,7 @@
 using AutoMapper;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.User;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +39,7 @@ namespace ShopWebGisApplicationContract.User
             CreateMap<UserDto, UserInfo>().ReverseMap();
             CreateMap<MenuDto, MenuInfo>().ReverseMap();
             CreateMap<UserUpdateDto, UserInfo>();
+            CreateMap<Page<MenuInfo>, Page<MenuDto>>();
         }
     }
 }

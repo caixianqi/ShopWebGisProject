@@ -1,0 +1,30 @@
+{
+  "id": "3526433",
+  "name": "ShopWebGis",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "577380",
+      "name": "物流",
+      "font_class": "wuliu",
+      "unicode": "e75f",
+      "unicode_decimal": 59231
+    },
+    {
+      "icon_id": "11372668",
+      "name": "会员",
+      "font_class": "huiyuan",
+      "unicode": "e8b1",
+      "unicode_decimal": 59569
+    },
+    {
+      "icon_id": "11441202",
+      "name": "仓库库存",
+      "font_class": "cangkukucun",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    }
+  ]
+}

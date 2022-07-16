@@ -88,15 +88,15 @@ namespace Repository.Base
             return await _dbSet.Where(expression).ToListAsync();
         }
 
-        public async Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 0, int pageSize = 20)
+        public async Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 1, int pageSize = 20)
         {
             return await _dbSet.ToPagedListAsync(pageIndex, pageSize);
         }
 
-        public async Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 0, int pageSize = 20)
+        public async Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 1, int pageSize = 20)
         {
             var expression = predicate.Merge((x => x.isSoftDelete == false));
-            return await _dbSet.Where(expression).ToPagedListAsync(pageIndex, pageSize);
+            return await _dbSet.Where(expression).OrderBy(x=>x.Id).ToPagedListAsync(pageIndex, pageSize);
         }
 
         public async Task<TEntity> FindAsync([NotNull] TPrimaryKey id)
@@ -193,7 +193,8 @@ namespace Repository.Base
             {
                 throw new ShopWebGisCustomException($"{typeof(TEntity).Name}-{id}不存在,无法进行追踪禁用!");
             }
-            entity.isSoftDelete = false;
+            entity.isSoftDelete = true;
+            _dbSet.Update(entity);
             return await SaveAsync();
         }
 
@@ -203,6 +204,7 @@ namespace Repository.Base
             foreach (var entity in entities)
             {
                 entity.isSoftDelete = true;
+                _dbSet.Update(entity);
             }
             return await SaveAsync();
         }

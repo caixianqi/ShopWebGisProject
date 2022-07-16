@@ -23,7 +23,7 @@
         </el-row></el-header
       >
       <el-main>
-        <el-row v-if="tableData.length > 0" v-loading="tableLoading">
+        <el-row v-if="!showEmpty" v-loading="tableLoading">
           <div>
             <el-table
               :data="tableData"
@@ -87,7 +87,7 @@
                     size="mini"
                     type="danger"
                     @click="handleDelete(scope.row)"
-                    >删除<i class="el-icon-delete el-icon--right" />
+                    >禁用<i class="el-icon-delete el-icon--right" />
                   </el-button>
                 </template>
               </el-table-column>
@@ -99,9 +99,9 @@
               @current-change="handleCurrentChange"
               :current-page.sync="currentPage"
               :page-sizes="[10, 20, 50]"
-              :page-size="10"
+              :page-size="currentSize"
               layout="prev, jumper, next,sizes "
-              :total="1000"
+              :total="total"
             >
             </el-pagination>
           </div>
@@ -216,6 +216,8 @@ export default {
       queryStr: '', // 搜索条件
       currentPage: 1,
       currentSize: 20,
+      total: 0,
+      showEmpty: false,
     }
   },
   mounted() {
@@ -295,19 +297,35 @@ export default {
       console.log(row)
     },
     handleDelete(row) {
-      console.log(row)
+      this.tableLoading = true
+      this.axios
+        .delete('/Menu/DisableMenu?Id=' + row.id)
+        .then(() => {
+          this.$message.success('禁用成功!')
+          this.doQuery()
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
+        .finally(() => {
+          this.tableLoading = false
+        })
     },
     // 搜索框查询
     doQuery() {
       this.tableLoading = true
       const param = {
-        Query: this.queryStr,
+        query: this.queryStr,
         pageSize: this.currentSize,
         pageIndex: this.currentPage,
       }
       this.$get(this.MenuListUrl, param)
         .then((res) => {
-          this.tableData = res
+          this.tableData = res.datas
+          this.total = res.totalCount
+          if (this.tableData.length <= 0) {
+            this.showEmpty = true
+          }
         })
         .catch((error) => {
           this.$message.error(error)

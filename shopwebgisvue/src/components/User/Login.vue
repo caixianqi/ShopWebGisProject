@@ -71,19 +71,6 @@ export default {
       },
     }
   },
-  //钩子函数，从其他页面进来并且用户信息已清空，提示重新登录
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      debugger
-      if (
-        from.name &&
-        from.name !== 'login' &&
-        !vm.$store.state.auth.isLoggedIn
-      ) {
-        vm.$message.warning('用户信息已失效,请重新登录！')
-      }
-    })
-  },
   created() {
     var auth = this.$store.state.auth
     if (auth.isLoggedIn) {

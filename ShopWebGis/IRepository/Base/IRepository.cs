@@ -58,9 +58,9 @@ namespace IRepository.Base
 
         Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 0, int pageSize = 20);
+        Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 1, int pageSize = 20);
 
-        Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 0, int pageSize = 20);
+        Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 1, int pageSize = 20);
 
         Task<TEntity> FindAsync(TPrimaryKey id);
 

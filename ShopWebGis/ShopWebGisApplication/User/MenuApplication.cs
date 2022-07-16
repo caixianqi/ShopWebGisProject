@@ -28,6 +28,7 @@ using IRepository.Base;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.User;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,10 +68,10 @@ namespace ShopWebGisApplication.User
             return _mapper.Map<MenuInfo, MenuDto>(menu);
         }
 
-        public async Task<IList<MenuDto>> GetMenuList(string query)
+        public async Task<Page<MenuDto>> GetMenuList(string query, int pageIndex, int pageSize)
         {
-            var menuList = await _repository.GetAvailableListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query.Trim()));
-            return _mapper.Map<IList<MenuInfo>, IList<MenuDto>>(menuList.OrderBy(x => x.Sort).ToList());
+            var data = await _repository.GetAvailablePageListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query.Trim()), pageIndex, pageSize);
+            return _mapper.Map<Page<MenuInfo>, Page<MenuDto>>(data);
         }
 
 
@@ -94,7 +95,7 @@ namespace ShopWebGisApplication.User
                 memuDto.children = await GetTreeList(memuDto.Id);
                 datas.Add(memuDto);
             }
-            return datas;
+            return datas.OrderBy(x => x.Sort).ToList();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace ShopWebGis.HttApi.Host.Controllers
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public async Task<IList<MenuDto>> GetMenuList(string Query)
+        public async Task<Page<MenuDto>> GetMenuList(string query, int pageIndex = 1, int pageSize = 20)
         {
-            return await _menuApplication.GetMenuList(Query);
+            return await _menuApplication.GetMenuList(query, pageIndex, pageSize);
         }
 
         [HttpPost(nameof(AddMenu))]

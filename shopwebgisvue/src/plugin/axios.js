@@ -5,6 +5,7 @@ import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
 import qs from 'qs'
+import { Message } from 'element-ui'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -112,7 +113,7 @@ function _retry(config) {
 
 function logout() {
   store.commit('CLEAR_ALL_DATA')
-
+  Message.warning('用户信息已失效,请重新登录！')
   router.push({
     name: 'login',
   })
