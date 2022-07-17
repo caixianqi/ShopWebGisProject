@@ -37,6 +37,7 @@ namespace ShopWebGisXxlJob.config
         public static void  XxlJobServiceSetup(this IServiceCollection services)
         {
             services.AddSingleton<IJobHandler, DemoJobHandler>();
+            services.AddSingleton<IJobHandler, CrawlerJDGoodsClassJob>();
         }
 
         public static IApplicationBuilder UseXxlJobExecutor(this IApplicationBuilder @this)

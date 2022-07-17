@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ShopWebGisApplicationContract.User;
+using ShopWebGisDomain.Shop;
 using ShopWebGisDomain.User;
 using ShopWebGisDomain.ValueObject;
 using ShopWebGisDomainShare.Common;
@@ -58,6 +59,8 @@ namespace ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore
         public DbSet<RoleInfo> roleInfos { get; set; }
 
         public DbSet<MenuInfo> menuInfos { get; set; }
+
+        public DbSet<GoodClassification> goodClassifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

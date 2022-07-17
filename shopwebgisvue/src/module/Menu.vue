@@ -2,26 +2,12 @@
   <el-container style="height: 100%">
     <el-container>
       <el-header>
-        <el-row>
-          <el-col :span="3"
-            ><el-input placeholder="菜单名:" v-model="queryStr" clearable>
-            </el-input
-          ></el-col>
-          <el-col :span="2">
-            <el-button type="primary" icon="el-icon-search" @click="doQuery"
-              >查询</el-button
-            >
-          </el-col>
-          <el-col :span="1">
-            <el-button
-              type="primary"
-              icon="el-icon-plus"
-              @click="showDialogVisible"
-              >新增</el-button
-            >
-          </el-col>
-        </el-row></el-header
-      >
+        <table-header
+          ref="tableheader"
+          @doQuery="doQuery"
+          @showAddDialog="showDialogVisible"
+        ></table-header>
+      </el-header>
       <el-main>
         <el-row v-if="!showEmpty" v-loading="tableLoading">
           <div>
@@ -107,6 +93,9 @@
           </div>
         </el-row>
         <el-row v-else><el-empty description="暂无数据"></el-empty></el-row>
+        <el-row style="height: 300px"
+          ><div id="echart" style="width: 100%; height: 100%"></div
+        ></el-row>
         <el-dialog
           title="菜单"
           :visible.sync="dialogVisible"
@@ -126,7 +115,7 @@
               <el-form-item label="菜单名称" prop="name" required>
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
-              <el-form-item label="父菜单" prop="parentId" required>
+              <el-form-item label="父菜单" prop="parentId">
                 <el-row
                   ><el-col :span="24">
                     <el-dropdown
@@ -148,6 +137,7 @@
                             :check-on-click-node="true"
                             show-checkbox
                             :check-strictly="true"
+                            highlight-current
                           ></el-tree
                         ></el-dropdown-item>
                       </el-dropdown-menu> </el-dropdown></el-col
@@ -172,10 +162,9 @@
                 ></el-row>
               </el-form-item>
               <el-form-item class="btn">
-                <el-button type="primary" @click="onSubmit('form')"
-                  >创建</el-button
-                >
-                <el-button @click="cancel">清空</el-button>
+                <el-button type="primary" @click="onSubmit('form')">{{
+                  form.id ? '修改' : '创建'
+                }}</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -190,6 +179,7 @@ export default {
     return {
       tableData: [],
       form: {
+        id: '',
         name: '',
         sort: 1,
         url: '',
@@ -213,7 +203,6 @@ export default {
       MenuListUrl: '/Menu/GetMenuList',
       menuName: '',
       parentIdList: [],
-      queryStr: '', // 搜索条件
       currentPage: 1,
       currentSize: 20,
       total: 0,
@@ -221,6 +210,25 @@ export default {
     }
   },
   mounted() {
+    var myChart = this.$echarts.init(document.getElementById('echart'))
+    // 绘制图表
+    myChart.setOption({
+      title: {
+        text: 'ECharts 入门示例',
+      },
+      tooltip: {},
+      xAxis: {
+        data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+      },
+      yAxis: {},
+      series: [
+        {
+          name: '销量',
+          type: 'bar',
+          data: [5, 20, 36, 10, 10, 20],
+        },
+      ],
+    })
     this.doQuery()
     this.getTreeMenuList()
   },
@@ -235,11 +243,17 @@ export default {
           this.form.parentId = this.parentIdList[0]
           this.loading = true
           this.axios
-            .post('/Menu/AddMenu', this.form)
+            .post(
+              this.form.id ? '/Menu/UpdateMenu' : '/Menu/AddMenu',
+              this.form
+            )
             .then(() => {
+              this.$message.success(
+                `${this.form.id ? '修改成功!' : '新增成功!'}`
+              )
               this.$refs[formName].resetFields()
-              this.$message.success('新增成功!')
               this.dialogVisible = false
+              this.doQuery()
             })
             .catch((error) => {
               this.$message.error(error)
@@ -255,8 +269,15 @@ export default {
     },
     showDialogVisible() {
       this.dialogVisible = true
+      this.form = {
+        id: '',
+        name: '',
+        sort: 1,
+        url: '',
+        parentId: 0,
+        iconClass: '',
+      }
     },
-    search() {},
     cancel() {
       this.$refs.form.resetFields()
     },
@@ -289,12 +310,30 @@ export default {
     },
     // 弹出框回调
     dialogClose() {
+      this.$refs.treeMenuRef.setCheckedKeys([])
       this.$refs.form.resetFields()
       this.menuName = ''
     },
     // 编辑菜单
     handleEdit(row) {
-      console.log(row)
+      this.loading = true
+      this.axios
+        .get('/Menu/GetMenuById?Id=' + row.id)
+        .then((res) => {
+          this.form = res
+          if (res.parentId !== 0) {
+            this.$nextTick(() => {
+              this.$refs.treeMenuRef.setCheckedKeys([res.parentId])
+            })
+          }
+          this.dialogVisible = true
+        })
+        .catch((error) => {
+          this.$message.error(error)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     handleDelete(row) {
       this.tableLoading = true
@@ -315,7 +354,7 @@ export default {
     doQuery() {
       this.tableLoading = true
       const param = {
-        query: this.queryStr,
+        query: this.$refs.tableheader.queryStr,
         pageSize: this.currentSize,
         pageIndex: this.currentPage,
       }

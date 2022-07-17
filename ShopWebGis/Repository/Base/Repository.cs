@@ -96,7 +96,7 @@ namespace Repository.Base
         public async Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 1, int pageSize = 20)
         {
             var expression = predicate.Merge((x => x.isSoftDelete == false));
-            return await _dbSet.Where(expression).OrderBy(x=>x.Id).ToPagedListAsync(pageIndex, pageSize);
+            return await _dbSet.Where(expression).OrderBy(x => x.Id).ToPagedListAsync(pageIndex, pageSize);
         }
 
         public async Task<TEntity> FindAsync([NotNull] TPrimaryKey id)
@@ -119,10 +119,6 @@ namespace Repository.Base
         {
             await _dbSet.AddAsync(entity);
             var eddectRows = await SaveAsync();
-            if (eddectRows <= 0)
-            {
-                throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
-            }
             return eddectRows;
         }
 
@@ -130,10 +126,6 @@ namespace Repository.Base
         {
             await _dbSet.AddRangeAsync(list);
             var eddectRows = await SaveAsync();
-            if (eddectRows <= 0)
-            {
-                throw new ShopWebGisCustomException(SystemConst.NotAffectedRow);
-            }
             return eddectRows;
         }
 

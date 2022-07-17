@@ -97,5 +97,11 @@ namespace ShopWebGisApplication.User
             }
             return datas.OrderBy(x => x.Sort).ToList();
         }
+
+        public async Task<MenuDto> GetMenuById(int Id)
+        {
+            var menu = await _repository.FindAsync(Id);
+            return _mapper.Map<MenuInfo, MenuDto>(menu);
+        }
     }
 }

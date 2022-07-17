@@ -22,9 +22,6 @@
         :collapse="isCollapse"
         :router="true"
       >
-        <el-menu-item index="home"
-          ><i class="el-icon-menu"></i>首页</el-menu-item
-        >
         <el-submenu :index="item.id" v-for="item in menulist" :key="item.id">
           <template slot="title">
             <i :class="item.iconClass + ' icon'"></i>

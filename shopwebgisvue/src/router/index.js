@@ -54,7 +54,7 @@ const router = new VueRouter({
       path: '/home',
       name: 'home',
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         title: ['主页'],
         allowAnonymous: false,
       },

@@ -54,7 +54,7 @@ namespace ShopWebGis.HttApi.Host.Controllers
             return await _menuApplication.DisableMenu(Id);
         }
 
-        [HttpPut(nameof(UpdateMenu))]
+        [HttpPost(nameof(UpdateMenu))]
         /// <summary>
         /// 修改菜单
         /// </summary>
@@ -73,6 +73,17 @@ namespace ShopWebGis.HttApi.Host.Controllers
         public async Task<IList<MenuDto>> GetTreeList()
         {
             return await _menuApplication.GetTreeList(0);
+        }
+
+        /// <summary>
+        /// 获取菜单根据Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet(nameof(GetMenuById))]
+        public async Task<MenuDto> GetMenuById(int Id)
+        {
+            return await _menuApplication.GetMenuById(Id);
         }
     }
 }

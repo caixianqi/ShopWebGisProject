@@ -9,6 +9,8 @@ import store from './store'
 import '@/assets/css/global.css'
 import components from './components'
 import './assets/icon/iconfont.css'
+import * as echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.use(components)
 Vue.use(CommonComponent)
 Vue.config.productionTip = false

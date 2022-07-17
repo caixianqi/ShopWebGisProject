@@ -81,5 +81,12 @@ namespace ShopWebGisApplicationContract.User
         /// <param name="parentId">父节点Id</param>
         Task<IList<MenuDto>> GetTreeList(int parentId);
 
+        /// <summary>
+        /// 根据Id获取菜单
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        Task<MenuDto> GetMenuById(int Id);
+
     }
 }
