@@ -125,7 +125,6 @@ export default {
                 OriginalPassword: encrypt.encrypt(this.form.OriginalPassword),
                 UserPassword: encrypt.encrypt(this.form.NewPassword),
               }
-              debugger
               return this.axios.put('/User/ModifyUser', param)
             })
             .then(() => {
