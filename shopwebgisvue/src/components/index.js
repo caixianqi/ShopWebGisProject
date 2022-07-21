@@ -1,7 +1,8 @@
 import HeaderTop from './HeaderTop.vue'
 import TableHeader from './Common/TableHeader.vue'
+import TableComponent from './Common/TableComponent.vue'
 
-const components = [HeaderTop, TableHeader]
+const components = [HeaderTop, TableHeader, TableComponent]
 
 export default {
   install(Vue) {

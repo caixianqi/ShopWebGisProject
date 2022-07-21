@@ -28,7 +28,7 @@
             <span>{{ item.name }}</span>
           </template>
           <el-menu-item
-            :index="'/' + subItem.url"
+            :index="subItem.url"
             v-for="subItem in item.children"
             :key="subItem.id"
           >

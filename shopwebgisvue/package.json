@@ -29,6 +29,7 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "editorconfig": "^0.15.3",
+    "element-theme-default": "^1.4.13",
     "eslint": "^8.17.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",

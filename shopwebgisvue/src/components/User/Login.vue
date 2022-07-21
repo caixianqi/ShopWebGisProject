@@ -22,6 +22,7 @@
         </el-form-item>
         <el-form-item prop="password">
           <el-input
+            prefix-icon="iconfont icon-mima"
             v-model="form.password"
             type="password"
             placeholder="密码"
