@@ -70,7 +70,7 @@ namespace ShopWebGis
             services.XxlJobServiceSetup();// XXLJob定时任务注册
             services.AddAutoMapper(Assembly.Load("ShopWebGisApplicationContract"));
             //services.HangFireServiceSetup(Configuration);
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(); ;
             services.AddControllers(option =>
             {
                 option.Filters.Add(new ResultFilter());

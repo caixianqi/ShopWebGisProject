@@ -15,6 +15,7 @@
               :data="tableData"
               :border="true"
               stripe
+              row-key="id"
               size="medium "
               :header-cell-style="{ color: '#fff', backgroundColor: '#409EFF' }"
               style="
@@ -22,6 +23,7 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12),
                   0 0 6px rgba(0, 0, 0, 0.04);
               "
+              :tree-props="{ children: 'children' }"
             >
               <el-table-column
                 prop="name"
@@ -179,7 +181,7 @@ export default {
     return {
       tableData: [],
       form: {
-        id: '',
+        id: 0,
         name: '',
         sort: 1,
         url: '',
@@ -230,7 +232,6 @@ export default {
       ],
     })
     this.doQuery()
-    this.getTreeMenuList()
   },
   methods: {
     onSubmit(formName) {
@@ -270,7 +271,7 @@ export default {
     showDialogVisible() {
       this.dialogVisible = true
       this.form = {
-        id: '',
+        id: 0,
         name: '',
         sort: 1,
         url: '',
@@ -280,20 +281,6 @@ export default {
     },
     cancel() {
       this.$refs.form.resetFields()
-    },
-    getTreeMenuList() {
-      this.loading = true
-      this.axios
-        .get(this.treeMenuListUrl)
-        .then((res) => {
-          this.data = res
-        })
-        .catch((error) => {
-          this.$message.error(error)
-        })
-        .finally(() => {
-          this.loading = false
-        })
     },
     // 获取选中菜单的Id以及Name
     getMenuCurrentKey() {

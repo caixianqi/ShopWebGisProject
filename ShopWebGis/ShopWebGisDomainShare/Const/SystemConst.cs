@@ -48,6 +48,8 @@ namespace ShopWebGisDomainShare.Const
 
         public const string NotAffectedRow = "无影响行数!";
 
+        public const string DefaultParentMenu = "0"; // 默认父菜单节点
+
         /// <summary>
         /// 限制登录次数
         /// </summary>

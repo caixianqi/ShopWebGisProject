@@ -29,6 +29,7 @@ using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
 using ShopWebGisDomain.User;
 using ShopWebGisDomainShare.Common;
+using ShopWebGisDomainShare.Const;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,8 +71,14 @@ namespace ShopWebGisApplication.User
 
         public async Task<Page<MenuDto>> GetMenuList(string query, int pageIndex, int pageSize)
         {
-            var data = await _repository.GetAvailablePageListAsync(x => string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query.Trim()), pageIndex, pageSize);
-            return _mapper.Map<Page<MenuInfo>, Page<MenuDto>>(data);
+            var datas = await _repository.GetAvailablePageListAsync(x => x.ParentId == SystemConst.DefaultParentMenu && (string.IsNullOrWhiteSpace(query) ? true : x.Name.Contains(query.Trim())), pageIndex, pageSize);
+
+            var tempDatas = _mapper.Map<Page<MenuInfo>, Page<MenuDto>>(datas);
+            foreach (var data in tempDatas.Datas)
+            {
+                data.children = await GetTreeList(data.Id);
+            }
+            return tempDatas;
         }
 
 
