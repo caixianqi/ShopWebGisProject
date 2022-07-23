@@ -5,7 +5,7 @@ import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
 import qs from 'qs'
-import { Message } from 'element-ui'
+//import { Message } from 'element-ui'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -46,12 +46,13 @@ _axios.interceptors.response.use(
       response.data !== null &&
       response.data.resultCode !== null &&
       response.data.success !== null
-    )
+    ) {
       if (response.data.ResultCode !== 200 && response.data.success !== true) {
         return Promise.reject(response.data.errorMessage)
       } else {
         return response.data.resultData
       }
+    }
     return response.data
     // Do something with response data//
   },
@@ -102,8 +103,9 @@ function _refreshToken(config) {
       _storeToken(resp)
       return _retry(config)
     })
-    .catch(() => {
+    .catch((error) => {
       logout()
+      return Promise.reject(error)
     })
 }
 
@@ -113,7 +115,7 @@ function _retry(config) {
 
 function logout() {
   store.commit('CLEAR_ALL_DATA')
-  Message.warning('用户信息已失效,请重新登录！')
+  // Message.warning('用户信息已失效,请重新登录！')
   router.push({
     name: 'login',
   })
