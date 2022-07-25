@@ -55,28 +55,28 @@ namespace ShopWebGisDomain.Base
         /// <summary>
         /// 创建用户Id
         /// </summary>
-        public string CreateUserId { get; set; }
+        public string CreateUserId { get; private set; }
 
         [Comment("创建用户名称")]
         [Column("createusername")]
         /// <summary>
         /// 创建用户名称
         /// </summary>
-        public string CreateUserName { get; set; }
+        public string CreateUserName { get; private set; }
 
         [Comment("更新操作用户名称")]
         [Column("updateusername")]
         /// <summary>
         /// 更新操作用户
         /// </summary>
-        public string UpdateUserName { get; set; }
+        public string UpdateUserName { get; private set; }
 
         [Comment("更新操作用户Id")]
         [Column("updateuserid")]
         /// <summary>
         /// 更新操作用户Id
         /// </summary>
-        public string UpdateUserId { get; set; }
+        public string UpdateUserId { get; private set; }
 
 
     }

@@ -8,7 +8,7 @@
 
  *命名空间：ShopWebGisApplicationContract.Shop
 
- *文件名：  ICommodityManagement
+ *文件名：  IGoodClassifyApplication
 
  *版本号：  V1.0.0.0
 
@@ -16,18 +16,26 @@
 
  *创建人： 智慧环保部-蔡显麒
 
- *创建时间：2022/7/21 22:26:37
+ *创建时间：2022/7/23 12:50:25
 
- *描述：商品管理
+ *描述：商品种类接口
 
 /************************************************************************************/
+using ShopWebGisDomain.Shop;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ShopWebGisApplicationContract.Shop
 {
-    public interface ICommodityManagement
+    public interface IGoodClassifyApplication
     {
+        /// <summary>
+        /// 获取商品种类
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        Task<IList<GoodClassification>> GetGoodsClassifyList(string query);
     }
 }

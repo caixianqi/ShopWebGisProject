@@ -88,7 +88,6 @@ export default {
       this.axios
         .get('/Menu/GetTreeList')
         .then((res) => {
-          debugger
           that.menulist = res
           that.menulist.forEach((x) => (x.id = x.id.toString()))
         })

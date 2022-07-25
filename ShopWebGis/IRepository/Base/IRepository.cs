@@ -77,6 +77,8 @@ namespace IRepository.Base
 
         Task<int> InsertRangeAsync(IList<TEntity> list);
 
+        Task<TPrimaryKey> InsertAsyncReturnId([NotNull] TEntity entity);
+
         #endregion
 
         #region Update

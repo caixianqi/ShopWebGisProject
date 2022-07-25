@@ -129,6 +129,13 @@ namespace Repository.Base
             return eddectRows;
         }
 
+        public async Task<TPrimaryKey> InsertAsyncReturnId([NotNull] TEntity entity)
+        {
+            await _dbSet.AddAsync(entity);
+            await SaveAsync();
+            return entity.Id;
+        }
+
         public async Task<int> UpdateAsync(TEntity entity)
         {
             //AttachIfNot(entity);
