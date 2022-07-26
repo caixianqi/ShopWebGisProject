@@ -14,7 +14,7 @@
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人：  智慧环保部-蔡显麒
+ *创建人：  蔡显麒
 
  *创建时间：2022/7/17 19:17:17
 
@@ -24,6 +24,7 @@
 
 using AutoMapper;
 using ShopWebGisDomain.Shop;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,7 @@ namespace ShopWebGisApplicationContract.Shop.Dto
     {
         public ShopProfile()
         {
-            CreateMap<GoodClassificationDto, GoodClassification>().ReverseMap();
+            CreateMap<Page<GoodClassificationDto>, Page<GoodClassification>>().ReverseMap();
         }
     }
 }

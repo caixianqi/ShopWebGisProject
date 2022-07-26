@@ -45,7 +45,7 @@ namespace ShopWebGis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.ShopWebGisRedisSetup(Configuration);
             services.ShopWebGisFreeSqlSetup(Configuration);
             services.AddSingleton(new SubSetting());
@@ -64,6 +64,7 @@ namespace ShopWebGis
             });
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
             services.Configure<RedisConfiguration>(Configuration.GetSection("RedisConfiguration"));
+            services.Configure<EalsticSearchConfig>(Configuration.GetSection("ElasticSearch"));
             services.ShopWebGisJwtSetup(Configuration); // JWT鉴权
             services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
             services.AddAutoRegistry(); // 自动注册

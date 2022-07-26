@@ -14,7 +14,7 @@
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人：  智慧环保部-蔡显麒
+ *创建人：  蔡显麒
 
  *创建时间：2022/7/3 12:45:17
 
@@ -22,13 +22,14 @@
 
 /************************************************************************************/
 
+using ShopWebGisDomain.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ShopWebGisApplicationContract.User.Models
 {
-    public class MenuDto
+    public class MenuDto : IEntityDto<int>
     {
         public int Id { get; set; }
 

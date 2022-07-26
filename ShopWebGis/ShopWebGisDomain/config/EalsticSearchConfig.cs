@@ -6,19 +6,19 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisApplicationContract.Base
+ *命名空间：ShopWebGisDomain.config
 
- *文件名：  ShopWebInput
+ *文件名：  EalsticSearchConfig
 
  *版本号：  V1.0.0.0
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人：  智慧环保部-蔡显麒
+ *创建人：  蔡显麒
 
- *创建时间：2022/7/23 13:29:31
+ *创建时间：2022/7/25 17:16:32
 
- *描述：入参查询条件
+ *描述：Ealstic配置类
 
 /************************************************************************************/
 
@@ -26,14 +26,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisApplicationContract.Base
+namespace ShopWebGisDomain.config
 {
-    public class ShopWebInput
+    public class EalsticSearchConfig
     {
-        public string query { get; set; }
+        public string  Host { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public string Post { get; set; }
 
-        public DateTime EndTime { get; set; }
+        public string Key { get; set; }
     }
 }

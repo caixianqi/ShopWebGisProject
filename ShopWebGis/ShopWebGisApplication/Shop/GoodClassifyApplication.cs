@@ -14,7 +14,7 @@
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人：  智慧环保部-蔡显麒
+ *创建人：  蔡显麒
 
  *创建时间：2022/7/23 13:25:47
 
@@ -22,9 +22,13 @@
 
 /************************************************************************************/
 
+using AutoMapper;
 using IRepository.Base;
+using ShopWebGisApplication.Base;
 using ShopWebGisApplicationContract.Shop;
+using ShopWebGisApplicationContract.Shop.Dto;
 using ShopWebGisDomain.Shop;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,16 +36,14 @@ using System.Threading.Tasks;
 
 namespace ShopWebGisApplication.Shop
 {
-    public class GoodClassifyApplication : IGoodClassifyApplication
+    public class GoodClassifyApplication : CrudApplication<int, GoodClassification, GoodClassificationDto>, IGoodClassifyApplication
     {
         private readonly IRepository<int, GoodClassification> _repository;
-        public GoodClassifyApplication(IRepository<int, GoodClassification> repository)
+        private readonly IMapper _mapper;
+        public GoodClassifyApplication(IRepository<int, GoodClassification> repository, IMapper mapper) : base(repository, mapper)
         {
             _repository = repository;
-        }
-        public Task<IList<GoodClassification>> GetGoodsClassifyList(string query)
-        {
-            throw new NotImplementedException();
+            _mapper = mapper;
         }
     }
 }

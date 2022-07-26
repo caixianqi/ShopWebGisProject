@@ -14,7 +14,7 @@
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人：  智慧环保部-蔡显麒
+ *创建人：  蔡显麒
 
  *创建时间：2022/5/5 23:09:05
 
@@ -48,7 +48,7 @@ namespace ShopWebGisDomainShare.Extension
 
             var RepositoryDllFile = Path.Combine(basePath, "Repository.dll");
             var RepositoryServices = Assembly.LoadFile(RepositoryDllFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(RepositoryServices).AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterAssemblyTypes(RepositoryServices).Where(x=>x.Name.EndsWith("")).AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 
@@ -74,7 +74,7 @@ namespace ShopWebGisDomainShare.Extension
 
             var ApplicationFile = Path.Combine(basePath, "ShopWebGisApplication.dll");
             var ApplicationFileServices = Assembly.LoadFile(ApplicationFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).PublicOnly().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 
