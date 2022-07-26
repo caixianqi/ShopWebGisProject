@@ -42,27 +42,28 @@ namespace ShopWebGisLogger.Adpter
             _cache = cache;
             _options = options;
         }
-        public void LogDebug(string message, string )
+
+        public void LogDebug(string message, string index = "logger_Index")
         {
             throw new NotImplementedException();
         }
 
-        public void LogError(string msg)
+        public void LogError(string msg, string index = "logger_Index")
         {
             throw new NotImplementedException();
         }
 
-        public void LogException(Exception exception)
+        public void LogException(Exception exception, string index = "logger_Index")
         {
             throw new NotImplementedException();
         }
 
-        public void LogInfo(string message)
+        public void LogInfo(string message, string index = "logger_Index")
         {
             throw new NotImplementedException();
         }
 
-        public void LogInfo(object msg)
+        public void LogInfo(object msg, string index = "logger_Index")
         {
             throw new NotImplementedException();
         }

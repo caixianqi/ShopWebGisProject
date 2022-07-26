@@ -33,11 +33,11 @@ namespace ShopWebGisElasticSearch
     {
         void LogInfo(string message, string index = CommonKeys.LoggerIndex);
 
-        void LogInfo(object msg);
+        void LogInfo(object msg, string index = CommonKeys.LoggerIndex);
 
-        void LogDebug(string message);
+        void LogDebug(string message, string index = CommonKeys.LoggerIndex);
 
-        void LogError(string msg);
-        void LogException(Exception exception);
+        void LogError(string msg, string index = CommonKeys.LoggerIndex);
+        void LogException(Exception exception, string index = CommonKeys.LoggerIndex);
     }
 }

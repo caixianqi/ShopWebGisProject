@@ -21,8 +21,8 @@ namespace ShopWebGis.HttApi.Host.Controllers.CommodityManagement
             _goodClassifyApplication = goodClassifyApplication;
         }
 
-        [HttpGet(nameof(GetGoodsClassify))]
-        public async Task<Page<GoodClassificationDto>> GetGoodsClassify(int pageIndex, int pageSize)
+        [HttpGet(nameof(GetGoodsClassifyList))]
+        public async Task<Page<GoodClassificationDto>> GetGoodsClassifyList(int pageIndex, int pageSize)
         {
             return await _goodClassifyApplication.GetPageListAsync(pageIndex, pageSize);
         }
