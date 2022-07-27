@@ -25,6 +25,8 @@
 using Microsoft.Extensions.Options;
 using ShopWebGisCache;
 using ShopWebGisDomain.config;
+using ShopWebGisDomainShare.Common;
+using ShopWebGisDomainShare.Const;
 using ShopWebGisElasticSearch;
 using System;
 using System.Collections.Generic;
@@ -32,40 +34,69 @@ using System.Text;
 
 namespace ShopWebGisLogger.Adpter
 {
-    public class ElasticsearchLogAdpter : IShopLogger
+    public class ElasticsearchLogAdpter : ILogger
     {
-        private readonly IShopWebGisCache _cache;
-        private readonly IOptions<EalsticSearchConfig> _options;
 
-        public ElasticsearchLogAdpter(IShopWebGisCache cache, IOptions<EalsticSearchConfig> options)
+        private readonly IOptions<EalsticSearchConfig> _options;
+        private readonly string elasticSearchUrl;
+
+        public ElasticsearchLogAdpter(IOptions<EalsticSearchConfig> options)
         {
-            _cache = cache;
             _options = options;
+            elasticSearchUrl = options.Value.Url;
         }
 
-        public void LogDebug(string message, string index = "logger_Index")
+        public void LogDebug(string msg, string index = "logger_Index")
         {
-            throw new NotImplementedException();
+            LogModel logModel = new LogModel()
+            {
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Debug),
+                Msg = msg,
+                Success = true
+            };
         }
 
         public void LogError(string msg, string index = "logger_Index")
         {
-            throw new NotImplementedException();
+            LogModel logModel = new LogModel()
+            {
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
+                Msg = msg,
+                Success = false
+            };
+
         }
 
         public void LogException(Exception exception, string index = "logger_Index")
         {
-            throw new NotImplementedException();
+            LogModel logModel = new LogModel()
+            {
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Debug),
+                Exception = exception,
+                Success = false
+            };
+
         }
 
-        public void LogInfo(string message, string index = "logger_Index")
+        public void LogInfo(string msg, string index = "logger_Index")
         {
-            throw new NotImplementedException();
+            LogModel logModel = new LogModel()
+            {
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
+                Msg = msg,
+                Success = true
+            };
+
         }
 
         public void LogInfo(object msg, string index = "logger_Index")
         {
-            throw new NotImplementedException();
+            LogModel logModel = new LogModel()
+            {
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
+                Msg = msg,
+                Success = true
+            };
         }
     }
 }

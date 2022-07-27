@@ -29,13 +29,13 @@ using System.Text;
 
 namespace ShopWebGisElasticSearch
 {
-    public interface IShopLogger
+    public interface ILogger
     {
-        void LogInfo(string message, string index = CommonKeys.LoggerIndex);
+        void LogInfo(string msg, string index = CommonKeys.LoggerIndex);
 
         void LogInfo(object msg, string index = CommonKeys.LoggerIndex);
 
-        void LogDebug(string message, string index = CommonKeys.LoggerIndex);
+        void LogDebug(string msg, string index = CommonKeys.LoggerIndex);
 
         void LogError(string msg, string index = CommonKeys.LoggerIndex);
         void LogException(Exception exception, string index = CommonKeys.LoggerIndex);

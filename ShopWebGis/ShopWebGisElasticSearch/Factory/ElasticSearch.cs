@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisDomain.config
+ *命名空间：ShopWebGisLogger.Factory
 
- *文件名：  EalsticSearchConfig
+ *文件名：  ElasticFactory
 
  *版本号：  V1.0.0.0
 
@@ -16,22 +16,23 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/7/25 17:16:32
+ *创建时间：2022/7/27 16:38:00
 
- *描述：Ealstic配置类
-
+ *描述：ES工厂
 /************************************************************************************/
 
+using ShopWebGisElasticSearch;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisDomain.config
+namespace ShopWebGisLogger.Factory
 {
-    public class EalsticSearchConfig
+    public class ElasticSearch : IElasticSearch
     {
-        public string Url { get; set; }
-
-        public string Key { get; set; }
+        public ILogger GetLogger()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

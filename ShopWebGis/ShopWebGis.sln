@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopWebGisCache", "ShopWebG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopWebGisNacosClient", "ShopWebGisNacosClient\ShopWebGisNacosClient.csproj", "{69BE2A84-47E9-4230-9532-66EDFB5CEC0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopWebGisLogger", "ShopWebGisElasticSearch\ShopWebGisLogger.csproj", "{E361327F-7FB5-49F5-886D-1C72BB03CD75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopWebGisElasticSearch", "ShopWebGisElasticSearch\ShopWebGisElasticSearch.csproj", "{E361327F-7FB5-49F5-886D-1C72BB03CD75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
