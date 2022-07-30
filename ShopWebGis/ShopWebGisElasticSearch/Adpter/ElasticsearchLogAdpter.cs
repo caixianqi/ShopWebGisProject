@@ -34,16 +34,17 @@ using System.Text;
 
 namespace ShopWebGisLogger.Adpter
 {
-    public class ElasticsearchLogAdpter : ILogger
+    public class ElasticsearchLogAdpter : IShopLogger
     {
 
-        private readonly IOptions<EalsticSearchConfig> _options;
+        private readonly IOptions<EalsticSearchLogOption> _options;
         private readonly string elasticSearchUrl;
 
-        public ElasticsearchLogAdpter(IOptions<EalsticSearchConfig> options)
+        public ElasticsearchLogAdpter(IOptions<EalsticSearchLogOption> options)
         {
             _options = options;
             elasticSearchUrl = options.Value.Url;
+
         }
 
         public void LogDebug(string msg, string index = "logger_Index")

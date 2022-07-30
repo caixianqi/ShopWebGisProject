@@ -30,6 +30,7 @@
     <ProjectReference Include="..\ShopWebGisAutofac\ShopWebGisAutofac.csproj" />
     <ProjectReference Include="..\ShopWebGisConsul\ShopWebGisConsul.csproj" />
     <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
+    <ProjectReference Include="..\ShopWebGisElasticSearch\ShopWebGisElasticSearch.csproj" />
     <ProjectReference Include="..\ShopWebGisEntityFrameWorkCore\ShopWebGisEntityFrameWorkCore.csproj" />
     <ProjectReference Include="..\ShopWebGisFreeSql\ShopWebGisFreeSql.csproj" />
     <ProjectReference Include="..\ShopWebGisIoc\ShopWebGisIoc.csproj" />
@@ -37,10 +38,6 @@
     <ProjectReference Include="..\ShopWebGisMongoDB\ShopWebGisMongoDB.csproj" />
     <ProjectReference Include="..\ShopWebGisRedis\ShopWebGisRedis.csproj" />
     <ProjectReference Include="..\ShopWebGisXxlJob\ShopWebGisXxlJob.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extension\" />
   </ItemGroup>
 
   <ItemGroup>

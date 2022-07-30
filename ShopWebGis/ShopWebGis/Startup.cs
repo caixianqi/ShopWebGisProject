@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using Nacos.AspNetCore.V2;
 using Serilog;
 using ShopWebGis.Filters;
+using ShopWebGis.HttApi.Host.Extension;
 using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.Extension;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
@@ -28,6 +30,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace ShopWebGis
@@ -64,14 +68,18 @@ namespace ShopWebGis
             });
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
             services.Configure<RedisConfiguration>(Configuration.GetSection("RedisConfiguration"));
-            services.Configure<EalsticSearchConfig>(Configuration.GetSection("ElasticSearch"));
+            services.Configure<EalsticSearchLogOption>(Configuration.GetSection("ElasticSearch"));
             services.ShopWebGisJwtSetup(Configuration); // JWT鉴权
             services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
             services.AddAutoRegistry(); // 自动注册
             services.XxlJobServiceSetup();// XXLJob定时任务注册
             services.AddAutoMapper(Assembly.Load("ShopWebGisApplicationContract"));
             //services.HangFireServiceSetup(Configuration);
-            services.AddControllers().AddNewtonsoftJson(); ;
+            services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true);
+            services.AddControllersWithViews().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
+            });
             services.AddControllers(option =>
             {
                 option.Filters.Add(new ResultFilter());
@@ -91,6 +99,10 @@ namespace ShopWebGis
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseElasticSearchRequestLogging(option =>
+            {
+                option.Url = Configuration["ElasticSearch:Url"];
+            });
             app.UseSerilogRequestLogging();
             app.UseAuthentication();
 

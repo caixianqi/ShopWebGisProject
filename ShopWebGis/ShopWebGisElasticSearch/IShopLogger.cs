@@ -29,7 +29,7 @@ using System.Text;
 
 namespace ShopWebGisElasticSearch
 {
-    public interface ILogger
+    public interface IShopLogger
     {
         void LogInfo(string msg, string index = CommonKeys.LoggerIndex);
 
