@@ -30,6 +30,6 @@ namespace ShopWebGisLogger.Factory
 {
     public interface IElasticSearchFactory
     {
-        IShopLogger GetLogger();
+        IGisLogger GetLogger();
     }
 }

@@ -30,7 +30,7 @@ namespace ShopWebGisLogger.Factory
 {
     public class ElasticSearchFactory : IElasticSearchFactory
     {
-        public IShopLogger GetLogger()
+        public IGisLogger GetLogger()
         {
             throw new NotImplementedException();
         }

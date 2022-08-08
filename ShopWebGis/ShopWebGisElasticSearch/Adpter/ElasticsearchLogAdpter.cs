@@ -34,7 +34,7 @@ using System.Text;
 
 namespace ShopWebGisLogger.Adpter
 {
-    public class ElasticsearchLogAdpter : IShopLogger
+    public class ElasticsearchLogAdpter : IGisLogger
     {
 
         private readonly IOptions<EalsticSearchLogOption> _options;

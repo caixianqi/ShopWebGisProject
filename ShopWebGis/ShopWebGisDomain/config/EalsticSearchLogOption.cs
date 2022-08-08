@@ -51,7 +51,7 @@ namespace ShopWebGisDomain.config
         /// 默认日志模板
         public string LogMessagetemplate { get; set; }
 
-        public const string DefaultMessageTemplate = "{Request} \n {Reponse}";
+        public const string DefaultMessageTemplate = "Request: {0} \n Reponse: {1}";
 
     }
 }

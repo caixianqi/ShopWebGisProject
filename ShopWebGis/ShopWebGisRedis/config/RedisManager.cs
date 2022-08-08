@@ -29,7 +29,7 @@ using System.Text;
 
 namespace ShopWebGisRedis.config
 {
-    public  sealed class RedisManager
+    public sealed class RedisManager
     {
         public volatile ConnectionMultiplexer _redisConnect;
         private readonly object redisConnectLock = new object();

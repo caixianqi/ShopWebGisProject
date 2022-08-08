@@ -47,7 +47,7 @@ namespace ShopWebGisElasticSearch.Logger
 
         public override string ToString()
         {
-            return $"Request RequestMethod:{RequestMethod} RequestUrl:{RequestUrl} RequestParameter: {RequestParameter}";
+            return $"RequestMethod:{RequestMethod} RequestUrl:{RequestUrl} RequestParameter: {RequestParameter}";
         }
     }
 }

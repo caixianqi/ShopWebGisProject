@@ -37,13 +37,15 @@ namespace ShopWebGisElasticSearch.Logger
     {
         private readonly RequestDelegate _next;
         private readonly EalsticSearchLogOption _option;
-        private readonly IShopLogger _logger;
-        public ElasticSearchLoggingMiddleware(RequestDelegate next, EalsticSearchLogOption option)
+        private readonly IGisLogger _logger;
+        public ElasticSearchLoggingMiddleware(RequestDelegate next, EalsticSearchLogOption option, IGisLogger logger)
         {
             if (option == null) throw new ArgumentNullException(nameof(option));
             _next = next ?? throw new ArgumentNullException(nameof(next));
+            if (logger == null) throw new ArgumentNullException(nameof(option));
             _next = next;
             _option = option;
+            _logger = logger;
 
         }
         public async Task Invoke(HttpContext httpContext)
@@ -55,8 +57,9 @@ namespace ShopWebGisElasticSearch.Logger
             var request = httpContext.Request;
             httpRequestLogModel.RequestUrl = request.Path;
             httpRequestLogModel.RequestMethod = request.Method;
-            // 获取请求body内容
-            if (request.Method.ToLower().Equals("post"))
+            var method = request.Method.ToLower();
+            //获取请求body内容
+            if (method.Equals("post") || method.Equals("put"))
             {
                 // 启用倒带功能，就可以让 Request.Body 可以再次读取
                 request.EnableBuffering();
@@ -68,8 +71,9 @@ namespace ShopWebGisElasticSearch.Logger
                 request.Body.Position = 0;
 
             }
-            else if (request.Method.ToLower().Equals("get"))
+            else if (method.Equals("get") || method.Equals("delete"))
             {
+                httpRequestLogModel.RequestParameter = request.QueryString.Value;
             }
             var originalBodyStream = httpContext.Response.Body;
             HttpReponseLogModel httpReponseLogModel = new HttpReponseLogModel();
@@ -90,7 +94,8 @@ namespace ShopWebGisElasticSearch.Logger
             {
                 _stopwatch.Stop();
                 httpReponseLogModel.ReponseTime = _stopwatch.ElapsedMilliseconds;
-
+                var logMessage = string.Format(_option.LogMessagetemplate, httpRequestLogModel.ToString(), httpReponseLogModel.ToString());
+                _logger.LogInfo(logMessage);
                 return Task.CompletedTask;
             });
         }
