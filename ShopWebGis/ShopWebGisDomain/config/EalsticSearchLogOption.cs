@@ -41,7 +41,7 @@ namespace ShopWebGisDomain.config
         /// </summary>
         public string Url { get; set; }
 
-        public string Key { get; set; }
+        public string Index { get; set; }
 
         /// <summary>
         /// 序列化
