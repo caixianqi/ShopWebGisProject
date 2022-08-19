@@ -25,6 +25,7 @@ using ShopWebGisFreeSql.InterFace;
 using ShopWebGisIoc;
 using ShopWebGisJwt.config;
 using ShopWebGisLogger.Adpter;
+using ShopWebGisLogger.Factory;
 using ShopWebGisMongoDB.MongoDBConfig;
 using ShopWebGisRedis.config;
 using ShopWebGisXxlJob.config;
@@ -56,7 +57,7 @@ namespace ShopWebGis
             services.ShopWebGisFreeSqlSetup(Configuration);
             services.AddSingleton(new SubSetting());
             services.AddSingleton<ISubRuleResolver>(new SubRuleResolver(new ConfigurationBuilder().AddJsonFile("subsetting.json", true, true).Build()));
-            services.AddSingleton<IGisLogger, ElasticsearchLogAdpter>();// ES日志接口
+            services.AddSingleton<IElasticSearchFactory, ElasticSearchFactory>();// ES工厂接口
             services.ShopWebGisMongoDBConfigureServices(Configuration);
             services.AddDbContext<ShopWebGisDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("Mysql")));
             services.AddSwaggerGen(c =>

@@ -95,7 +95,7 @@ namespace ShopWebGisElasticSearch
                     return data;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 return "";
             }

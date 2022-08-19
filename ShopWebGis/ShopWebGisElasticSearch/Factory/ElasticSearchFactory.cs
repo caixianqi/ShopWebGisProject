@@ -21,18 +21,33 @@
  *描述：ES工厂
 /************************************************************************************/
 
+using Microsoft.Extensions.Options;
+using ShopWebGisDomain.config;
 using ShopWebGisElasticSearch;
+using ShopWebGisLogger.Adpter;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 
 namespace ShopWebGisLogger.Factory
 {
     public class ElasticSearchFactory : IElasticSearchFactory
     {
+        private readonly IOptions<EalsticSearchLogOption> _option;
+        private readonly IHttpClientFactory _httpClientFactory;
+        public ElasticSearchFactory(IOptions<EalsticSearchLogOption> option, IHttpClientFactory httpClientFactory)
+        {
+            _option = option;
+            _httpClientFactory = httpClientFactory;
+        }
+        /// <summary>
+        /// 获取日志接口
+        /// </summary>
+        /// <returns></returns>
         public IGisLogger GetLogger()
         {
-            throw new NotImplementedException();
+            return new ElasticsearchLogAdpter(_option, _httpClientFactory);
         }
     }
 }

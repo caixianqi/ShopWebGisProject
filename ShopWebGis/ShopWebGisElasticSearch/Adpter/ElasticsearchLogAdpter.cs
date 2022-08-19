@@ -30,6 +30,7 @@ using ShopWebGisDomainShare.Const;
 using ShopWebGisElasticSearch;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 
 namespace ShopWebGisLogger.Adpter
@@ -38,66 +39,66 @@ namespace ShopWebGisLogger.Adpter
     {
 
         private readonly IOptions<EalsticSearchLogOption> _options;
-        private readonly string elasticSearchUrl;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public ElasticsearchLogAdpter(IOptions<EalsticSearchLogOption> options)
+        public ElasticsearchLogAdpter(IOptions<EalsticSearchLogOption> options, IHttpClientFactory httpClientFactory)
         {
             _options = options;
-            elasticSearchUrl = options.Value.Url;
-
+            _httpClientFactory = httpClientFactory;
         }
 
         public void LogDebug(string msg, string index = "logger_Index")
         {
-            LogModel logModel = new LogModel()
+            new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Debug),
                 Msg = msg,
                 Success = true
-            };
+            });
+
         }
 
         public void LogError(string msg, string index = "logger_Index")
         {
-            LogModel logModel = new LogModel()
+            new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Msg = msg,
                 Success = false
-            };
+            });
 
         }
 
         public void LogException(Exception exception, string index = "logger_Index")
         {
-            LogModel logModel = new LogModel()
+            new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Debug),
                 Exception = exception,
                 Success = false
-            };
+            });
 
         }
 
         public void LogInfo(string msg, string index = "logger_Index")
         {
-            LogModel logModel = new LogModel()
+            new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Msg = msg,
                 Success = true
-            };
+            });
 
         }
 
         public void LogInfo(object msg, string index = "logger_Index")
         {
-            LogModel logModel = new LogModel()
+            new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Msg = msg,
                 Success = true
-            };
+            });
         }
     }
 }

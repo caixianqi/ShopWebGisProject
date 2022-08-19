@@ -92,4 +92,6 @@ namespace ShopWebGisDomainShare.Extension
             containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).AsImplementedInterfaces().SingleInstance();
         }
     }
+
+   
 }

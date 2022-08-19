@@ -25,6 +25,7 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using ShopWebGisDomain.config;
+using ShopWebGisLogger.Factory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -39,14 +40,14 @@ namespace ShopWebGisElasticSearch.Logger
         private readonly RequestDelegate _next;
         private readonly EalsticSearchLogOption _option;
         private readonly IGisLogger _logger;
-        public ElasticSearchLoggingMiddleware(RequestDelegate next, EalsticSearchLogOption option, IGisLogger logger)
+        public ElasticSearchLoggingMiddleware(RequestDelegate next, EalsticSearchLogOption option, IElasticSearchFactory elasticSearchFactory)
         {
             if (option == null) throw new ArgumentNullException(nameof(option));
             _next = next ?? throw new ArgumentNullException(nameof(next));
-            if (logger == null) throw new ArgumentNullException(nameof(option));
+            if (elasticSearchFactory == null) throw new ArgumentNullException(nameof(elasticSearchFactory));
             _next = next;
             _option = option;
-            _logger = logger;
+            _logger = elasticSearchFactory.GetLogger();
 
         }
         public async Task Invoke(HttpContext httpContext)
