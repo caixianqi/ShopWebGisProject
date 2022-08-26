@@ -85,11 +85,11 @@ namespace ShopWebGisElasticSearch
                     HttpRequestMessage request = new HttpRequestMessage();
                     request.Method = HttpMethod.Post;
                     request.RequestUri = url;
+                    string param = func?.Invoke();
+                    request.Content = new StringContent(param);
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     request.Headers.Add("kbn-xsrf", "kibana");
                     httpClient.Timeout = TimeSpan.FromSeconds(1000);//超过一秒就不管
-                    string param = func?.Invoke();
-                    request.Content = new StringContent(param);
                     var response = await httpClient.SendAsync(request);
                     string data = await response.Content.ReadAsStringAsync();
                     return data;
