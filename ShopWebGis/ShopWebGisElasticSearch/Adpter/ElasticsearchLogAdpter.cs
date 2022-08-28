@@ -73,7 +73,7 @@ namespace ShopWebGisLogger.Adpter
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
-                Level = Enum.GetName(typeof(LogLevel), LogLevel.Debug),
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Exception = exception,
                 Success = false
             });
@@ -84,7 +84,7 @@ namespace ShopWebGisLogger.Adpter
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
-                Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Info),
                 Msg = msg,
                 Success = true
             });
@@ -95,7 +95,7 @@ namespace ShopWebGisLogger.Adpter
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
-                Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
+                Level = Enum.GetName(typeof(LogLevel), LogLevel.Info),
                 Msg = msg,
                 Success = true
             });

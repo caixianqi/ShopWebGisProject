@@ -29,6 +29,7 @@ using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -78,27 +79,29 @@ namespace ShopWebGisElasticSearch
         /// <returns></returns>
         private async Task<string> Post(Uri url, Func<string> func)
         {
-            try
+
+            using (var httpClient = _httpClientFactory.CreateClient())
             {
-                using (var httpClient = _httpClientFactory.CreateClient())
+                HttpRequestMessage request = new HttpRequestMessage();
+                request.Method = HttpMethod.Post;
+                request.RequestUri = url;
+                string param = func?.Invoke();
+                request.Content = new StringContent(param);
+                request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                request.Headers.Add("kbn-xsrf", "kibana");
+                httpClient.Timeout = TimeSpan.FromSeconds(1000);//超过一秒就不管
+                var response = await httpClient.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    HttpRequestMessage request = new HttpRequestMessage();
-                    request.Method = HttpMethod.Post;
-                    request.RequestUri = url;
-                    string param = func?.Invoke();
-                    request.Content = new StringContent(param);
-                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    request.Headers.Add("kbn-xsrf", "kibana");
-                    httpClient.Timeout = TimeSpan.FromSeconds(1000);//超过一秒就不管
-                    var response = await httpClient.SendAsync(request);
                     string data = await response.Content.ReadAsStringAsync();
                     return data;
                 }
+                else
+                {
+                    return "";
+                }
             }
-            catch(Exception ex)
-            {
-                return "";
-            }
+
 
         }
 
