@@ -18,7 +18,7 @@
 
  *创建时间：2022/7/15 15:25:13
 
- *描述：
+ *描述：Get请求特性
 
 /************************************************************************************/
 
@@ -29,11 +29,8 @@ using System.Text;
 namespace ShopWebGisDomainShare.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class NacosGetMapping : Attribute
+    public class GetMappingAttribute : MappingAttribute
     {
-        /// <summary>
-        /// 访问接口路径Url
-        /// </summary>
-        public string Route { get; set; }
+      
     }
 }
