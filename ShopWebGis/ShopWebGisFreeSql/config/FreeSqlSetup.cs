@@ -25,6 +25,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ShopWebGisDomain.User;
+using ShopWebGisDomainShare.Common;
 using ShopWebGisFreeSql.Aop;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,11 @@ namespace ShopWebGisFreeSql.config
     {
         public static void ShopWebGisFreeSqlSetup(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<DbMigrationEntryOption>(x =>
+            {
+                x.ConnectString = configuration.GetConnectionString("Mysql")；
+                x.entry<MenuInfo>();
+            });
             IFreeSql fsql = new FreeSql.FreeSqlBuilder()
              .UseConnectionString(FreeSql.DataType.MySql, configuration.GetConnectionString("Mysql"))
             // .UseAutoSyncStructure(true) //自动同步实体结构到数据库，FreeSql不会扫描程序集，只有CRUD时才会生成表。
@@ -44,10 +51,12 @@ namespace ShopWebGisFreeSql.config
             services.AddSingleton<IFreeSql>(fsql);
             services.AddScoped<FreeSqlCrudBeforeLog>();
             fsql.Aop.CurdBefore += (s, e) =>
-            {               
+            {
                 FreeSqlCrudBeforeLog.Current.Value?._logger.LogInformation(e.Sql);// AOP记录日志
-            };                       
+            };
         }
+
+
     }
 
 

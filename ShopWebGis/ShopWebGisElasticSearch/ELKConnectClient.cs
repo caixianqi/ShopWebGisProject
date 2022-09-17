@@ -41,7 +41,6 @@ namespace ShopWebGisElasticSearch
     public class ELKConnectClient
     {
         private Uri baseUrl;
-        private string index;
         private static HashSet<string> existsIndex = new HashSet<string>(); // hashset集合存储索引
         IOptions<EalsticSearchLogOption> _elkOption;
         private readonly IHttpClientFactory _httpClientFactory;
@@ -50,18 +49,17 @@ namespace ShopWebGisElasticSearch
             _elkOption = elkOption;
             var elkConfig = elkOption.Value;
             baseUrl = new Uri(elkConfig.Url);
-            index = elkConfig.Index.ToLower() + DateTime.Now.ToString("yyyy-MM");// 利用时间作为索引后缀
             _httpClientFactory = httpClientFactory;
         }
 
-        public void Log(LogModel msg)
+        public void Log(LogModel logModel)
         {
             try
             {
                 Thread.Sleep(1);
                 ThreadPool.QueueUserWorkItem(state =>
                 {
-                    PutMsg(msg);
+                    PutMsg(logModel);
                 });
 
             }
@@ -91,7 +89,7 @@ namespace ShopWebGisElasticSearch
                 request.Headers.Add("kbn-xsrf", "kibana");
                 httpClient.Timeout = TimeSpan.FromSeconds(1000);//超过一秒就不管
                 var response = await httpClient.SendAsync(request);
-                if (response.StatusCode == HttpStatusCode.Created|| response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
                 {
                     string data = await response.Content.ReadAsStringAsync();
                     return data;
@@ -105,24 +103,24 @@ namespace ShopWebGisElasticSearch
 
         }
 
-        private async void PutMsg(LogModel msg)
+        private async void PutMsg(LogModel logModel)
         {
-            if (!existsIndex.Contains(index))
+            if (!existsIndex.Contains(logModel.Index))
             {
-                if (!await QueryIndexExists(index))
+                if (!await QueryIndexExists(logModel.Index))
                 {
                     //查询索引是否存在,不存在则尝试新建
-                    CreateIndex(index);
+                    CreateIndex(logModel.Index);
                 }
                 else
                 {
-                    existsIndex.Add(index);
+                    existsIndex.Add(logModel.Index);
                 }
             }
-            Uri proxyUrl = new Uri(baseUrl, $"/api/console/proxy?path={index}/_doc/{Guid.NewGuid()}&method=PUT");
+            Uri proxyUrl = new Uri(baseUrl, $"/api/console/proxy?path={logModel.Index}/_doc/{Guid.NewGuid()}&method=PUT");
             await Post(proxyUrl, () =>
             {
-                string param = JsonConvert.SerializeObject(msg, _elkOption.Value.JsonSerializerSettings);
+                string param = JsonConvert.SerializeObject(logModel, _elkOption.Value.JsonSerializerSettings);
                 return param;
             });
         }
@@ -161,7 +159,7 @@ InR5cGUiOiAiYm9vbGVhbiINCgkJCX0NCgkJfQ0KCX0NCn0=";
                 var flag = result.SelectToken("acknowledged").Value<bool>();
                 if (flag)
                 {
-                    existsIndex.Add(index);
+                    existsIndex.Add(indexName);
                 }
             }
         }
@@ -173,6 +171,7 @@ InR5cGUiOiAiYm9vbGVhbiINCgkJCX0NCgkJfQ0KCX0NCn0=";
             string res = await Post(url, () => "");
             return !string.IsNullOrEmpty(res);
         }
+
     }
 }
 

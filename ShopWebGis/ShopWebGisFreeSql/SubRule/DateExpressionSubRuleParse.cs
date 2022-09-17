@@ -33,6 +33,12 @@ namespace ShopWebGisFreeSql.SubRule
 {
     public class DateExpressionSubRuleParse : SubRuleAbstarctClass, ISubRule
     {
+        public IList<string> GetDefaultAllTables<T>(DataSubContext<T> context)
+        {
+            IList<string> tables = new List<string>();
+            return tables;
+        }
+
         public IList<string> GetTables<T>(DataSubContext<T> context)
         {
             IList<string> tables = new List<string>();

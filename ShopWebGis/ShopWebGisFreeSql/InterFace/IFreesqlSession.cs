@@ -8,7 +8,7 @@
 
  *命名空间：ShopWebGisFreeSql.InterFace
 
- *文件名：  ISubRule
+ *文件名：  IFreesqlSession
 
  *版本号：  V1.0.0.0
 
@@ -16,34 +16,24 @@
 
  *创建人： 蔡显麒
 
- *创建时间：2022/5/20 17:31:39
+ *创建时间：2022/9/15 15:47:21
 
- *描述：分表规则接口
+ *描述：IFreesqlSession接口
 
 /************************************************************************************/
-using ShopWebGisFreeSql.Resolve;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ShopWebGisFreeSql.InterFace
 {
-    public interface ISubRule
+    public interface IFreesqlSession : IDisposable
     {
         /// <summary>
-        /// 获取操作的表
+        /// 获取Ifreesql
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="context"></param>
+        /// <param name="connectString">数据库连接名</param>
         /// <returns></returns>
-        IList<string> GetTables<T>(DataSubContext<T> context);
-
-        /// <summary>
-        /// 获取Type配置的所有表
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        IList<string> GetDefaultAllTables<T>(DataSubContext<T> context);
+        IFreeSql Get(string connectStringName);
     }
 }

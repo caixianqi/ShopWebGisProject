@@ -76,8 +76,7 @@ namespace ShopWebGisFreeSql.AbstarctClass
             var fullName = $"{t.Namespace}.{t.Name}";
             var domainClassSection = SubSetting._configuration.GetSection(fullName);// 获取实体命名空间以及类名
             var subRule = domainClassSection.GetSection("SubRuleType").Value;// 分表类型
-            Type subRuleType = null;
-            if (!SubRuleTypeMapper.SubRuleTypeMapperDic.TryGetValue(subRule, out subRuleType))// 获取Type
+            if (!SubRuleTypeMapper.SubRuleTypeMapperDic.TryGetValue(subRule, out var subRuleType))// 获取Type
             {
                 throw new ShopWebGisCustomException("分表类型不存在，无法确定分表规则!");
             }

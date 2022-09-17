@@ -31,13 +31,14 @@ namespace ShopWebGisElasticSearch
 {
     public interface IGisLogger
     {
-        void LogInfo(string msg, string index = CommonKeys.LoggerIndex);
+        void LogInfo(string msg, string index = null);
 
-        void LogInfo(object msg, string index = CommonKeys.LoggerIndex);
+        void LogInfo(object msg, string index = null);
 
-        void LogDebug(string msg, string index = CommonKeys.LoggerIndex);
+        void LogDebug(string msg, string index = null);
 
-        void LogError(string msg, string index = CommonKeys.LoggerIndex);
-        void LogException(Exception exception, string index = CommonKeys.LoggerIndex);
+        void LogError(string msg, string index = null);
+        void LogException(Exception exception, string index = null);
+
     }
 }

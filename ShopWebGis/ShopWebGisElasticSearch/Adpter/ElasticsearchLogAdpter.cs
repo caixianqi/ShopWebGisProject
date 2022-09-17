@@ -27,6 +27,7 @@ using ShopWebGisCache;
 using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.Const;
+using ShopWebGisDomainShare.Const.CacheKey;
 using ShopWebGisElasticSearch;
 using System;
 using System.Collections.Generic;
@@ -47,58 +48,64 @@ namespace ShopWebGisLogger.Adpter
             _httpClientFactory = httpClientFactory;
         }
 
-        public void LogDebug(string msg, string index = "logger_Index")
+        public void LogDebug(string msg, string index = null)
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Debug),
                 Msg = msg,
-                Success = true
+                Success = true,
+                Index = !string.IsNullOrWhiteSpace(index) ? index : _options.Value.Index
             });
 
         }
 
-        public void LogError(string msg, string index = "logger_Index")
+        public void LogError(string msg, string index = null)
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Msg = msg,
-                Success = false
+                Success = false,
+                Index = !string.IsNullOrWhiteSpace(index) ? index : _options.Value.Index
             });
 
         }
 
-        public void LogException(Exception exception, string index = "logger_Index")
+        public void LogException(Exception exception, string index = null)
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Exception = exception,
-                Success = false
+                Success = false,
+                Index = !string.IsNullOrWhiteSpace(index) ? index : _options.Value.Index
             });
 
         }
 
-        public void LogInfo(string msg, string index = "logger_Index")
+        public void LogInfo(string msg, string index = null)
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Info),
                 Msg = msg,
-                Success = true
+                Success = true,
+                Index = !string.IsNullOrWhiteSpace(index) ? index : _options.Value.Index
             });
 
         }
 
-        public void LogInfo(object msg, string index = "logger_Index")
+        public void LogInfo(object msg, string index = null)
         {
             new ELKConnectClient(_options, _httpClientFactory).Log(new LogModel()
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Info),
                 Msg = msg,
-                Success = true
+                Success = true,
+                Index = !string.IsNullOrWhiteSpace(index) ? index : _options.Value.Index
             });
         }
+
     }
 }

@@ -21,6 +21,7 @@
     <ProjectReference Include="..\ShopWebGisApplicationContract\ShopWebGisApplicationContract.csproj" />
     <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
     <ProjectReference Include="..\ShopWebGisDomain\ShopWebGisDomain.csproj" />
+    <ProjectReference Include="..\ShopWebGisElasticSearch\ShopWebGisElasticSearch.csproj" />
     <ProjectReference Include="..\ShopWebGisIoc\ShopWebGisIoc.csproj" />
   </ItemGroup>
 

@@ -16,6 +16,7 @@ using ShopWebGisDomain.User;
 using ShopWebGisFreeSql.Aop;
 using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.Extension;
+using ShopWebGisFreeSql.SubRule;
 using ShopWebGisIoc;
 using ShopWebGisMongoDB.Base;
 using ShopWebGisMongoDB.MongoDBCollection;
@@ -176,8 +177,20 @@ namespace ShopWebGis.Controllers
         public void FreesqlTest()
         {
             var test = _fsql.Select<UserInfo>();
-            Expression<Func<UserInfo, bool>> expression = (x => x.Id == 1 && x.isSoftDelete == false && x.UserPhone == "123");
-            test.SubTableSelect(expression, null);
+            List<string> vs = new List<string>()
+            {
+                "1232",
+                "41123123",
+                "34324"
+            };
+            Func<string> func = () => { return "123"; };
+
+            Expression<Func<UserInfo, bool>> expression = (x =>x.UserPhone == func() );
+            ConditionBuilderVisitor conditionBuilderVisitor = new ConditionBuilderVisitor();
+            conditionBuilderVisitor.Visit(expression);
+            conditionBuilderVisitor.Condition();
+
+            //test.SubTableSelect(expression, null);
         }
 
         [HttpGet("FreesqlTest1")]

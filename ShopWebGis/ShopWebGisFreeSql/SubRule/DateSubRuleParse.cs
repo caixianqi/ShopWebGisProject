@@ -36,6 +36,12 @@ namespace ShopWebGisFreeSql.SubRule
 {
     public class DateSubRuleParse : SubRuleAbstarctClass, ISubRule
     {
+        public IList<string> GetDefaultAllTables<T>(DataSubContext<T> context)
+        {
+            IList<string> tables = new List<string>();
+            return tables;
+        }
+
         public IList<string> GetTables<T>(DataSubContext<T> context)
         {
             IList<string> tables = new List<string>();
@@ -44,12 +50,8 @@ namespace ShopWebGisFreeSql.SubRule
             var domainClassSection = SubSetting._configuration.GetSection(fullName);// 获取实体命名空间以及类名
             var defaultTableName = GetDefaultName<T>();
             List<DateSubRule> dateSubRules = (List<DateSubRule>)domainClassSection.GetSection($"{typeof(DateSubRule).Name}s").Get(typeof(List<DateSubRule>));
-            if (context.Expression.NodeType == ExpressionType.Lambda)
-            {
-                AppendParams(GetChildValue(context.Expression.Body));
-                var binaryExpression = context.Expression.Body as BinaryExpression;
-                ParsingExpression(binaryExpression);             
-            }
+            ConditionBuilderVisitor visitor = new ConditionBuilderVisitor();
+            visitor.Visit(context.Expression);
 
             return tables;
         }

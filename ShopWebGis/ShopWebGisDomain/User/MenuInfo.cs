@@ -33,6 +33,7 @@ namespace ShopWebGisDomain.User
 {
     [Table("menu")]
     [Comment("菜单")]
+    [Index(nameof(Url), Name = "Index_Url")]
     public class MenuInfo : BasicModel<int>
     {
         public MenuInfo(int Id) : base(Id)

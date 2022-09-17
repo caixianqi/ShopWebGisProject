@@ -8,7 +8,7 @@
 
  *命名空间：ShopWebGisDomainShare.Common
 
- *文件名：  LogModel
+ *文件名：  EntryOption
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/7/27 16:45:27
+ *创建时间：2022/9/16 11:39:30
 
- *描述：日志传输类
+ *描述：实体配置类型
 
 /************************************************************************************/
 
@@ -28,37 +28,32 @@ using System.Text;
 
 namespace ShopWebGisDomainShare.Common
 {
-    public class LogModel
+    public class DbMigrationEntryOption
     {
         /// <summary>
-        /// 记录时间
+        /// 实体类型数组
         /// </summary>
-        public DateTime LogDateTime { get; private set; } = DateTime.Now;
+        public List<Type> types;
 
         /// <summary>
-        /// 异常
+        /// 连接字符串
         /// </summary>
-        public Exception Exception { get; set; }
+        public string ConnectString;
 
+        public DbMigrationEntryOption()
+        {
+            types = new List<Type>();
+        }
         /// <summary>
-        /// 日志
+        /// 配置实体
         /// </summary>
-        public object Msg { get; set; }
-
-        /// <summary>
-        /// 日志等级
-        /// </summary>
-
-        public string Level { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool Success { get; set; }
-
-        /// <summary>
-        /// 索引
-        /// </summary>
-        public string Index { get; set; }
+        /// <param name="type"></param>
+        public void entry<T>()
+        {
+            if (!types.Contains(typeof(T)))
+            {
+                types.Add(typeof(T));
+            }
+        }
     }
 }
