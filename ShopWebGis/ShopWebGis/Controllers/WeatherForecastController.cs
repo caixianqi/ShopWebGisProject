@@ -16,6 +16,7 @@ using ShopWebGisDomain.User;
 using ShopWebGisFreeSql.Aop;
 using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.Extension;
+using ShopWebGisFreeSql.InterFace;
 using ShopWebGisFreeSql.SubRule;
 using ShopWebGisIoc;
 using ShopWebGisMongoDB.Base;
@@ -47,17 +48,18 @@ namespace ShopWebGis.Controllers
         private readonly IShopWebGisDatabaseSettings _shopWebGisDatabaseSettings;
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test> _testimongoDBRepository;
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test1> _test1imongoDBRepository;
-        private readonly IFreeSql _fsql;
+        private readonly IFreesqlSession _freesqlSession;
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<int, UserInfo> iUserInfoRepository, IDistributedCache distributedCache, IConfiguration configuration,
             IMongoDBRepository<ObjectId, BsonDocument, test> testMongoDBRepository, IMongoDBRepository<ObjectId, BsonDocument, test1> test1MongoDBRepository,
-            IFreeSql fsql)
+            IFreesqlSession freesqlSession)
         {
             _logger = logger;
             _iUserInfoRepository = iUserInfoRepository;
             _distributedCache = distributedCache;
             _testimongoDBRepository = testMongoDBRepository;
             _test1imongoDBRepository = test1MongoDBRepository;
-            _fsql = fsql;
+            _freesqlSession = freesqlSession;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -176,7 +178,6 @@ namespace ShopWebGis.Controllers
         [HttpGet("FreesqlTest")]
         public void FreesqlTest()
         {
-            var test = _fsql.Select<UserInfo>();
             List<string> vs = new List<string>()
             {
                 "1232",
@@ -185,7 +186,7 @@ namespace ShopWebGis.Controllers
             };
             Func<string> func = () => { return "123"; };
 
-            Expression<Func<UserInfo, bool>> expression = (x =>x.UserPhone == func() );
+            Expression<Func<UserInfo, bool>> expression = (x => x.UserPhone == func());
             ConditionBuilderVisitor conditionBuilderVisitor = new ConditionBuilderVisitor();
             conditionBuilderVisitor.Visit(expression);
             conditionBuilderVisitor.Condition();
@@ -197,14 +198,15 @@ namespace ShopWebGis.Controllers
         public void FreesqlTest1(string ttttt)
         {
             _logger.LogInformation("123");
-            var test = _fsql.Select<UserInfo>().Where(x => x.Id == 1).ToList();
+            var test = _freesqlSession.Get("Mysql").Select<UserInfo>().Where(x => x.Id == 1).ToList();
+            //_freesqlSession.Dispose();
             List<string> vs = new List<string>()
             {
                 "1232",
                 "41123123",
                 "34324"
             };
-            Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId == "dddd");
+            //Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId == "dddd");
             // test.SubTableSelect(expression, null);
         }
     }

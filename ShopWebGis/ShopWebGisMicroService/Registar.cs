@@ -31,9 +31,10 @@ namespace ShopWebGisMicroService
 {
     public class Registar
     {
+
         public static void Register(IServiceCollection services, params Type[] types)
         {
-
+            types.forEach(x=> { })
         }
     }
 }

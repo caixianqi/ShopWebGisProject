@@ -37,7 +37,7 @@ namespace ShopWebGisFreeSql
     {
         private IFreeSql _iFreesql;
 
-        private bool disposed;
+        private bool disposed = false;
 
         private readonly IConfiguration _configuration;
 
@@ -55,7 +55,7 @@ namespace ShopWebGisFreeSql
             {
                 throw new Exception("空数据库连接!");
             }
-            if (disposed)
+            if (_iFreesql == null)
             {
                 _iFreesql = CreateConnection(connectStringName);
             }
@@ -85,6 +85,7 @@ namespace ShopWebGisFreeSql
             try
             {
                 _iFreesql.Dispose();
+                _iFreesql = null;
             }
             catch
             {

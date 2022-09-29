@@ -42,7 +42,7 @@ namespace ShopWebGisFreeSql.Extension
         /// <returns></returns>
         public static FreeSqlBuilder UseLogger(this FreeSqlBuilder builder, IGisLogger logger)
         {
-            return builder.UseMonitorCommand(delegate (DbCommand cmd)
+            return builder.UseMonitorCommand(cmd =>
             {
                 logger.LogInfo($"Sql:{cmd.CommandText}");
             });
