@@ -25,6 +25,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ShopWebGisMicroService
@@ -34,7 +35,10 @@ namespace ShopWebGisMicroService
 
         public static void Register(IServiceCollection services, params Type[] types)
         {
-            types.forEach(x=> { })
+            foreach (var type in types)
+            {
+
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ShopWebGisDomainShare.Common;
+using ShopWebGisMicroService.DynamicCodeGen;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +16,11 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-
+            var command = Proxy.Of<Command>();
+                 command.Execute();
+            
+      Console.WriteLine("Hi, Dennis, great, we got the interceptor works.");
+            Console.ReadLine();
         }
         #region Expression
         public abstract class ExpressionVisitor35
@@ -846,7 +851,15 @@ namespace ConsoleApp1
 
         }
 
-
+        public class Command
+        {
+            public virtual void Execute()
+            {
+                Console.WriteLine("Command executing...");
+                Console.WriteLine("Hello Kitty!");
+                Console.WriteLine("Command executed.");
+            }
+        }
 
 
         #endregion
