@@ -1,5 +1,6 @@
 using Autofac;
 using DotXxlJob.Core;
+using FastLambda;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,11 +53,9 @@ namespace ShopWebGis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.ShopWebGisRedisSetup(Configuration);
             services.ShopWebGisFreeSqlSetup(Configuration);
-            services.AddSingleton(new SubSetting());
-            services.AddSingleton<ISubRuleResolver>(new SubRuleResolver(new ConfigurationBuilder().AddJsonFile("subsetting.json", true, true).Build()));
             services.AddSingleton<IElasticSearchFactory, ElasticSearchFactory>();// ES工厂接口
             services.ShopWebGisMongoDBConfigureServices(Configuration);
             services.AddDbContext<ShopWebGisDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("Mysql")));
@@ -80,6 +79,7 @@ namespace ShopWebGis
             services.AddAutoMapper(Assembly.Load("ShopWebGisApplicationContract"));
             //services.HangFireServiceSetup(Configuration);
             services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true);
+            services.AddSingleton<IEvaluator, FastEvaluator>();
             services.AddControllersWithViews().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);

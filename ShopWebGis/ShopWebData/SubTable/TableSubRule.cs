@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisFreeSql.Resolve
+ *命名空间：ShopWebData.SubTable
 
- *文件名：  SubRuleType
+ *文件名：  TableSubRule
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/5/24 16:24:17
+ *创建时间：2022/11/25 10:48:36
 
- *描述：分表规则类型
+ *描述：
 
 /************************************************************************************/
 
@@ -26,17 +26,24 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisFreeSql.Resolve
+namespace ShopWebData.SubTable
 {
-    public class SubRuleType
+    public class TableSubRule
     {
+        /// <summary>
+        /// 分表解析类
+        /// </summary>
+        public string SubRuleType { get; set; }
 
+        /// <summary>
+        /// 分表字段
+        /// </summary>
+        public string SubRoute { get; set; }
+
+        public List<DateRuleContent> DateRules { get; set; }
     }
 
-    /// <summary>
-    /// 时间分表
-    /// </summary>
-    public class DateSubRule
+    public class DateRuleContent
     {
         /// <summary>
         /// 后缀
@@ -44,23 +51,13 @@ namespace ShopWebGisFreeSql.Resolve
         public string Suffix { get; set; }
 
         /// <summary>
-        /// 开始时间(unix时间戳)
+        /// 起始时间戳
         /// </summary>
         public int StartTimeStamp { get; set; }
 
         /// <summary>
-        /// 结束时间(unix时间戳)
+        /// 结束时间戳
         /// </summary>
         public int EndTimeStamp { get; set; }
-    }
-
-    /// <summary>
-    /// 表达式树分表
-    /// </summary>
-    public class DateExpressionSubRule
-    {
-        public List<string> Expressions { get; set; }
-
-        public List<DateSubRule> Rules { get; set; }
     }
 }

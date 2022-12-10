@@ -1,5 +1,6 @@
 ﻿using ShopWebGisDomainShare.Common;
 using ShopWebGisMicroService.DynamicCodeGen;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,11 +17,24 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var command = Proxy.Of<Command>();
-                 command.Execute();
-            
-      Console.WriteLine("Hi, Dennis, great, we got the interceptor works.");
-            Console.ReadLine();
+            var age = 11;
+            Func<string, int> func = x =>
+            {
+                return 11;
+            };
+
+            Expression<Func<Users, bool>> exp = a => a.Id > gettest() && a.Name == "ABC".ToLower() && a.DateTime > DateTime.Now && a.DateTime < DateTime.Now.AddSeconds(10);
+            SqlServerExpressionContext expContext = new SqlServerExpressionContext();
+            expContext.Resolve(exp, ResolveExpressType.WhereSingle);
+            var value = expContext.Result.GetString();
+            var pars = expContext.Parameters;// @id:11
+
+
+        }
+
+        static int gettest()
+        {
+            return 11;
         }
         #region Expression
         public abstract class ExpressionVisitor35
@@ -999,6 +1013,8 @@ namespace ConsoleApp1
             public string Name { get; set; }
 
             public int Id { get; set; }
+
+            public DateTime DateTime { get; set; }
         }
     }
 

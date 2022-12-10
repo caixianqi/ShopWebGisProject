@@ -38,11 +38,19 @@ namespace ShopWebGisXxlJob.config
         private readonly RequestDelegate _next;
 
         private readonly XxlRestfulServiceHandler _rpcService;
+
+        private List<string> interceptUrls = new List<string>();
         public XxlJobExecutorMiddleware(IServiceProvider provider, RequestDelegate next)
         {
             this._provider = provider;
             this._next = next;
             this._rpcService = _provider.GetRequiredService<XxlRestfulServiceHandler>();
+            this.interceptUrls.Add("/run");
+            this.interceptUrls.Add("/idleBeat");
+            this.interceptUrls.Add("/beat");
+            this.interceptUrls.Add("/run");
+            this.interceptUrls.Add("/kill");
+            this.interceptUrls.Add("/log");
         }
 
         public async Task Invoke(HttpContext context)
@@ -52,7 +60,7 @@ namespace ShopWebGisXxlJob.config
             if ("POST".Equals(context.Request.Method, StringComparison.OrdinalIgnoreCase)
                 && !string.IsNullOrEmpty(contentType)
                 && contentType.ToLower().StartsWith("application/json")
-                && context.Request.Path.Value.Contains("run")) //防止任何Post请求都进入XXLJob执行器 
+                && this.interceptUrls.Contains(context.Request.Path.Value)) //防止任何Post请求都进入XXLJob执行器 
             {
                 await _rpcService.HandlerAsync(context.Request, context.Response);
                 return;

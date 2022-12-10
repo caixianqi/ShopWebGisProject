@@ -28,6 +28,7 @@ using ShopWebGisFreeSql.Extension;
 using ShopWebGisFreeSql.InterFace;
 using ShopWebGisLogger.Factory;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -43,10 +44,13 @@ namespace ShopWebGisFreeSql
 
         private readonly IElasticSearchFactory _elasticSearchFactory;
 
+        protected ConcurrentDictionary<string, IFreeSql> Connections { get; }
+
         public FreeSqlSession(IConfiguration configuration, IElasticSearchFactory elasticSearchFactory)
         {
             _configuration = configuration;
             _elasticSearchFactory = elasticSearchFactory;
+            Connections = new ConcurrentDictionary<string, IFreeSql>();
         }
 
         public IFreeSql Get(string connectStringName)
@@ -55,11 +59,9 @@ namespace ShopWebGisFreeSql
             {
                 throw new Exception("空数据库连接!");
             }
-            if (_iFreesql == null)
-            {
-                _iFreesql = CreateConnection(connectStringName);
-            }
-            return _iFreesql;
+            return Connections.GetOrAdd(connectStringName,
+                 CreateConnection(connectStringName)
+            );
         }
 
         /// <summary>
@@ -82,16 +84,20 @@ namespace ShopWebGisFreeSql
         {
             if (disposed)
                 return;
+            disposed = true;
             try
             {
-                _iFreesql.Dispose();
-                _iFreesql = null;
+                foreach (var connection in Connections.Values)
+                {
+                    connection.Dispose();
+                }
             }
             catch
             {
 
             }
-            disposed = true;
+            
+            Connections.Clear();
         }
     }
 }

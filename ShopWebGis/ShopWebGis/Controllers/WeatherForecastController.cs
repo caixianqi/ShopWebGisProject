@@ -17,7 +17,6 @@ using ShopWebGisFreeSql.Aop;
 using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.Extension;
 using ShopWebGisFreeSql.InterFace;
-using ShopWebGisFreeSql.SubRule;
 using ShopWebGisIoc;
 using ShopWebGisMongoDB.Base;
 using ShopWebGisMongoDB.MongoDBCollection;
@@ -25,6 +24,7 @@ using ShopWebGisMongoDB.MongoDBConfig;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -63,7 +63,7 @@ namespace ShopWebGis.Controllers
         }
 
         [HttpGet]
-        public async Task<object> Get()
+        public async Task Get()
         {
             //var client = new MongoClient(_shopWebGisDatabaseSettings.ConnectionString);
             //var database = client.GetDatabase(_shopWebGisDatabaseSettings.DatabaseName);
@@ -89,23 +89,31 @@ namespace ShopWebGis.Controllers
             ////    await _distributedCache.SetAsync(key, Encoding.UTF8.GetBytes("world22222"));
             ////    valueByte = await _distributedCache.GetAsync(key);
             ////}
-            ////var valueString = Encoding.UTF8.GetString(valueByte);
-            var filter = Builders<BsonDocument>.Filter.Empty;
-            //var document = collection.Find(filter).ToList();
-            //foreach (var item in document)
+            //////var valueString = Encoding.UTF8.GetString(valueByte);
+            //var filter = Builders<BsonDocument>.Filter.Empty;
+            ////var document = collection.Find(filter).ToList();
+            ////foreach (var item in document)
+            ////{
+            ////    var test = item.;
+            ////}
+            ////return document;
+            //var documents = await _test1imongoDBRepository.GetAllList(x =>
             //{
-            //    var test = item.;
+            //    x.Sort = Builders<BsonDocument>.Sort.Ascending("type");
+            //});
+            //foreach (var item in documents)
+            //{
+            //    var tt = BsonSerializer.Deserialize<test>(item);
             //}
-            //return document;
-            var documents = await _test1imongoDBRepository.GetAllList(x =>
+            //return "12";
+            var content = "";
+            for (int i = 0; i < 50000; i++)
             {
-                x.Sort = Builders<BsonDocument>.Sort.Ascending("type");
-            });
-            foreach (var item in documents)
-            {
-                var tt = BsonSerializer.Deserialize<test>(item);
+                content += "123";
             }
-            return "12";
+            var f2 = new StreamWriter("C:\\Users\\58330\\Desktop\\test.txt", true, Encoding.GetEncoding("gb2312"));
+            f2.WriteLineAsync(content);
+            
         }
 
 
@@ -186,10 +194,6 @@ namespace ShopWebGis.Controllers
             };
             Func<string> func = () => { return "123"; };
 
-            Expression<Func<UserInfo, bool>> expression = (x => x.UserPhone == func());
-            ConditionBuilderVisitor conditionBuilderVisitor = new ConditionBuilderVisitor();
-            conditionBuilderVisitor.Visit(expression);
-            conditionBuilderVisitor.Condition();
 
             //test.SubTableSelect(expression, null);
         }
@@ -209,5 +213,7 @@ namespace ShopWebGis.Controllers
             //Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId == "dddd");
             // test.SubTableSelect(expression, null);
         }
+
+
     }
 }

@@ -6,7 +6,7 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisFreeSql.InterFace
+ *命名空间：ShopWebData.SubTable.SubRule
 
  *文件名：  ISubRule
 
@@ -16,22 +16,21 @@
 
  *创建人： 蔡显麒
 
- *创建时间：2022/5/20 17:31:39
+ *创建时间：2022/11/25 14:54:53
 
- *描述：分表规则接口
+ *描述：
 
 /************************************************************************************/
-using ShopWebGisFreeSql.Resolve;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisFreeSql.InterFace
+namespace ShopWebData.SubTable.SubRule
 {
     public interface ISubRule
     {
         /// <summary>
-        /// 获取操作的表
+        /// 根据分表规则解析当前操作的表
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="context"></param>
@@ -39,11 +38,9 @@ namespace ShopWebGisFreeSql.InterFace
         IList<string> GetTables<T>(DataSubContext<T> context);
 
         /// <summary>
-        /// 获取Type配置的所有表
+        /// 根据配置获取所有的表名
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="context"></param>
         /// <returns></returns>
-        IList<string> GetDefaultAllTables<T>(DataSubContext<T> context);
+        IList<string> GetDefaultTables(Type type, string defaultName);
     }
 }

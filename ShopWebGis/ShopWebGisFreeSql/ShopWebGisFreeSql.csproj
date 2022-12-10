@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ShopWebCore\ShopWebCore.csproj" />
+    <ProjectReference Include="..\ShopWebData\ShopWebData.csproj" />
     <ProjectReference Include="..\ShopWebGisApplicationContract\ShopWebGisApplicationContract.csproj" />
     <ProjectReference Include="..\ShopWebGisDomainShare\ShopWebGisDomainShare.csproj" />
     <ProjectReference Include="..\ShopWebGisDomain\ShopWebGisDomain.csproj" />

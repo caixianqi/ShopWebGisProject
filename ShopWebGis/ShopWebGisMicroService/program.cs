@@ -49,5 +49,10 @@ namespace ShopWebGisMicroService
                 Console.WriteLine("Command executed.");
             }
         }
+
+        public class student
+        {
+            public string Name { get; set; }
+        }
     }
 }

@@ -23,6 +23,7 @@
 /************************************************************************************/
 
 using Microsoft.EntityFrameworkCore;
+using ShopWebGisDomain.Shop;
 using ShopWebGisDomain.User;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,6 @@ namespace ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore
         /// <param name="modelBuilder"></param>
         public static void ConfigureShopWebGisEntity(this ModelBuilder modelBuilder)
         {
-            
         }
     }
 }

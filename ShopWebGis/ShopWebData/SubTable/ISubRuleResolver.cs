@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisFreeSql.InterFace
+ *命名空间：ShopWebData.SubTable
 
- *文件名：  IExtensionExpression
+ *文件名：  ISubRuleResolver
 
  *版本号：  V1.0.0.0
 
@@ -16,19 +16,24 @@
 
  *创建人： 蔡显麒
 
- *创建时间：2022/5/20 17:25:47
+ *创建时间：2022/11/25 10:55:33
 
- *描述：Freesql外部扩展条件
+ *描述：
 
 /************************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisFreeSql.InterFace
+namespace ShopWebData.SubTable
 {
-    public interface IExtensionExpression
+    public interface ISubRuleResolver
     {
-        string GetExpression();
+        /// <summary>
+        /// 解析当前类型的分表规则
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        SubRuleContext Resolve<T>() where T : class;
     }
 }
