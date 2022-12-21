@@ -997,9 +997,9 @@
   },
 
   "ShopWebGisDomain.User.UserInfo": {
-    "SubRuleType": "ShopWebGisFreeSql.Resolve.DateSubRule",
+    "SubRuleType": "ShopWebData.SubTable.SubRule.DateSubRule",
     "SubRoute": "TimePoint",
-    "DateSubRules": [
+    "DateRules": [
       {
         "Suffix": "2020",
         "StartTimeStamp": 1577808000,

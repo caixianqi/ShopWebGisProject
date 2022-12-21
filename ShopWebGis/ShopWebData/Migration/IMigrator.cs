@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebData.SubTable
+ *命名空间：ShopWebData.Migration
 
- *文件名：  IExtensionExpression
+ *文件名：  IMigrator
 
  *版本号：  V1.0.0.0
 
@@ -16,19 +16,19 @@
 
  *创建人： 蔡显麒
 
- *创建时间：2022/11/25 11:34:56
+ *创建时间：2022/12/12 16:32:58
 
- *描述：
+ *描述：结构迁移接口
 
 /************************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebData.SubTable
+namespace ShopWebData.Migration
 {
-    public interface IExtensionExpression
+    public interface IMigrator
     {
-        string GetExpression();
+        void Migrate();
     }
 }

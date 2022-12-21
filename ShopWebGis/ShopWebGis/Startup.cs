@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Nacos.AspNetCore.V2;
 using Serilog;
+using ShopWebData.config;
 using ShopWebGis.Filters;
 using ShopWebGis.HttApi.Host.Extension;
 using ShopWebGisDomain.config;
@@ -80,6 +81,7 @@ namespace ShopWebGis
             //services.HangFireServiceSetup(Configuration);
             services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true);
             services.AddSingleton<IEvaluator, FastEvaluator>();
+            services.DataSetup();
             services.AddControllersWithViews().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);

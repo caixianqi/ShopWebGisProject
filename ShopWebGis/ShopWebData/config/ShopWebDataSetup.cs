@@ -35,7 +35,7 @@ namespace ShopWebData.config
 {
     public static class ShopWebDataSetup
     {
-        public static void Setup(this IServiceCollection services)
+        public static void DataSetup(this IServiceCollection services)
         {
             var jsonPath = "subsetting.json";
             var baseDirectory = Directory.GetCurrentDirectory();
@@ -50,7 +50,8 @@ namespace ShopWebData.config
                 services.Configure<TableSubRuleOptions>(configuration);
             }
             services.AddTransient<ISubRuleResolver, SubRuleResolver>();
-            services.AddTransient<ISubRule, DateSubRule>();
+            services.AddTransient<DateSubRule>();
+            services.AddTransient<DateExpressionSubRule>();
         }
     }
 }

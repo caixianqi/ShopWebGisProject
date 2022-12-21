@@ -49,7 +49,7 @@ namespace ShopWebGisDomain.User
         ///  用户名
         /// </summary>
         public string UserName { get; set; }
-        
+
         [Comment("用户密码")]
         [Required]
         [Column("userpassword")]
@@ -66,16 +66,18 @@ namespace ShopWebGisDomain.User
         /// 用户号码
         /// </summary>
         public string UserPhone { get; set; }
-      
+
         /// <summary>
         /// 用户地址
         /// </summary>
-        
+
         public Address Address { get; set; }
 
         /// <summary>
         /// 角色
         /// </summary>
         public List<RoleInfo> Roles { get; set; }
+
+        public DateTime TimePoint { get; set; }
     }
 }

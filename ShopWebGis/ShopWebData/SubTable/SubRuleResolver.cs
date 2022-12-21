@@ -25,6 +25,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ShopWebData.SubTable.SubRule;
+using ShopWebGisLogger.Factory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -53,7 +54,9 @@ namespace ShopWebData.SubTable
             if (string.IsNullOrEmpty(tableSubRule.SubRoute)) throw new Exception("未设置分表字段!");
             if (string.IsNullOrEmpty(tableSubRule.SubRuleType)) throw new Exception("未设置分表解析类!");
 
-            if (type.GetProperty(tableSubRule.SubRoute) == null) throw new Exception($"{type.FullName}类不包含设置的分表字段{tableSubRule.SubRoute}!");
+            var subRouteProperty = type.GetProperty(tableSubRule.SubRoute);
+
+            if (subRouteProperty == null) throw new Exception($"{type.FullName}类不包含设置的分表字段{tableSubRule.SubRoute}!");
 
             var basicTableName = type.Name;
             var tableAttribute = type.GetCustomAttributes(typeof(TableAttribute), true).FirstOrDefault();
@@ -62,9 +65,11 @@ namespace ShopWebData.SubTable
             var subRuleType = executingTypes.FirstOrDefault(x => x.FullName == tableSubRule.SubRuleType);
             if (subRuleType == null) throw new Exception($"未找到分表规则解析类{tableSubRule.SubRuleType}");
 
+            
+
             var iSubRule = (ISubRule)_serviceProvider.GetRequiredService(subRuleType);
 
-            return new SubRuleContext(basicTableName, tableSubRule.SubRoute, subRuleType, iSubRule);
+            return new SubRuleContext(basicTableName, tableSubRule.SubRoute, subRouteProperty.PropertyType, iSubRule);
         }
     }
 }

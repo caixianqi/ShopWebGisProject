@@ -113,7 +113,7 @@ namespace ShopWebGis.Controllers
             }
             var f2 = new StreamWriter("C:\\Users\\58330\\Desktop\\test.txt", true, Encoding.GetEncoding("gb2312"));
             f2.WriteLineAsync(content);
-            
+
         }
 
 
@@ -202,7 +202,7 @@ namespace ShopWebGis.Controllers
         public void FreesqlTest1(string ttttt)
         {
             _logger.LogInformation("123");
-            var test = _freesqlSession.Get("Mysql").Select<UserInfo>().Where(x => x.Id == 1).ToList();
+            var freeSql = _freesqlSession.Get("Mysql").Select<UserInfo>();
             //_freesqlSession.Dispose();
             List<string> vs = new List<string>()
             {
@@ -210,8 +210,8 @@ namespace ShopWebGis.Controllers
                 "41123123",
                 "34324"
             };
-            //Expression<Func<UserInfo, bool>> expression = (x => x.UpdateUserId == "dddd");
-            // test.SubTableSelect(expression, null);
+            Expression<Func<UserInfo, bool>> expression = (x => x.TimePoint>=DateTime.Now);
+            freeSql.SubTableSelect(expression, null);
         }
 
 

@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IRepository\IRepository.csproj" />
     <ProjectReference Include="..\ShopWebCore\ShopWebCore.csproj" />
+    <ProjectReference Include="..\ShopWebData\ShopWebData.csproj" />
     <ProjectReference Include="..\ShopWebGisApplicationContract\ShopWebGisApplicationContract.csproj" />
     <ProjectReference Include="..\ShopWebGisApplication\ShopWebGisApplication.csproj" />
     <ProjectReference Include="..\ShopWebGisAutofac\ShopWebGisAutofac.csproj" />

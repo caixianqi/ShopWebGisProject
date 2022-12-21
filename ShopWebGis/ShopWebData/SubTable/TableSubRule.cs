@@ -41,6 +41,8 @@ namespace ShopWebData.SubTable
         public string SubRoute { get; set; }
 
         public List<DateRuleContent> DateRules { get; set; }
+
+        public IList<DateExpressionRuleContent> DateExpressionRules { get; set; }
     }
 
     public class DateRuleContent
@@ -59,5 +61,12 @@ namespace ShopWebData.SubTable
         /// 结束时间戳
         /// </summary>
         public int EndTimeStamp { get; set; }
+    }
+
+    public class DateExpressionRuleContent
+    {
+        public IList<string> Expressions { get; set; }
+
+        public IList<DateRuleContent> Rules { get; set; }
     }
 }
