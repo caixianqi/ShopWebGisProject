@@ -64,5 +64,10 @@ namespace ShopWebGisDomainShare.Const
         /// 登录冻结时间间隔(分钟)
         /// </summary>
         public const int LoginFreezeTimeSpan = 60;
+
+        /// <summary>
+        /// 无效监测值
+        /// </summary>
+        public const int InvaliValue = -99;
     }
 }

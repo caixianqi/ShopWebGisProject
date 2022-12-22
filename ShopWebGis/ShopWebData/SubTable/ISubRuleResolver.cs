@@ -35,5 +35,7 @@ namespace ShopWebData.SubTable
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         SubRuleContext Resolve<T>() where T : class;
+
+        SubRuleContext Resolve(Type type);
     }
 }

@@ -49,6 +49,11 @@ namespace ShopWebData.SubTable
         public SubRuleContext Resolve<T>() where T : class
         {
             var type = typeof(T);
+            return Resolve(type);
+        }
+
+        public SubRuleContext Resolve(Type type)
+        {
             if (TableSubRuleOptions == null || TableSubRuleOptions.GetOrDefault(type.FullName) == null) throw new Exception("未设置分表规则!");
             var tableSubRule = TableSubRuleOptions.GetOrDefault(type.FullName);
             if (string.IsNullOrEmpty(tableSubRule.SubRoute)) throw new Exception("未设置分表字段!");
@@ -65,7 +70,7 @@ namespace ShopWebData.SubTable
             var subRuleType = executingTypes.FirstOrDefault(x => x.FullName == tableSubRule.SubRuleType);
             if (subRuleType == null) throw new Exception($"未找到分表规则解析类{tableSubRule.SubRuleType}");
 
-            
+
 
             var iSubRule = (ISubRule)_serviceProvider.GetRequiredService(subRuleType);
 

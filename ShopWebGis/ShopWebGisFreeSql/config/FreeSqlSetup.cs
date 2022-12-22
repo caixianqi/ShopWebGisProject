@@ -25,6 +25,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ShopWebData.config;
+using ShopWebGisDomain.ObservationData;
 using ShopWebGisDomain.User;
 using ShopWebGisDomainShare.Common;
 using ShopWebGisFreeSql.Aop;
@@ -40,10 +42,9 @@ namespace ShopWebGisFreeSql.config
     {
         public static void ShopWebGisFreeSqlSetup(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<DbMigrationEntryOption>(x =>
+            services.Configure<DbMigrationOptions>(x =>
             {
-                x.ConnectString = configuration.GetConnectionString("Mysql");
-                x.entry<MenuInfo>();
+                x.Config("Mysql").Entity<ObservationDataDO>();
             });
             services.AddSingleton<IFreesqlSession, FreeSqlSession>();
 
