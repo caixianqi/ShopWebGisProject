@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisDomainShare.Attribute
+ *命名空间：ShopWebGisDomain.Order
 
- *文件名：  NacosClientAttribute
+ *文件名：  OrderLine
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/7/15 15:20:58
+ *创建时间：2022/12/25 22:14:13
 
- *描述：Nacos服务请求特性
+ *描述：订单明细
 
 /************************************************************************************/
 
@@ -26,14 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisDomainShare.Attributes
+namespace ShopWebGisDomain.Order
 {
-    [AttributeUsage(AttributeTargets.Interface| AttributeTargets.Class)]
-    public class NacosClientAttribute : Attribute
+    public class OrderLine
     {
-        /// <summary>
-        /// nacos服务名
-        /// </summary>
-        public string Name { get; set; }
     }
 }

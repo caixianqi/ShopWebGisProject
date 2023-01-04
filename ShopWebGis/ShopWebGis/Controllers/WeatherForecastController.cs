@@ -210,8 +210,7 @@ namespace ShopWebGis.Controllers
                 "41123123",
                 "34324"
             };
-            Expression<Func<UserInfo, bool>> expression = (x => x.TimePoint>=DateTime.Now);
-            freeSql.SubTableSelect(expression, null);
+            
         }
 
 

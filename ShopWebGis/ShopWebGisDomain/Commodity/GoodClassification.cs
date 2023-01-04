@@ -35,10 +35,6 @@ namespace ShopWebGisDomain.Shop
     [Description("商品分类")]
     public class GoodClassification : BasicModel<int>
     {
-        public GoodClassification(int Id) : base(Id)
-        {
-
-        }
 
         /// <summary>
         /// 商品分类名称

@@ -35,11 +35,6 @@ namespace ShopWebGisDomain.User
     [Description("角色")]
     public class RoleInfo : BasicModel<int>
     {
-        public RoleInfo(int Id) : base(Id)
-        {
-            Menus = new List<MenuInfo>();
-            Users = new List<UserInfo>();
-        }
 
         /// <summary>
         /// 角色名称

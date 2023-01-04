@@ -8,7 +8,7 @@
 
  *命名空间：ShopWebGisDomain
 
- *文件名：  BasicModel
+ *文件名：  BSDRegion
 
  *版本号：  V1.0.0.0
 
@@ -16,14 +16,15 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/5/5 21:26:18
+ *创建时间：2022/12/25 21:41:10
 
- *描述：基础实体类
+ *描述：省市区
 
 /************************************************************************************/
 
 using Microsoft.EntityFrameworkCore;
 using ShopWebGisDomain.Base;
+using ShopWebGisDomainShare.Const.Emun;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,22 +33,26 @@ using System.Text;
 
 namespace ShopWebGisDomain
 {
-    public abstract class BasicModel<T> : EntityBase<T>
+    public class BSDRegion: BasicModel<int>
     {
+        [Column("areacode")]
+        [Required]
+        [Comment("区域Code")]
+        public int AreaCode { get; set; }
 
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        [Column("createtime")]
-        [Comment("创建时间")]
-        public DateTime? CreateTime { get; set; }
+        [Column("areaname")]
+        [Required]
+        [Comment("区域名称")]
+        public string AreaName { get; set; }
 
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        [Column("updatetime")]
-        [Comment("修改时间")]
-        public DateTime? UpdateTime { get; set; }
+        [Column("parentid")]
+        [Comment("父级")]
+        public int ParendId { get; set; }
+
+        [Column("level")]
+        [Required]
+        [Comment("区域划分等级")]
+        public RegionLevelEmun Level { get; set; }
 
     }
 }

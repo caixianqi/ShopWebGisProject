@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisMicroService
+ *命名空间：ShopWebGisDomain.Order
 
- *文件名：  Registar
+ *文件名：  Order
 
  *版本号：  V1.0.0.0
 
@@ -16,29 +16,19 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/9/9 17:03:47
+ *创建时间：2022/12/25 22:13:57
 
- *描述：动态类注册
+ *描述：订单
 
 /************************************************************************************/
 
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace ShopWebGisMicroService
+namespace ShopWebGisDomain.Order
 {
-    public class Registar
+    public class Order
     {
-
-        public static void Register(IServiceCollection services, params Type[] types)
-        {
-            foreach (var type in types)
-            {
-
-            };
-        }
     }
 }

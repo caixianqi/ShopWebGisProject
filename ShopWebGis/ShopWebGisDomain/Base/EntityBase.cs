@@ -33,10 +33,7 @@ namespace ShopWebGisDomain.Base
 {
     public abstract class EntityBase<T> : IEntityBase<T>, ISoftDelete
     {
-        public EntityBase(T Id)
-        {
-            this.Id = Id;
-        }
+
 
         [Required]
         [Column("id")]

@@ -1,1060 +1,1477 @@
 {
-  // 分表规则配置文件
-  "Suncere.AirAnalysis.Domain.Models.Gridding.GriddingDO": {
-    "SubRuleType": "Suncere.Abp.Data.DateExpressionSubRule",
-    "SubRoute": "TimePoint",
-    "DateExpressionRules": [
-      // 站点小时值分表规则，根据实际项目中的数据情况进行配置
-      // 1700 * 9 * 24 * 30 = 11,016,000， 按月份分表
-      {
-        "Expressions": [ "station_hour" ],
-        "Rules": [
-          {
-            "Suffix": "201501",
-            "StartTimeStamp": 1420041600,
-            "EndTimeStamp": 1422719999
-          },
-          {
-            "Suffix": "201502",
-            "StartTimeStamp": 1422720000,
-            "EndTimeStamp": 1425139199
-          },
-          {
-            "Suffix": "201503",
-            "StartTimeStamp": 1425139200,
-            "EndTimeStamp": 1427817599
-          },
-          {
-            "Suffix": "201504",
-            "StartTimeStamp": 1427817600,
-            "EndTimeStamp": 1430409599
-          },
-          {
-            "Suffix": "201505",
-            "StartTimeStamp": 1430409600,
-            "EndTimeStamp": 1433087999
-          },
-          {
-            "Suffix": "201506",
-            "StartTimeStamp": 1433088000,
-            "EndTimeStamp": 1435679999
-          },
-          {
-            "Suffix": "201507",
-            "StartTimeStamp": 1435680000,
-            "EndTimeStamp": 1438358399
-          },
-          {
-            "Suffix": "201508",
-            "StartTimeStamp": 1438358400,
-            "EndTimeStamp": 1441036799
-          },
-          {
-            "Suffix": "201509",
-            "StartTimeStamp": 1441036800,
-            "EndTimeStamp": 1443628799
-          },
-          {
-            "Suffix": "201510",
-            "StartTimeStamp": 1443628800,
-            "EndTimeStamp": 1446307199
-          },
-          {
-            "Suffix": "201511",
-            "StartTimeStamp": 1446307200,
-            "EndTimeStamp": 1448899199
-          },
-          {
-            "Suffix": "201512",
-            "StartTimeStamp": 1448899200,
-            "EndTimeStamp": 1451577599
-          },
-          {
-            "Suffix": "201601",
-            "StartTimeStamp": 1451577600,
-            "EndTimeStamp": 1454255999
-          },
-          {
-            "Suffix": "201602",
-            "StartTimeStamp": 1454256000,
-            "EndTimeStamp": 1456761599
-          },
-          {
-            "Suffix": "201603",
-            "StartTimeStamp": 1456761600,
-            "EndTimeStamp": 1459439999
-          },
-          {
-            "Suffix": "201604",
-            "StartTimeStamp": 1459440000,
-            "EndTimeStamp": 1462031999
-          },
-          {
-            "Suffix": "201605",
-            "StartTimeStamp": 1462032000,
-            "EndTimeStamp": 1464710399
-          },
-          {
-            "Suffix": "201606",
-            "StartTimeStamp": 1464710400,
-            "EndTimeStamp": 1467302399
-          },
-          {
-            "Suffix": "201607",
-            "StartTimeStamp": 1467302400,
-            "EndTimeStamp": 1469980799
-          },
-          {
-            "Suffix": "201608",
-            "StartTimeStamp": 1469980800,
-            "EndTimeStamp": 1472659199
-          },
-          {
-            "Suffix": "201609",
-            "StartTimeStamp": 1472659200,
-            "EndTimeStamp": 1475251199
-          },
-          {
-            "Suffix": "201610",
-            "StartTimeStamp": 1475251200,
-            "EndTimeStamp": 1477929599
-          },
-          {
-            "Suffix": "201611",
-            "StartTimeStamp": 1477929600,
-            "EndTimeStamp": 1480521599
-          },
-          {
-            "Suffix": "201612",
-            "StartTimeStamp": 1480521600,
-            "EndTimeStamp": 1483199999
-          },
-          {
-            "Suffix": "201701",
-            "StartTimeStamp": 1483200000,
-            "EndTimeStamp": 1485878399
-          },
-          {
-            "Suffix": "201702",
-            "StartTimeStamp": 1485878400,
-            "EndTimeStamp": 1488297599
-          },
-          {
-            "Suffix": "201703",
-            "StartTimeStamp": 1488297600,
-            "EndTimeStamp": 1490975999
-          },
-          {
-            "Suffix": "201704",
-            "StartTimeStamp": 1490976000,
-            "EndTimeStamp": 1493567999
-          },
-          {
-            "Suffix": "201705",
-            "StartTimeStamp": 1493568000,
-            "EndTimeStamp": 1496246399
-          },
-          {
-            "Suffix": "201706",
-            "StartTimeStamp": 1496246400,
-            "EndTimeStamp": 1498838399
-          },
-          {
-            "Suffix": "201707",
-            "StartTimeStamp": 1498838400,
-            "EndTimeStamp": 1501516799
-          },
-          {
-            "Suffix": "201708",
-            "StartTimeStamp": 1501516800,
-            "EndTimeStamp": 1504195199
-          },
-          {
-            "Suffix": "201709",
-            "StartTimeStamp": 1504195200,
-            "EndTimeStamp": 1506787199
-          },
-          {
-            "Suffix": "201710",
-            "StartTimeStamp": 1506787200,
-            "EndTimeStamp": 1509465599
-          },
-          {
-            "Suffix": "201711",
-            "StartTimeStamp": 1509465600,
-            "EndTimeStamp": 1512057599
-          },
-          {
-            "Suffix": "201712",
-            "StartTimeStamp": 1512057600,
-            "EndTimeStamp": 1514735999
-          },
-          {
-            "Suffix": "201801",
-            "StartTimeStamp": 1514736000,
-            "EndTimeStamp": 1517414399
-          },
-          {
-            "Suffix": "201802",
-            "StartTimeStamp": 1517414400,
-            "EndTimeStamp": 1519833599
-          },
-          {
-            "Suffix": "201803",
-            "StartTimeStamp": 1519833600,
-            "EndTimeStamp": 1522511999
-          },
-          {
-            "Suffix": "201804",
-            "StartTimeStamp": 1522512000,
-            "EndTimeStamp": 1525103999
-          },
-          {
-            "Suffix": "201805",
-            "StartTimeStamp": 1525104000,
-            "EndTimeStamp": 1527782399
-          },
-          {
-            "Suffix": "201806",
-            "StartTimeStamp": 1527782400,
-            "EndTimeStamp": 1530374399
-          },
-          {
-            "Suffix": "201807",
-            "StartTimeStamp": 1530374400,
-            "EndTimeStamp": 1533052799
-          },
-          {
-            "Suffix": "201808",
-            "StartTimeStamp": 1533052800,
-            "EndTimeStamp": 1535731199
-          },
-          {
-            "Suffix": "201809",
-            "StartTimeStamp": 1535731200,
-            "EndTimeStamp": 1538323199
-          },
-          {
-            "Suffix": "201810",
-            "StartTimeStamp": 1538323200,
-            "EndTimeStamp": 1541001599
-          },
-          {
-            "Suffix": "201811",
-            "StartTimeStamp": 1541001600,
-            "EndTimeStamp": 1543593599
-          },
-          {
-            "Suffix": "201812",
-            "StartTimeStamp": 1543593600,
-            "EndTimeStamp": 1546271999
-          },
-          {
-            "Suffix": "201901",
-            "StartTimeStamp": 1546272000,
-            "EndTimeStamp": 1548950399
-          },
-          {
-            "Suffix": "201902",
-            "StartTimeStamp": 1548950400,
-            "EndTimeStamp": 1551369599
-          },
-          {
-            "Suffix": "201903",
-            "StartTimeStamp": 1551369600,
-            "EndTimeStamp": 1554047999
-          },
-          {
-            "Suffix": "201904",
-            "StartTimeStamp": 1554048000,
-            "EndTimeStamp": 1556639999
-          },
-          {
-            "Suffix": "201905",
-            "StartTimeStamp": 1556640000,
-            "EndTimeStamp": 1559318399
-          },
-          {
-            "Suffix": "201906",
-            "StartTimeStamp": 1559318400,
-            "EndTimeStamp": 1561910399
-          },
-          {
-            "Suffix": "201907",
-            "StartTimeStamp": 1561910400,
-            "EndTimeStamp": 1564588799
-          },
-          {
-            "Suffix": "201908",
-            "StartTimeStamp": 1564588800,
-            "EndTimeStamp": 1567267199
-          },
-          {
-            "Suffix": "201909",
-            "StartTimeStamp": 1567267200,
-            "EndTimeStamp": 1569859199
-          },
-          {
-            "Suffix": "201910",
-            "StartTimeStamp": 1569859200,
-            "EndTimeStamp": 1572537599
-          },
-          {
-            "Suffix": "201911",
-            "StartTimeStamp": 1572537600,
-            "EndTimeStamp": 1575129599
-          },
-          {
-            "Suffix": "201912",
-            "StartTimeStamp": 1575129600,
-            "EndTimeStamp": 1577807999
-          },
-          {
-            "Suffix": "202001",
-            "StartTimeStamp": 1577808000,
-            "EndTimeStamp": 1580486399
-          },
-          {
-            "Suffix": "202002",
-            "StartTimeStamp": 1580486400,
-            "EndTimeStamp": 1582991999
-          },
-          {
-            "Suffix": "202003",
-            "StartTimeStamp": 1582992000,
-            "EndTimeStamp": 1585670399
-          },
-          {
-            "Suffix": "202004",
-            "StartTimeStamp": 1585670400,
-            "EndTimeStamp": 1588262399
-          },
-          {
-            "Suffix": "202005",
-            "StartTimeStamp": 1588262400,
-            "EndTimeStamp": 1590940799
-          },
-          {
-            "Suffix": "202006",
-            "StartTimeStamp": 1590940800,
-            "EndTimeStamp": 1593532799
-          },
-          {
-            "Suffix": "202007",
-            "StartTimeStamp": 1593532800,
-            "EndTimeStamp": 1596211199
-          },
-          {
-            "Suffix": "202008",
-            "StartTimeStamp": 1596211200,
-            "EndTimeStamp": 1598889599
-          },
-          {
-            "Suffix": "202009",
-            "StartTimeStamp": 1598889600,
-            "EndTimeStamp": 1601481599
-          },
-          {
-            "Suffix": "202010",
-            "StartTimeStamp": 1601481600,
-            "EndTimeStamp": 1604159999
-          },
-          {
-            "Suffix": "202011",
-            "StartTimeStamp": 1604160000,
-            "EndTimeStamp": 1606751999
-          },
-          {
-            "Suffix": "202012",
-            "StartTimeStamp": 1606752000,
-            "EndTimeStamp": 1609430399
-          },
-          {
-            "Suffix": "202101",
-            "StartTimeStamp": 1609430400,
-            "EndTimeStamp": 1612108799
-          },
-          {
-            "Suffix": "202102",
-            "StartTimeStamp": 1612108800,
-            "EndTimeStamp": 1614527999
-          },
-          {
-            "Suffix": "202103",
-            "StartTimeStamp": 1614528000,
-            "EndTimeStamp": 1617206399
-          },
-          {
-            "Suffix": "202104",
-            "StartTimeStamp": 1617206400,
-            "EndTimeStamp": 1619798399
-          },
-          {
-            "Suffix": "202105",
-            "StartTimeStamp": 1619798400,
-            "EndTimeStamp": 1622476799
-          },
-          {
-            "Suffix": "202106",
-            "StartTimeStamp": 1622476800,
-            "EndTimeStamp": 1625068799
-          },
-          {
-            "Suffix": "202107",
-            "StartTimeStamp": 1625068800,
-            "EndTimeStamp": 1627747199
-          },
-          {
-            "Suffix": "202108",
-            "StartTimeStamp": 1627747200,
-            "EndTimeStamp": 1630425599
-          },
-          {
-            "Suffix": "202109",
-            "StartTimeStamp": 1630425600,
-            "EndTimeStamp": 1633017599
-          },
-          {
-            "Suffix": "202110",
-            "StartTimeStamp": 1633017600,
-            "EndTimeStamp": 1635695999
-          },
-          {
-            "Suffix": "202111",
-            "StartTimeStamp": 1635696000,
-            "EndTimeStamp": 1638287999
-          },
-          {
-            "Suffix": "202112",
-            "StartTimeStamp": 1638288000,
-            "EndTimeStamp": 1640966399
-          },
-          {
-            "Suffix": "202201",
-            "StartTimeStamp": 1640966400,
-            "EndTimeStamp": 1643644799
-          },
-          {
-            "Suffix": "202202",
-            "StartTimeStamp": 1643644800,
-            "EndTimeStamp": 1646063999
-          },
-          {
-            "Suffix": "202203",
-            "StartTimeStamp": 1646064000,
-            "EndTimeStamp": 1648742399
-          },
-          {
-            "Suffix": "202204",
-            "StartTimeStamp": 1648742400,
-            "EndTimeStamp": 1651334399
-          },
-          {
-            "Suffix": "202205",
-            "StartTimeStamp": 1651334400,
-            "EndTimeStamp": 1654012799
-          },
-          {
-            "Suffix": "202206",
-            "StartTimeStamp": 1654012800,
-            "EndTimeStamp": 1656604799
-          },
-          {
-            "Suffix": "202207",
-            "StartTimeStamp": 1656604800,
-            "EndTimeStamp": 1659283199
-          },
-          {
-            "Suffix": "202208",
-            "StartTimeStamp": 1659283200,
-            "EndTimeStamp": 1661961599
-          },
-          {
-            "Suffix": "202209",
-            "StartTimeStamp": 1661961600,
-            "EndTimeStamp": 1664553599
-          },
-          {
-            "Suffix": "202210",
-            "StartTimeStamp": 1664553600,
-            "EndTimeStamp": 1667231999
-          },
-          {
-            "Suffix": "202211",
-            "StartTimeStamp": 1667232000,
-            "EndTimeStamp": 1669823999
-          },
-          {
-            "Suffix": "202212",
-            "StartTimeStamp": 1669824000,
-            "EndTimeStamp": 1672502399
-          },
-          {
-            "Suffix": "202301",
-            "StartTimeStamp": 1672502400,
-            "EndTimeStamp": 1675180799
-          },
-          {
-            "Suffix": "202302",
-            "StartTimeStamp": 1675180800,
-            "EndTimeStamp": 1677599999
-          },
-          {
-            "Suffix": "202303",
-            "StartTimeStamp": 1677600000,
-            "EndTimeStamp": 1680278399
-          },
-          {
-            "Suffix": "202304",
-            "StartTimeStamp": 1680278400,
-            "EndTimeStamp": 1682870399
-          },
-          {
-            "Suffix": "202305",
-            "StartTimeStamp": 1682870400,
-            "EndTimeStamp": 1685548799
-          },
-          {
-            "Suffix": "202306",
-            "StartTimeStamp": 1685548800,
-            "EndTimeStamp": 1688140799
-          },
-          {
-            "Suffix": "202307",
-            "StartTimeStamp": 1688140800,
-            "EndTimeStamp": 1690819199
-          },
-          {
-            "Suffix": "202308",
-            "StartTimeStamp": 1690819200,
-            "EndTimeStamp": 1693497599
-          },
-          {
-            "Suffix": "202309",
-            "StartTimeStamp": 1693497600,
-            "EndTimeStamp": 1696089599
-          },
-          {
-            "Suffix": "202310",
-            "StartTimeStamp": 1696089600,
-            "EndTimeStamp": 1698767999
-          },
-          {
-            "Suffix": "202311",
-            "StartTimeStamp": 1698768000,
-            "EndTimeStamp": 1701359999
-          },
-          {
-            "Suffix": "202312",
-            "StartTimeStamp": 1701360000,
-            "EndTimeStamp": 1704038399
-          },
-          {
-            "Suffix": "202401",
-            "StartTimeStamp": 1704038400,
-            "EndTimeStamp": 1706716799
-          },
-          {
-            "Suffix": "202402",
-            "StartTimeStamp": 1706716800,
-            "EndTimeStamp": 1709222399
-          },
-          {
-            "Suffix": "202403",
-            "StartTimeStamp": 1709222400,
-            "EndTimeStamp": 1711900799
-          },
-          {
-            "Suffix": "202404",
-            "StartTimeStamp": 1711900800,
-            "EndTimeStamp": 1714492799
-          },
-          {
-            "Suffix": "202405",
-            "StartTimeStamp": 1714492800,
-            "EndTimeStamp": 1717171199
-          },
-          {
-            "Suffix": "202406",
-            "StartTimeStamp": 1717171200,
-            "EndTimeStamp": 1719763199
-          },
-          {
-            "Suffix": "202407",
-            "StartTimeStamp": 1719763200,
-            "EndTimeStamp": 1722441599
-          },
-          {
-            "Suffix": "202408",
-            "StartTimeStamp": 1722441600,
-            "EndTimeStamp": 1725119999
-          },
-          {
-            "Suffix": "202409",
-            "StartTimeStamp": 1725120000,
-            "EndTimeStamp": 1727711999
-          },
-          {
-            "Suffix": "202410",
-            "StartTimeStamp": 1727712000,
-            "EndTimeStamp": 1730390399
-          },
-          {
-            "Suffix": "202411",
-            "StartTimeStamp": 1730390400,
-            "EndTimeStamp": 1732982399
-          },
-          {
-            "Suffix": "202412",
-            "StartTimeStamp": 1732982400,
-            "EndTimeStamp": 1735660799
-          },
-          {
-            "Suffix": "202501",
-            "StartTimeStamp": 1735660800,
-            "EndTimeStamp": 1738339199
-          },
-          {
-            "Suffix": "202502",
-            "StartTimeStamp": 1738339200,
-            "EndTimeStamp": 1740758399
-          },
-          {
-            "Suffix": "202503",
-            "StartTimeStamp": 1740758400,
-            "EndTimeStamp": 1743436799
-          },
-          {
-            "Suffix": "202504",
-            "StartTimeStamp": 1743436800,
-            "EndTimeStamp": 1746028799
-          },
-          {
-            "Suffix": "202505",
-            "StartTimeStamp": 1746028800,
-            "EndTimeStamp": 1748707199
-          },
-          {
-            "Suffix": "202506",
-            "StartTimeStamp": 1748707200,
-            "EndTimeStamp": 1751299199
-          },
-          {
-            "Suffix": "202507",
-            "StartTimeStamp": 1751299200,
-            "EndTimeStamp": 1753977599
-          },
-          {
-            "Suffix": "202508",
-            "StartTimeStamp": 1753977600,
-            "EndTimeStamp": 1756655999
-          },
-          {
-            "Suffix": "202509",
-            "StartTimeStamp": 1756656000,
-            "EndTimeStamp": 1759247999
-          },
-          {
-            "Suffix": "202510",
-            "StartTimeStamp": 1759248000,
-            "EndTimeStamp": 1761926399
-          },
-          {
-            "Suffix": "202511",
-            "StartTimeStamp": 1761926400,
-            "EndTimeStamp": 1764518399
-          },
-          {
-            "Suffix": "202512",
-            "StartTimeStamp": 1764518400,
-            "EndTimeStamp": 1767196799
-          },
-          {
-            "Suffix": "202601",
-            "StartTimeStamp": 1767196800,
-            "EndTimeStamp": 1769875199
-          },
-          {
-            "Suffix": "202602",
-            "StartTimeStamp": 1769875200,
-            "EndTimeStamp": 1772294399
-          },
-          {
-            "Suffix": "202603",
-            "StartTimeStamp": 1772294400,
-            "EndTimeStamp": 1774972799
-          },
-          {
-            "Suffix": "202604",
-            "StartTimeStamp": 1774972800,
-            "EndTimeStamp": 1777564799
-          },
-          {
-            "Suffix": "202605",
-            "StartTimeStamp": 1777564800,
-            "EndTimeStamp": 1780243199
-          },
-          {
-            "Suffix": "202606",
-            "StartTimeStamp": 1780243200,
-            "EndTimeStamp": 1782835199
-          },
-          {
-            "Suffix": "202607",
-            "StartTimeStamp": 1782835200,
-            "EndTimeStamp": 1785513599
-          },
-          {
-            "Suffix": "202608",
-            "StartTimeStamp": 1785513600,
-            "EndTimeStamp": 1788191999
-          },
-          {
-            "Suffix": "202609",
-            "StartTimeStamp": 1788192000,
-            "EndTimeStamp": 1790783999
-          },
-          {
-            "Suffix": "202610",
-            "StartTimeStamp": 1790784000,
-            "EndTimeStamp": 1793462399
-          },
-          {
-            "Suffix": "202611",
-            "StartTimeStamp": 1793462400,
-            "EndTimeStamp": 1796054399
-          },
-          {
-            "Suffix": "202612",
-            "StartTimeStamp": 1796054400,
-            "EndTimeStamp": 1798732799
-          },
-          {
-            "Suffix": "202701",
-            "StartTimeStamp": 1798732800,
-            "EndTimeStamp": 1801411199
-          },
-          {
-            "Suffix": "202702",
-            "StartTimeStamp": 1801411200,
-            "EndTimeStamp": 1803830399
-          },
-          {
-            "Suffix": "202703",
-            "StartTimeStamp": 1803830400,
-            "EndTimeStamp": 1806508799
-          },
-          {
-            "Suffix": "202704",
-            "StartTimeStamp": 1806508800,
-            "EndTimeStamp": 1809100799
-          },
-          {
-            "Suffix": "202705",
-            "StartTimeStamp": 1809100800,
-            "EndTimeStamp": 1811779199
-          },
-          {
-            "Suffix": "202706",
-            "StartTimeStamp": 1811779200,
-            "EndTimeStamp": 1814371199
-          },
-          {
-            "Suffix": "202707",
-            "StartTimeStamp": 1814371200,
-            "EndTimeStamp": 1817049599
-          },
-          {
-            "Suffix": "202708",
-            "StartTimeStamp": 1817049600,
-            "EndTimeStamp": 1819727999
-          },
-          {
-            "Suffix": "202709",
-            "StartTimeStamp": 1819728000,
-            "EndTimeStamp": 1822319999
-          },
-          {
-            "Suffix": "202710",
-            "StartTimeStamp": 1822320000,
-            "EndTimeStamp": 1824998399
-          },
-          {
-            "Suffix": "202711",
-            "StartTimeStamp": 1824998400,
-            "EndTimeStamp": 1827590399
-          },
-          {
-            "Suffix": "202712",
-            "StartTimeStamp": 1827590400,
-            "EndTimeStamp": 1830268799
-          },
-          {
-            "Suffix": "202801",
-            "StartTimeStamp": 1830268800,
-            "EndTimeStamp": 1832947199
-          },
-          {
-            "Suffix": "202802",
-            "StartTimeStamp": 1832947200,
-            "EndTimeStamp": 1835452799
-          },
-          {
-            "Suffix": "202803",
-            "StartTimeStamp": 1835452800,
-            "EndTimeStamp": 1838131199
-          },
-          {
-            "Suffix": "202804",
-            "StartTimeStamp": 1838131200,
-            "EndTimeStamp": 1840723199
-          },
-          {
-            "Suffix": "202805",
-            "StartTimeStamp": 1840723200,
-            "EndTimeStamp": 1843401599
-          },
-          {
-            "Suffix": "202806",
-            "StartTimeStamp": 1843401600,
-            "EndTimeStamp": 1845993599
-          },
-          {
-            "Suffix": "202807",
-            "StartTimeStamp": 1845993600,
-            "EndTimeStamp": 1848671999
-          },
-          {
-            "Suffix": "202808",
-            "StartTimeStamp": 1848672000,
-            "EndTimeStamp": 1851350399
-          },
-          {
-            "Suffix": "202809",
-            "StartTimeStamp": 1851350400,
-            "EndTimeStamp": 1853942399
-          },
-          {
-            "Suffix": "202810",
-            "StartTimeStamp": 1853942400,
-            "EndTimeStamp": 1856620799
-          },
-          {
-            "Suffix": "202811",
-            "StartTimeStamp": 1856620800,
-            "EndTimeStamp": 1859212799
-          },
-          {
-            "Suffix": "202812",
-            "StartTimeStamp": 1859212800,
-            "EndTimeStamp": 1861891199
-          },
-          {
-            "Suffix": "202901",
-            "StartTimeStamp": 1861891200,
-            "EndTimeStamp": 1864569599
-          },
-          {
-            "Suffix": "202902",
-            "StartTimeStamp": 1864569600,
-            "EndTimeStamp": 1866988799
-          },
-          {
-            "Suffix": "202903",
-            "StartTimeStamp": 1866988800,
-            "EndTimeStamp": 1869667199
-          },
-          {
-            "Suffix": "202904",
-            "StartTimeStamp": 1869667200,
-            "EndTimeStamp": 1872259199
-          },
-          {
-            "Suffix": "202905",
-            "StartTimeStamp": 1872259200,
-            "EndTimeStamp": 1874937599
-          },
-          {
-            "Suffix": "202906",
-            "StartTimeStamp": 1874937600,
-            "EndTimeStamp": 1877529599
-          },
-          {
-            "Suffix": "202907",
-            "StartTimeStamp": 1877529600,
-            "EndTimeStamp": 1880207999
-          },
-          {
-            "Suffix": "202908",
-            "StartTimeStamp": 1880208000,
-            "EndTimeStamp": 1882886399
-          },
-          {
-            "Suffix": "202909",
-            "StartTimeStamp": 1882886400,
-            "EndTimeStamp": 1885478399
-          },
-          {
-            "Suffix": "202910",
-            "StartTimeStamp": 1885478400,
-            "EndTimeStamp": 1888156799
-          },
-          {
-            "Suffix": "202911",
-            "StartTimeStamp": 1888156800,
-            "EndTimeStamp": 1890748799
-          },
-          {
-            "Suffix": "202912",
-            "StartTimeStamp": 1890748800,
-            "EndTimeStamp": 1893427199
-          }
-        ]
-      },
-      // 站点日均值分表规则，根据实际项目中的数据情况进行配置
-      // 1700 * 9 * 365 = 5,584,500, 按年份分表
-      {
-        "Expressions": [ "station_day" ],
-        "Rules": [
-          {
-            "Suffix": "2015",
-            "StartTimeStamp": 1420041600,
-            "EndTimeStamp": 1451577599
-          },
-          {
-            "Suffix": "2016",
-            "StartTimeStamp": 1451577600,
-            "EndTimeStamp": 1483199999
-          },
-          {
-            "Suffix": "2017",
-            "StartTimeStamp": 1483200000,
-            "EndTimeStamp": 1514735999
-          },
-          {
-            "Suffix": "2018",
-            "StartTimeStamp": 1514736000,
-            "EndTimeStamp": 1546271999
-          },
-          {
-            "Suffix": "2019",
-            "StartTimeStamp": 1546272000,
-            "EndTimeStamp": 1577807999
-          },
-          {
-            "Suffix": "2020",
-            "StartTimeStamp": 1577808000,
-            "EndTimeStamp": 1609430399
-          },
-          {
-            "Suffix": "2021",
-            "StartTimeStamp": 1609430400,
-            "EndTimeStamp": 1640966399
-          },
-          {
-            "Suffix": "2022",
-            "StartTimeStamp": 1640966400,
-            "EndTimeStamp": 1672502399
-          },
-          {
-            "Suffix": "2023",
-            "StartTimeStamp": 1672502400,
-            "EndTimeStamp": 1704038399
-          },
-          {
-            "Suffix": "2024",
-            "StartTimeStamp": 1704038400,
-            "EndTimeStamp": 1735660799
-          },
-          {
-            "Suffix": "2025",
-            "StartTimeStamp": 1735660800,
-            "EndTimeStamp": 1767196799
-          },
-          {
-            "Suffix": "2026",
-            "StartTimeStamp": 1767196800,
-            "EndTimeStamp": 1798732799
-          },
-          {
-            "Suffix": "2027",
-            "StartTimeStamp": 1798732800,
-            "EndTimeStamp": 1830268799
-          },
-          {
-            "Suffix": "2028",
-            "StartTimeStamp": 1830268800,
-            "EndTimeStamp": 1861891199
-          },
-          {
-            "Suffix": "2029",
-            "StartTimeStamp": 1861891200,
-            "EndTimeStamp": 1893427199
-          }
-        ]
-      }
-    ]
-  },
-
-  "ShopWebGisDomain.User.UserInfo": {
-    "SubRuleType": "ShopWebData.SubTable.SubRule.DateSubRule",
-    "SubRoute": "TimePoint",
-    "DateRules": [
-      {
-        "Suffix": "2020",
-        "StartTimeStamp": 1577808000,
-        "EndTimeStamp": 1609430399
-      },
-      {
-        "Suffix": "2021",
-        "StartTimeStamp": 1609430400,
-        "EndTimeStamp": 1640966399
-      },
-      {
-        "Suffix": "2022",
-        "StartTimeStamp": 1640966400,
-        "EndTimeStamp": 1672502399
-      },
-      {
-        "Suffix": "2023",
-        "StartTimeStamp": 1672502400,
-        "EndTimeStamp": 1704038399
-      },
-      {
-        "Suffix": "2024",
-        "StartTimeStamp": 1704038400,
-        "EndTimeStamp": 1735660799
-      },
-      {
-        "Suffix": "2025",
-        "StartTimeStamp": 1735660800,
-        "EndTimeStamp": 1767196799
-      },
-      {
-        "Suffix": "2026",
-        "StartTimeStamp": 1767196800,
-        "EndTimeStamp": 1798732799
-      },
-      {
-        "Suffix": "2027",
-        "StartTimeStamp": 1798732800,
-        "EndTimeStamp": 1830268799
-      },
-      {
-        "Suffix": "2028",
-        "StartTimeStamp": 1830268800,
-        "EndTimeStamp": 1861891199
-      },
-      {
-        "Suffix": "2029",
-        "StartTimeStamp": 1861891200,
-        "EndTimeStamp": 1893427199
-      },
-      {
-        "Suffix": "2030",
-        "StartTimeStamp": 1893427200,
-        "EndTimeStamp": 1924963199
-      }
-    ]
+  {
+    // 分表规则配置文件
+    "Suncere.AirBase.ObservationData.ObservationDataDO": {
+      "SubRuleType": "Suncere.Abp.Data.DateExpressionSubRule",
+      "SubRoute": "TimePoint",
+      "DateExpressionRules": [
+        // 站点小时值分表规则，根据实际项目中的数据情况进行配置
+        // 1700 * 9 * 24 * 30 = 11,016,000， 按月份分表
+        {
+          "Expressions": [ "station_hour_act", "station_hour_std" ],
+          "Rules": [
+            {
+              "Suffix": "201501",
+              "StartTimeStamp": 1420041600,
+              "EndTimeStamp": 1422719999
+            },
+            {
+              "Suffix": "201502",
+              "StartTimeStamp": 1422720000,
+              "EndTimeStamp": 1425139199
+            },
+            {
+              "Suffix": "201503",
+              "StartTimeStamp": 1425139200,
+              "EndTimeStamp": 1427817599
+            },
+            {
+              "Suffix": "201504",
+              "StartTimeStamp": 1427817600,
+              "EndTimeStamp": 1430409599
+            },
+            {
+              "Suffix": "201505",
+              "StartTimeStamp": 1430409600,
+              "EndTimeStamp": 1433087999
+            },
+            {
+              "Suffix": "201506",
+              "StartTimeStamp": 1433088000,
+              "EndTimeStamp": 1435679999
+            },
+            {
+              "Suffix": "201507",
+              "StartTimeStamp": 1435680000,
+              "EndTimeStamp": 1438358399
+            },
+            {
+              "Suffix": "201508",
+              "StartTimeStamp": 1438358400,
+              "EndTimeStamp": 1441036799
+            },
+            {
+              "Suffix": "201509",
+              "StartTimeStamp": 1441036800,
+              "EndTimeStamp": 1443628799
+            },
+            {
+              "Suffix": "201510",
+              "StartTimeStamp": 1443628800,
+              "EndTimeStamp": 1446307199
+            },
+            {
+              "Suffix": "201511",
+              "StartTimeStamp": 1446307200,
+              "EndTimeStamp": 1448899199
+            },
+            {
+              "Suffix": "201512",
+              "StartTimeStamp": 1448899200,
+              "EndTimeStamp": 1451577599
+            },
+            {
+              "Suffix": "201601",
+              "StartTimeStamp": 1451577600,
+              "EndTimeStamp": 1454255999
+            },
+            {
+              "Suffix": "201602",
+              "StartTimeStamp": 1454256000,
+              "EndTimeStamp": 1456761599
+            },
+            {
+              "Suffix": "201603",
+              "StartTimeStamp": 1456761600,
+              "EndTimeStamp": 1459439999
+            },
+            {
+              "Suffix": "201604",
+              "StartTimeStamp": 1459440000,
+              "EndTimeStamp": 1462031999
+            },
+            {
+              "Suffix": "201605",
+              "StartTimeStamp": 1462032000,
+              "EndTimeStamp": 1464710399
+            },
+            {
+              "Suffix": "201606",
+              "StartTimeStamp": 1464710400,
+              "EndTimeStamp": 1467302399
+            },
+            {
+              "Suffix": "201607",
+              "StartTimeStamp": 1467302400,
+              "EndTimeStamp": 1469980799
+            },
+            {
+              "Suffix": "201608",
+              "StartTimeStamp": 1469980800,
+              "EndTimeStamp": 1472659199
+            },
+            {
+              "Suffix": "201609",
+              "StartTimeStamp": 1472659200,
+              "EndTimeStamp": 1475251199
+            },
+            {
+              "Suffix": "201610",
+              "StartTimeStamp": 1475251200,
+              "EndTimeStamp": 1477929599
+            },
+            {
+              "Suffix": "201611",
+              "StartTimeStamp": 1477929600,
+              "EndTimeStamp": 1480521599
+            },
+            {
+              "Suffix": "201612",
+              "StartTimeStamp": 1480521600,
+              "EndTimeStamp": 1483199999
+            },
+            {
+              "Suffix": "201701",
+              "StartTimeStamp": 1483200000,
+              "EndTimeStamp": 1485878399
+            },
+            {
+              "Suffix": "201702",
+              "StartTimeStamp": 1485878400,
+              "EndTimeStamp": 1488297599
+            },
+            {
+              "Suffix": "201703",
+              "StartTimeStamp": 1488297600,
+              "EndTimeStamp": 1490975999
+            },
+            {
+              "Suffix": "201704",
+              "StartTimeStamp": 1490976000,
+              "EndTimeStamp": 1493567999
+            },
+            {
+              "Suffix": "201705",
+              "StartTimeStamp": 1493568000,
+              "EndTimeStamp": 1496246399
+            },
+            {
+              "Suffix": "201706",
+              "StartTimeStamp": 1496246400,
+              "EndTimeStamp": 1498838399
+            },
+            {
+              "Suffix": "201707",
+              "StartTimeStamp": 1498838400,
+              "EndTimeStamp": 1501516799
+            },
+            {
+              "Suffix": "201708",
+              "StartTimeStamp": 1501516800,
+              "EndTimeStamp": 1504195199
+            },
+            {
+              "Suffix": "201709",
+              "StartTimeStamp": 1504195200,
+              "EndTimeStamp": 1506787199
+            },
+            {
+              "Suffix": "201710",
+              "StartTimeStamp": 1506787200,
+              "EndTimeStamp": 1509465599
+            },
+            {
+              "Suffix": "201711",
+              "StartTimeStamp": 1509465600,
+              "EndTimeStamp": 1512057599
+            },
+            {
+              "Suffix": "201712",
+              "StartTimeStamp": 1512057600,
+              "EndTimeStamp": 1514735999
+            },
+            {
+              "Suffix": "201801",
+              "StartTimeStamp": 1514736000,
+              "EndTimeStamp": 1517414399
+            },
+            {
+              "Suffix": "201802",
+              "StartTimeStamp": 1517414400,
+              "EndTimeStamp": 1519833599
+            },
+            {
+              "Suffix": "201803",
+              "StartTimeStamp": 1519833600,
+              "EndTimeStamp": 1522511999
+            },
+            {
+              "Suffix": "201804",
+              "StartTimeStamp": 1522512000,
+              "EndTimeStamp": 1525103999
+            },
+            {
+              "Suffix": "201805",
+              "StartTimeStamp": 1525104000,
+              "EndTimeStamp": 1527782399
+            },
+            {
+              "Suffix": "201806",
+              "StartTimeStamp": 1527782400,
+              "EndTimeStamp": 1530374399
+            },
+            {
+              "Suffix": "201807",
+              "StartTimeStamp": 1530374400,
+              "EndTimeStamp": 1533052799
+            },
+            {
+              "Suffix": "201808",
+              "StartTimeStamp": 1533052800,
+              "EndTimeStamp": 1535731199
+            },
+            {
+              "Suffix": "201809",
+              "StartTimeStamp": 1535731200,
+              "EndTimeStamp": 1538323199
+            },
+            {
+              "Suffix": "201810",
+              "StartTimeStamp": 1538323200,
+              "EndTimeStamp": 1541001599
+            },
+            {
+              "Suffix": "201811",
+              "StartTimeStamp": 1541001600,
+              "EndTimeStamp": 1543593599
+            },
+            {
+              "Suffix": "201812",
+              "StartTimeStamp": 1543593600,
+              "EndTimeStamp": 1546271999
+            },
+            {
+              "Suffix": "201901",
+              "StartTimeStamp": 1546272000,
+              "EndTimeStamp": 1548950399
+            },
+            {
+              "Suffix": "201902",
+              "StartTimeStamp": 1548950400,
+              "EndTimeStamp": 1551369599
+            },
+            {
+              "Suffix": "201903",
+              "StartTimeStamp": 1551369600,
+              "EndTimeStamp": 1554047999
+            },
+            {
+              "Suffix": "201904",
+              "StartTimeStamp": 1554048000,
+              "EndTimeStamp": 1556639999
+            },
+            {
+              "Suffix": "201905",
+              "StartTimeStamp": 1556640000,
+              "EndTimeStamp": 1559318399
+            },
+            {
+              "Suffix": "201906",
+              "StartTimeStamp": 1559318400,
+              "EndTimeStamp": 1561910399
+            },
+            {
+              "Suffix": "201907",
+              "StartTimeStamp": 1561910400,
+              "EndTimeStamp": 1564588799
+            },
+            {
+              "Suffix": "201908",
+              "StartTimeStamp": 1564588800,
+              "EndTimeStamp": 1567267199
+            },
+            {
+              "Suffix": "201909",
+              "StartTimeStamp": 1567267200,
+              "EndTimeStamp": 1569859199
+            },
+            {
+              "Suffix": "201910",
+              "StartTimeStamp": 1569859200,
+              "EndTimeStamp": 1572537599
+            },
+            {
+              "Suffix": "201911",
+              "StartTimeStamp": 1572537600,
+              "EndTimeStamp": 1575129599
+            },
+            {
+              "Suffix": "201912",
+              "StartTimeStamp": 1575129600,
+              "EndTimeStamp": 1577807999
+            },
+            {
+              "Suffix": "202001",
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1580486399
+            },
+            {
+              "Suffix": "202002",
+              "StartTimeStamp": 1580486400,
+              "EndTimeStamp": 1582991999
+            },
+            {
+              "Suffix": "202003",
+              "StartTimeStamp": 1582992000,
+              "EndTimeStamp": 1585670399
+            },
+            {
+              "Suffix": "202004",
+              "StartTimeStamp": 1585670400,
+              "EndTimeStamp": 1588262399
+            },
+            {
+              "Suffix": "202005",
+              "StartTimeStamp": 1588262400,
+              "EndTimeStamp": 1590940799
+            },
+            {
+              "Suffix": "202006",
+              "StartTimeStamp": 1590940800,
+              "EndTimeStamp": 1593532799
+            },
+            {
+              "Suffix": "202007",
+              "StartTimeStamp": 1593532800,
+              "EndTimeStamp": 1596211199
+            },
+            {
+              "Suffix": "202008",
+              "StartTimeStamp": 1596211200,
+              "EndTimeStamp": 1598889599
+            },
+            {
+              "Suffix": "202009",
+              "StartTimeStamp": 1598889600,
+              "EndTimeStamp": 1601481599
+            },
+            {
+              "Suffix": "202010",
+              "StartTimeStamp": 1601481600,
+              "EndTimeStamp": 1604159999
+            },
+            {
+              "Suffix": "202011",
+              "StartTimeStamp": 1604160000,
+              "EndTimeStamp": 1606751999
+            },
+            {
+              "Suffix": "202012",
+              "StartTimeStamp": 1606752000,
+              "EndTimeStamp": 1609430399
+            },
+            {
+              "Suffix": "202101",
+              "StartTimeStamp": 1609430400,
+              "EndTimeStamp": 1612108799
+            },
+            {
+              "Suffix": "202102",
+              "StartTimeStamp": 1612108800,
+              "EndTimeStamp": 1614527999
+            },
+            {
+              "Suffix": "202103",
+              "StartTimeStamp": 1614528000,
+              "EndTimeStamp": 1617206399
+            },
+            {
+              "Suffix": "202104",
+              "StartTimeStamp": 1617206400,
+              "EndTimeStamp": 1619798399
+            },
+            {
+              "Suffix": "202105",
+              "StartTimeStamp": 1619798400,
+              "EndTimeStamp": 1622476799
+            },
+            {
+              "Suffix": "202106",
+              "StartTimeStamp": 1622476800,
+              "EndTimeStamp": 1625068799
+            },
+            {
+              "Suffix": "202107",
+              "StartTimeStamp": 1625068800,
+              "EndTimeStamp": 1627747199
+            },
+            {
+              "Suffix": "202108",
+              "StartTimeStamp": 1627747200,
+              "EndTimeStamp": 1630425599
+            },
+            {
+              "Suffix": "202109",
+              "StartTimeStamp": 1630425600,
+              "EndTimeStamp": 1633017599
+            },
+            {
+              "Suffix": "202110",
+              "StartTimeStamp": 1633017600,
+              "EndTimeStamp": 1635695999
+            },
+            {
+              "Suffix": "202111",
+              "StartTimeStamp": 1635696000,
+              "EndTimeStamp": 1638287999
+            },
+            {
+              "Suffix": "202112",
+              "StartTimeStamp": 1638288000,
+              "EndTimeStamp": 1640966399
+            },
+            {
+              "Suffix": "202201",
+              "StartTimeStamp": 1640966400,
+              "EndTimeStamp": 1643644799
+            },
+            {
+              "Suffix": "202202",
+              "StartTimeStamp": 1643644800,
+              "EndTimeStamp": 1646063999
+            },
+            {
+              "Suffix": "202203",
+              "StartTimeStamp": 1646064000,
+              "EndTimeStamp": 1648742399
+            },
+            {
+              "Suffix": "202204",
+              "StartTimeStamp": 1648742400,
+              "EndTimeStamp": 1651334399
+            },
+            {
+              "Suffix": "202205",
+              "StartTimeStamp": 1651334400,
+              "EndTimeStamp": 1654012799
+            },
+            {
+              "Suffix": "202206",
+              "StartTimeStamp": 1654012800,
+              "EndTimeStamp": 1656604799
+            },
+            {
+              "Suffix": "202207",
+              "StartTimeStamp": 1656604800,
+              "EndTimeStamp": 1659283199
+            },
+            {
+              "Suffix": "202208",
+              "StartTimeStamp": 1659283200,
+              "EndTimeStamp": 1661961599
+            },
+            {
+              "Suffix": "202209",
+              "StartTimeStamp": 1661961600,
+              "EndTimeStamp": 1664553599
+            },
+            {
+              "Suffix": "202210",
+              "StartTimeStamp": 1664553600,
+              "EndTimeStamp": 1667231999
+            },
+            {
+              "Suffix": "202211",
+              "StartTimeStamp": 1667232000,
+              "EndTimeStamp": 1669823999
+            },
+            {
+              "Suffix": "202212",
+              "StartTimeStamp": 1669824000,
+              "EndTimeStamp": 1672502399
+            },
+            {
+              "Suffix": "202301",
+              "StartTimeStamp": 1672502400,
+              "EndTimeStamp": 1675180799
+            },
+            {
+              "Suffix": "202302",
+              "StartTimeStamp": 1675180800,
+              "EndTimeStamp": 1677599999
+            },
+            {
+              "Suffix": "202303",
+              "StartTimeStamp": 1677600000,
+              "EndTimeStamp": 1680278399
+            },
+            {
+              "Suffix": "202304",
+              "StartTimeStamp": 1680278400,
+              "EndTimeStamp": 1682870399
+            },
+            {
+              "Suffix": "202305",
+              "StartTimeStamp": 1682870400,
+              "EndTimeStamp": 1685548799
+            },
+            {
+              "Suffix": "202306",
+              "StartTimeStamp": 1685548800,
+              "EndTimeStamp": 1688140799
+            },
+            {
+              "Suffix": "202307",
+              "StartTimeStamp": 1688140800,
+              "EndTimeStamp": 1690819199
+            },
+            {
+              "Suffix": "202308",
+              "StartTimeStamp": 1690819200,
+              "EndTimeStamp": 1693497599
+            },
+            {
+              "Suffix": "202309",
+              "StartTimeStamp": 1693497600,
+              "EndTimeStamp": 1696089599
+            },
+            {
+              "Suffix": "202310",
+              "StartTimeStamp": 1696089600,
+              "EndTimeStamp": 1698767999
+            },
+            {
+              "Suffix": "202311",
+              "StartTimeStamp": 1698768000,
+              "EndTimeStamp": 1701359999
+            },
+            {
+              "Suffix": "202312",
+              "StartTimeStamp": 1701360000,
+              "EndTimeStamp": 1704038399
+            },
+            {
+              "Suffix": "202401",
+              "StartTimeStamp": 1704038400,
+              "EndTimeStamp": 1706716799
+            },
+            {
+              "Suffix": "202402",
+              "StartTimeStamp": 1706716800,
+              "EndTimeStamp": 1709222399
+            },
+            {
+              "Suffix": "202403",
+              "StartTimeStamp": 1709222400,
+              "EndTimeStamp": 1711900799
+            },
+            {
+              "Suffix": "202404",
+              "StartTimeStamp": 1711900800,
+              "EndTimeStamp": 1714492799
+            },
+            {
+              "Suffix": "202405",
+              "StartTimeStamp": 1714492800,
+              "EndTimeStamp": 1717171199
+            },
+            {
+              "Suffix": "202406",
+              "StartTimeStamp": 1717171200,
+              "EndTimeStamp": 1719763199
+            },
+            {
+              "Suffix": "202407",
+              "StartTimeStamp": 1719763200,
+              "EndTimeStamp": 1722441599
+            },
+            {
+              "Suffix": "202408",
+              "StartTimeStamp": 1722441600,
+              "EndTimeStamp": 1725119999
+            },
+            {
+              "Suffix": "202409",
+              "StartTimeStamp": 1725120000,
+              "EndTimeStamp": 1727711999
+            },
+            {
+              "Suffix": "202410",
+              "StartTimeStamp": 1727712000,
+              "EndTimeStamp": 1730390399
+            },
+            {
+              "Suffix": "202411",
+              "StartTimeStamp": 1730390400,
+              "EndTimeStamp": 1732982399
+            },
+            {
+              "Suffix": "202412",
+              "StartTimeStamp": 1732982400,
+              "EndTimeStamp": 1735660799
+            },
+            {
+              "Suffix": "202501",
+              "StartTimeStamp": 1735660800,
+              "EndTimeStamp": 1738339199
+            },
+            {
+              "Suffix": "202502",
+              "StartTimeStamp": 1738339200,
+              "EndTimeStamp": 1740758399
+            },
+            {
+              "Suffix": "202503",
+              "StartTimeStamp": 1740758400,
+              "EndTimeStamp": 1743436799
+            },
+            {
+              "Suffix": "202504",
+              "StartTimeStamp": 1743436800,
+              "EndTimeStamp": 1746028799
+            },
+            {
+              "Suffix": "202505",
+              "StartTimeStamp": 1746028800,
+              "EndTimeStamp": 1748707199
+            },
+            {
+              "Suffix": "202506",
+              "StartTimeStamp": 1748707200,
+              "EndTimeStamp": 1751299199
+            },
+            {
+              "Suffix": "202507",
+              "StartTimeStamp": 1751299200,
+              "EndTimeStamp": 1753977599
+            },
+            {
+              "Suffix": "202508",
+              "StartTimeStamp": 1753977600,
+              "EndTimeStamp": 1756655999
+            },
+            {
+              "Suffix": "202509",
+              "StartTimeStamp": 1756656000,
+              "EndTimeStamp": 1759247999
+            },
+            {
+              "Suffix": "202510",
+              "StartTimeStamp": 1759248000,
+              "EndTimeStamp": 1761926399
+            },
+            {
+              "Suffix": "202511",
+              "StartTimeStamp": 1761926400,
+              "EndTimeStamp": 1764518399
+            },
+            {
+              "Suffix": "202512",
+              "StartTimeStamp": 1764518400,
+              "EndTimeStamp": 1767196799
+            },
+            {
+              "Suffix": "202601",
+              "StartTimeStamp": 1767196800,
+              "EndTimeStamp": 1769875199
+            },
+            {
+              "Suffix": "202602",
+              "StartTimeStamp": 1769875200,
+              "EndTimeStamp": 1772294399
+            },
+            {
+              "Suffix": "202603",
+              "StartTimeStamp": 1772294400,
+              "EndTimeStamp": 1774972799
+            },
+            {
+              "Suffix": "202604",
+              "StartTimeStamp": 1774972800,
+              "EndTimeStamp": 1777564799
+            },
+            {
+              "Suffix": "202605",
+              "StartTimeStamp": 1777564800,
+              "EndTimeStamp": 1780243199
+            },
+            {
+              "Suffix": "202606",
+              "StartTimeStamp": 1780243200,
+              "EndTimeStamp": 1782835199
+            },
+            {
+              "Suffix": "202607",
+              "StartTimeStamp": 1782835200,
+              "EndTimeStamp": 1785513599
+            },
+            {
+              "Suffix": "202608",
+              "StartTimeStamp": 1785513600,
+              "EndTimeStamp": 1788191999
+            },
+            {
+              "Suffix": "202609",
+              "StartTimeStamp": 1788192000,
+              "EndTimeStamp": 1790783999
+            },
+            {
+              "Suffix": "202610",
+              "StartTimeStamp": 1790784000,
+              "EndTimeStamp": 1793462399
+            },
+            {
+              "Suffix": "202611",
+              "StartTimeStamp": 1793462400,
+              "EndTimeStamp": 1796054399
+            },
+            {
+              "Suffix": "202612",
+              "StartTimeStamp": 1796054400,
+              "EndTimeStamp": 1798732799
+            },
+            {
+              "Suffix": "202701",
+              "StartTimeStamp": 1798732800,
+              "EndTimeStamp": 1801411199
+            },
+            {
+              "Suffix": "202702",
+              "StartTimeStamp": 1801411200,
+              "EndTimeStamp": 1803830399
+            },
+            {
+              "Suffix": "202703",
+              "StartTimeStamp": 1803830400,
+              "EndTimeStamp": 1806508799
+            },
+            {
+              "Suffix": "202704",
+              "StartTimeStamp": 1806508800,
+              "EndTimeStamp": 1809100799
+            },
+            {
+              "Suffix": "202705",
+              "StartTimeStamp": 1809100800,
+              "EndTimeStamp": 1811779199
+            },
+            {
+              "Suffix": "202706",
+              "StartTimeStamp": 1811779200,
+              "EndTimeStamp": 1814371199
+            },
+            {
+              "Suffix": "202707",
+              "StartTimeStamp": 1814371200,
+              "EndTimeStamp": 1817049599
+            },
+            {
+              "Suffix": "202708",
+              "StartTimeStamp": 1817049600,
+              "EndTimeStamp": 1819727999
+            },
+            {
+              "Suffix": "202709",
+              "StartTimeStamp": 1819728000,
+              "EndTimeStamp": 1822319999
+            },
+            {
+              "Suffix": "202710",
+              "StartTimeStamp": 1822320000,
+              "EndTimeStamp": 1824998399
+            },
+            {
+              "Suffix": "202711",
+              "StartTimeStamp": 1824998400,
+              "EndTimeStamp": 1827590399
+            },
+            {
+              "Suffix": "202712",
+              "StartTimeStamp": 1827590400,
+              "EndTimeStamp": 1830268799
+            },
+            {
+              "Suffix": "202801",
+              "StartTimeStamp": 1830268800,
+              "EndTimeStamp": 1832947199
+            },
+            {
+              "Suffix": "202802",
+              "StartTimeStamp": 1832947200,
+              "EndTimeStamp": 1835452799
+            },
+            {
+              "Suffix": "202803",
+              "StartTimeStamp": 1835452800,
+              "EndTimeStamp": 1838131199
+            },
+            {
+              "Suffix": "202804",
+              "StartTimeStamp": 1838131200,
+              "EndTimeStamp": 1840723199
+            },
+            {
+              "Suffix": "202805",
+              "StartTimeStamp": 1840723200,
+              "EndTimeStamp": 1843401599
+            },
+            {
+              "Suffix": "202806",
+              "StartTimeStamp": 1843401600,
+              "EndTimeStamp": 1845993599
+            },
+            {
+              "Suffix": "202807",
+              "StartTimeStamp": 1845993600,
+              "EndTimeStamp": 1848671999
+            },
+            {
+              "Suffix": "202808",
+              "StartTimeStamp": 1848672000,
+              "EndTimeStamp": 1851350399
+            },
+            {
+              "Suffix": "202809",
+              "StartTimeStamp": 1851350400,
+              "EndTimeStamp": 1853942399
+            },
+            {
+              "Suffix": "202810",
+              "StartTimeStamp": 1853942400,
+              "EndTimeStamp": 1856620799
+            },
+            {
+              "Suffix": "202811",
+              "StartTimeStamp": 1856620800,
+              "EndTimeStamp": 1859212799
+            },
+            {
+              "Suffix": "202812",
+              "StartTimeStamp": 1859212800,
+              "EndTimeStamp": 1861891199
+            },
+            {
+              "Suffix": "202901",
+              "StartTimeStamp": 1861891200,
+              "EndTimeStamp": 1864569599
+            },
+            {
+              "Suffix": "202902",
+              "StartTimeStamp": 1864569600,
+              "EndTimeStamp": 1866988799
+            },
+            {
+              "Suffix": "202903",
+              "StartTimeStamp": 1866988800,
+              "EndTimeStamp": 1869667199
+            },
+            {
+              "Suffix": "202904",
+              "StartTimeStamp": 1869667200,
+              "EndTimeStamp": 1872259199
+            },
+            {
+              "Suffix": "202905",
+              "StartTimeStamp": 1872259200,
+              "EndTimeStamp": 1874937599
+            },
+            {
+              "Suffix": "202906",
+              "StartTimeStamp": 1874937600,
+              "EndTimeStamp": 1877529599
+            },
+            {
+              "Suffix": "202907",
+              "StartTimeStamp": 1877529600,
+              "EndTimeStamp": 1880207999
+            },
+            {
+              "Suffix": "202908",
+              "StartTimeStamp": 1880208000,
+              "EndTimeStamp": 1882886399
+            },
+            {
+              "Suffix": "202909",
+              "StartTimeStamp": 1882886400,
+              "EndTimeStamp": 1885478399
+            },
+            {
+              "Suffix": "202910",
+              "StartTimeStamp": 1885478400,
+              "EndTimeStamp": 1888156799
+            },
+            {
+              "Suffix": "202911",
+              "StartTimeStamp": 1888156800,
+              "EndTimeStamp": 1890748799
+            },
+            {
+              "Suffix": "202912",
+              "StartTimeStamp": 1890748800,
+              "EndTimeStamp": 1893427199
+            }
+          ]
+        },
+        // 站点日均值分表规则，根据实际项目中的数据情况进行配置
+        // 1700 * 9 * 365 = 5,584,500, 按年份分表
+        {
+          "Expressions": [ "station_day_act", "station_day_std" ],
+          "Rules": [
+            {
+              "Suffix": "2015",
+              "StartTimeStamp": 1420041600,
+              "EndTimeStamp": 1451577599
+            },
+            {
+              "Suffix": "2016",
+              "StartTimeStamp": 1451577600,
+              "EndTimeStamp": 1483199999
+            },
+            {
+              "Suffix": "2017",
+              "StartTimeStamp": 1483200000,
+              "EndTimeStamp": 1514735999
+            },
+            {
+              "Suffix": "2018",
+              "StartTimeStamp": 1514736000,
+              "EndTimeStamp": 1546271999
+            },
+            {
+              "Suffix": "2019",
+              "StartTimeStamp": 1546272000,
+              "EndTimeStamp": 1577807999
+            },
+            {
+              "Suffix": "2020",
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1609430399
+            },
+            {
+              "Suffix": "2021",
+              "StartTimeStamp": 1609430400,
+              "EndTimeStamp": 1640966399
+            },
+            {
+              "Suffix": "2022",
+              "StartTimeStamp": 1640966400,
+              "EndTimeStamp": 1672502399
+            },
+            {
+              "Suffix": "2023",
+              "StartTimeStamp": 1672502400,
+              "EndTimeStamp": 1704038399
+            },
+            {
+              "Suffix": "2024",
+              "StartTimeStamp": 1704038400,
+              "EndTimeStamp": 1735660799
+            },
+            {
+              "Suffix": "2025",
+              "StartTimeStamp": 1735660800,
+              "EndTimeStamp": 1767196799
+            },
+            {
+              "Suffix": "2026",
+              "StartTimeStamp": 1767196800,
+              "EndTimeStamp": 1798732799
+            },
+            {
+              "Suffix": "2027",
+              "StartTimeStamp": 1798732800,
+              "EndTimeStamp": 1830268799
+            },
+            {
+              "Suffix": "2028",
+              "StartTimeStamp": 1830268800,
+              "EndTimeStamp": 1861891199
+            },
+            {
+              "Suffix": "2029",
+              "StartTimeStamp": 1861891200,
+              "EndTimeStamp": 1893427199
+            }
+          ]
+        },
+        // 区县小时值分表规则，根据实际项目中的数据情况进行配置
+        // 42 * 9 * 24 * 365 = 3,311,280, 按年份分表
+        {
+          "Expressions": [ "county_hour_act", "county_hour_std" ],
+          "Rules": [
+            {
+              "Suffix": "2015",
+              "StartTimeStamp": 1420041600,
+              "EndTimeStamp": 1451577599
+            },
+            {
+              "Suffix": "2016",
+              "StartTimeStamp": 1451577600,
+              "EndTimeStamp": 1483199999
+            },
+            {
+              "Suffix": "2017",
+              "StartTimeStamp": 1483200000,
+              "EndTimeStamp": 1514735999
+            },
+            {
+              "Suffix": "2018",
+              "StartTimeStamp": 1514736000,
+              "EndTimeStamp": 1546271999
+            },
+            {
+              "Suffix": "2019",
+              "StartTimeStamp": 1546272000,
+              "EndTimeStamp": 1577807999
+            },
+            {
+              "Suffix": "2020",
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1609430399
+            },
+            {
+              "Suffix": "2021",
+              "StartTimeStamp": 1609430400,
+              "EndTimeStamp": 1640966399
+            },
+            {
+              "Suffix": "2022",
+              "StartTimeStamp": 1640966400,
+              "EndTimeStamp": 1672502399
+            },
+            {
+              "Suffix": "2023",
+              "StartTimeStamp": 1672502400,
+              "EndTimeStamp": 1704038399
+            },
+            {
+              "Suffix": "2024",
+              "StartTimeStamp": 1704038400,
+              "EndTimeStamp": 1735660799
+            },
+            {
+              "Suffix": "2025",
+              "StartTimeStamp": 1735660800,
+              "EndTimeStamp": 1767196799
+            },
+            {
+              "Suffix": "2026",
+              "StartTimeStamp": 1767196800,
+              "EndTimeStamp": 1798732799
+            },
+            {
+              "Suffix": "2027",
+              "StartTimeStamp": 1798732800,
+              "EndTimeStamp": 1830268799
+            },
+            {
+              "Suffix": "2028",
+              "StartTimeStamp": 1830268800,
+              "EndTimeStamp": 1861891199
+            },
+            {
+              "Suffix": "2029",
+              "StartTimeStamp": 1861891200,
+              "EndTimeStamp": 1893427199
+            }
+          ]
+        },
+        // 区县日均值分表规则，根据实际项目中的数据情况进行配置
+        // 42 * 9 * 365 * 10 = 3,679,200, 10年一个表
+        {
+          "Expressions": [ "county_day_act", "county_day_std" ],
+          "Rules": [
+            {
+              "StartTimeStamp": 1262275200,
+              "EndTimeStamp": 1577807999,
+              "Suffix": "2010_2019"
+            },
+            {
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1893427199,
+              "Suffix": "2020_2029"
+            },
+            {
+              "StartTimeStamp": 1893427200,
+              "EndTimeStamp": 2208959999,
+              "Suffix": "2030_2039"
+            }
+          ]
+        },
+        // 片区小时值分表规则，根据实际项目中的数据情况进行配置
+        // 4 * 9 * 24 * 365 * 10 = 3,153,600,  10年一个表
+        {
+          "Expressions": [ "district_hour_act", "district_hour_std" ],
+          "Rules": [
+            {
+              "StartTimeStamp": 1262275200,
+              "EndTimeStamp": 1577807999,
+              "Suffix": "2010_2019"
+            },
+            {
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1893427199,
+              "Suffix": "2020_2029"
+            },
+            {
+              "StartTimeStamp": 1893427200,
+              "EndTimeStamp": 2208959999,
+              "Suffix": "2030_2039"
+            }
+          ]
+        },
+        // 片区日均值分表规则，根据实际项目中的数据情况进行配置
+        // 4 * 9 * 365 * 10 = 131,400, 10年一个表
+        {
+          "Expressions": [ "district_day_act", "district_day_std" ],
+          "Rules": [
+            {
+              "StartTimeStamp": 1262275200,
+              "EndTimeStamp": 1577807999,
+              "Suffix": "2010_2019"
+            },
+            {
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1893427199,
+              "Suffix": "2020_2029"
+            },
+            {
+              "StartTimeStamp": 1893427200,
+              "EndTimeStamp": 2208959999,
+              "Suffix": "2030_2039"
+            }
+          ]
+        },
+        // 城市小时值分表规则，根据实际项目中的数据情况进行配置
+        // 390 * 9 * 24 * 90 = 7,581,600, 一个季度一个表
+        {
+          "Expressions": [ "city_hour_act", "city_hour_std" ],
+          "Rules": [
+            {
+              "Suffix": "201501_201503",
+              "StartTimeStamp": 1420041600,
+              "EndTimeStamp": 1427817599
+            },
+            {
+              "Suffix": "201504_201506",
+              "StartTimeStamp": 1427817600,
+              "EndTimeStamp": 1435679999
+            },
+            {
+              "Suffix": "201507_201509",
+              "StartTimeStamp": 1435680000,
+              "EndTimeStamp": 1443628799
+            },
+            {
+              "Suffix": "201510_201512",
+              "StartTimeStamp": 1443628800,
+              "EndTimeStamp": 1451577599
+            },
+            {
+              "Suffix": "201601_201603",
+              "StartTimeStamp": 1451577600,
+              "EndTimeStamp": 1459439999
+            },
+            {
+              "Suffix": "201604_201606",
+              "StartTimeStamp": 1459440000,
+              "EndTimeStamp": 1467302399
+            },
+            {
+              "Suffix": "201607_201609",
+              "StartTimeStamp": 1467302400,
+              "EndTimeStamp": 1475251199
+            },
+            {
+              "Suffix": "201610_201612",
+              "StartTimeStamp": 1475251200,
+              "EndTimeStamp": 1483199999
+            },
+            {
+              "Suffix": "201701_201703",
+              "StartTimeStamp": 1483200000,
+              "EndTimeStamp": 1490975999
+            },
+            {
+              "Suffix": "201704_201706",
+              "StartTimeStamp": 1490976000,
+              "EndTimeStamp": 1498838399
+            },
+            {
+              "Suffix": "201707_201709",
+              "StartTimeStamp": 1498838400,
+              "EndTimeStamp": 1506787199
+            },
+            {
+              "Suffix": "201710_201712",
+              "StartTimeStamp": 1506787200,
+              "EndTimeStamp": 1514735999
+            },
+            {
+              "Suffix": "201801_201803",
+              "StartTimeStamp": 1514736000,
+              "EndTimeStamp": 1522511999
+            },
+            {
+              "Suffix": "201804_201806",
+              "StartTimeStamp": 1522512000,
+              "EndTimeStamp": 1530374399
+            },
+            {
+              "Suffix": "201807_201809",
+              "StartTimeStamp": 1530374400,
+              "EndTimeStamp": 1538323199
+            },
+            {
+              "Suffix": "201810_201812",
+              "StartTimeStamp": 1538323200,
+              "EndTimeStamp": 1546271999
+            },
+            {
+              "Suffix": "201901_201903",
+              "StartTimeStamp": 1546272000,
+              "EndTimeStamp": 1554047999
+            },
+            {
+              "Suffix": "201904_201906",
+              "StartTimeStamp": 1554048000,
+              "EndTimeStamp": 1561910399
+            },
+            {
+              "Suffix": "201907_201909",
+              "StartTimeStamp": 1561910400,
+              "EndTimeStamp": 1569859199
+            },
+            {
+              "Suffix": "201910_201912",
+              "StartTimeStamp": 1569859200,
+              "EndTimeStamp": 1577807999
+            },
+            {
+              "Suffix": "202001_202003",
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1585670399
+            },
+            {
+              "Suffix": "202004_202006",
+              "StartTimeStamp": 1585670400,
+              "EndTimeStamp": 1593532799
+            },
+            {
+              "Suffix": "202007_202009",
+              "StartTimeStamp": 1593532800,
+              "EndTimeStamp": 1601481599
+            },
+            {
+              "Suffix": "202010_202012",
+              "StartTimeStamp": 1601481600,
+              "EndTimeStamp": 1609430399
+            },
+            {
+              "Suffix": "202101_202103",
+              "StartTimeStamp": 1609430400,
+              "EndTimeStamp": 1617206399
+            },
+            {
+              "Suffix": "202104_202106",
+              "StartTimeStamp": 1617206400,
+              "EndTimeStamp": 1625068799
+            },
+            {
+              "Suffix": "202107_202109",
+              "StartTimeStamp": 1625068800,
+              "EndTimeStamp": 1633017599
+            },
+            {
+              "Suffix": "202110_202112",
+              "StartTimeStamp": 1633017600,
+              "EndTimeStamp": 1640966399
+            },
+            {
+              "Suffix": "202201_202203",
+              "StartTimeStamp": 1640966400,
+              "EndTimeStamp": 1648742399
+            },
+            {
+              "Suffix": "202204_202206",
+              "StartTimeStamp": 1648742400,
+              "EndTimeStamp": 1656604799
+            },
+            {
+              "Suffix": "202207_202209",
+              "StartTimeStamp": 1656604800,
+              "EndTimeStamp": 1664553599
+            },
+            {
+              "Suffix": "202210_202212",
+              "StartTimeStamp": 1664553600,
+              "EndTimeStamp": 1672502399
+            },
+            {
+              "Suffix": "202301_202303",
+              "StartTimeStamp": 1672502400,
+              "EndTimeStamp": 1680278399
+            },
+            {
+              "Suffix": "202304_202306",
+              "StartTimeStamp": 1680278400,
+              "EndTimeStamp": 1688140799
+            },
+            {
+              "Suffix": "202307_202309",
+              "StartTimeStamp": 1688140800,
+              "EndTimeStamp": 1696089599
+            },
+            {
+              "Suffix": "202310_202312",
+              "StartTimeStamp": 1696089600,
+              "EndTimeStamp": 1704038399
+            },
+            {
+              "Suffix": "202401_202403",
+              "StartTimeStamp": 1704038400,
+              "EndTimeStamp": 1711900799
+            },
+            {
+              "Suffix": "202404_202406",
+              "StartTimeStamp": 1711900800,
+              "EndTimeStamp": 1719763199
+            },
+            {
+              "Suffix": "202407_202409",
+              "StartTimeStamp": 1719763200,
+              "EndTimeStamp": 1727711999
+            },
+            {
+              "Suffix": "202410_202412",
+              "StartTimeStamp": 1727712000,
+              "EndTimeStamp": 1735660799
+            },
+            {
+              "Suffix": "202501_202503",
+              "StartTimeStamp": 1735660800,
+              "EndTimeStamp": 1743436799
+            },
+            {
+              "Suffix": "202504_202506",
+              "StartTimeStamp": 1743436800,
+              "EndTimeStamp": 1751299199
+            },
+            {
+              "Suffix": "202507_202509",
+              "StartTimeStamp": 1751299200,
+              "EndTimeStamp": 1759247999
+            },
+            {
+              "Suffix": "202510_202512",
+              "StartTimeStamp": 1759248000,
+              "EndTimeStamp": 1767196799
+            },
+            {
+              "Suffix": "202601_202603",
+              "StartTimeStamp": 1767196800,
+              "EndTimeStamp": 1774972799
+            },
+            {
+              "Suffix": "202604_202606",
+              "StartTimeStamp": 1774972800,
+              "EndTimeStamp": 1782835199
+            },
+            {
+              "Suffix": "202607_202609",
+              "StartTimeStamp": 1782835200,
+              "EndTimeStamp": 1790783999
+            },
+            {
+              "Suffix": "202610_202612",
+              "StartTimeStamp": 1790784000,
+              "EndTimeStamp": 1798732799
+            },
+            {
+              "Suffix": "202701_202703",
+              "StartTimeStamp": 1798732800,
+              "EndTimeStamp": 1806508799
+            },
+            {
+              "Suffix": "202704_202706",
+              "StartTimeStamp": 1806508800,
+              "EndTimeStamp": 1814371199
+            },
+            {
+              "Suffix": "202707_202709",
+              "StartTimeStamp": 1814371200,
+              "EndTimeStamp": 1822319999
+            },
+            {
+              "Suffix": "202710_202712",
+              "StartTimeStamp": 1822320000,
+              "EndTimeStamp": 1830268799
+            },
+            {
+              "Suffix": "202801_202803",
+              "StartTimeStamp": 1830268800,
+              "EndTimeStamp": 1838131199
+            },
+            {
+              "Suffix": "202804_202806",
+              "StartTimeStamp": 1838131200,
+              "EndTimeStamp": 1845993599
+            },
+            {
+              "Suffix": "202807_202809",
+              "StartTimeStamp": 1845993600,
+              "EndTimeStamp": 1853942399
+            },
+            {
+              "Suffix": "202810_202812",
+              "StartTimeStamp": 1853942400,
+              "EndTimeStamp": 1861891199
+            },
+            {
+              "Suffix": "202901_202903",
+              "StartTimeStamp": 1861891200,
+              "EndTimeStamp": 1869667199
+            },
+            {
+              "Suffix": "202904_202906",
+              "StartTimeStamp": 1869667200,
+              "EndTimeStamp": 1877529599
+            },
+            {
+              "Suffix": "202907_202909",
+              "StartTimeStamp": 1877529600,
+              "EndTimeStamp": 1885478399
+            },
+            {
+              "Suffix": "202910_202912",
+              "StartTimeStamp": 1885478400,
+              "EndTimeStamp": 1893427199
+            }
+          ]
+        },
+        // 城市日均值分表规则，根据实际项目中的数据情况进行配置
+        // 390 * 9 * 365 * 5 = 6,405,750, 5年一个表
+        {
+          "Expressions": [ "city_day_act", "city_day_std" ],
+          "Rules": [
+            {
+              "StartTimeStamp": 1420041600,
+              "EndTimeStamp": 1577807999,
+              "Suffix": "2015_2019"
+            },
+            {
+              "StartTimeStamp": 1577808000,
+              "EndTimeStamp": 1735660799,
+              "Suffix": "2020_2024"
+            },
+            {
+              "StartTimeStamp": 1735660800,
+              "EndTimeStamp": 1893427199,
+              "Suffix": "2025_2029"
+            }
+          ]
+        }
+      ]
+    }
   }
 }

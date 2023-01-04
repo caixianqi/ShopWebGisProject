@@ -37,10 +37,7 @@ namespace ShopWebGisDomain.User
     [Comment("用户")]
     public class UserInfo : BasicModel<int>
     {
-        public UserInfo(int Id) : base(Id)
-        {
-            Roles = new List<RoleInfo>();
-        }
+
         [Required]
         [StringLength(25)]
         [Column("username")]
@@ -77,7 +74,5 @@ namespace ShopWebGisDomain.User
         /// 角色
         /// </summary>
         public List<RoleInfo> Roles { get; set; }
-
-        public DateTime TimePoint { get; set; }
     }
 }

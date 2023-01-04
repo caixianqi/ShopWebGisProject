@@ -36,10 +36,7 @@ namespace ShopWebGisDomain.User
     [Index(nameof(Url), Name = "Index_Url")]
     public class MenuInfo : BasicModel<int>
     {
-        public MenuInfo(int Id) : base(Id)
-        {
-            Roles = new List<RoleInfo>();
-        }
+
 
         [Required]
         [StringLength(50)]

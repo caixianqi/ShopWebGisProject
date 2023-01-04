@@ -6,9 +6,9 @@
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisNacosClient
+ *命名空间：ShopWebGisDomain.Commodity
 
- *文件名：  Register
+ *文件名：  Commodity
 
  *版本号：  V1.0.0.0
 
@@ -16,27 +16,19 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/7/16 16:13:53
+ *创建时间：2022/12/25 22:15:23
 
- *描述：注册器
+ *描述：商品实体
 
 /************************************************************************************/
 
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisNacosClient
+namespace ShopWebGisDomain.Commodity
 {
-    public static class Register
+    public class Commodity
     {
-        /// <summary>
-        /// 注册代理类
-        /// </summary>
-        public static void RegisterProxy(this IServiceCollection services)
-        {
-
-        }
     }
 }

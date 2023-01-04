@@ -13,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Nacos.AspNetCore.V2;
 using Serilog;
 using ShopWebData.config;
 using ShopWebGis.Filters;
@@ -92,9 +91,7 @@ namespace ShopWebGis
                 option.Filters.Add(typeof(CustomerExceptionFilter));
             });
             services.AddHttpContextAccessor();
-            services.AddNacosAspNet(Configuration);// Nacos服务注册
-
-            //services.AddHangfireServer();//启动hangfire服务
+            services.AddNacosAspNetCore(Configuration);// Nacos服务注册
 
         }
 
@@ -128,8 +125,7 @@ namespace ShopWebGis
                 c.SwaggerEndpoint($"/swagger/V1/swagger.json", "WebApi.Core V1");
                 c.RoutePrefix = "";
             });
-            // app.HangFireConfiguraSetup(Configuration);   //使用hangfire面板
-            //HangFireSetup.HangFireJobsSetup();
+
             ServiceManager.Init(app.ApplicationServices);
 
 

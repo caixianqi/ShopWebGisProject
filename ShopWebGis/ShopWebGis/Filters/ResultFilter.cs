@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ShopWebGis.Attributes;
-using ShopWebGis.Model;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
