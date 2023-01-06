@@ -42,6 +42,13 @@ namespace ShopWebGisFreeSql.config
     {
         public static void ShopWebGisFreeSqlSetup(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<FreeSqlConnectionOptions>(x =>
+            {
+                x.DefacultFreeSqlAction = (action) =>
+                {
+                    action.DataType = FreeSql.DataType.MySql;
+                };
+            });
             services.Configure<DbMigrationOptions>(x =>
             {
                 x.Config("Mysql").Entity<ObservationDataDO>();

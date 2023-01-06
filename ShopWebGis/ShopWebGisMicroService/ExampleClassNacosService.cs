@@ -59,7 +59,7 @@ namespace ShopWebGisMicroService
         public async Task<OutPut> PostXXXMethod(Input input)
         {
             string url = "/api/test";
-           return await PostRequestAsync<OutPut>(Host, url, input);
+            return await PostRequestAsync<OutPut>(Host, url, input);
         }
     }
 

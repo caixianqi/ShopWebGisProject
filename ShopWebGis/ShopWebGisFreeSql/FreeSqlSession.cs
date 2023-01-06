@@ -24,6 +24,8 @@
 
 using FreeSql;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using ShopWebGisFreeSql.config;
 using ShopWebGisFreeSql.Extension;
 using ShopWebGisFreeSql.InterFace;
 using ShopWebGisLogger.Factory;
@@ -44,10 +46,14 @@ namespace ShopWebGisFreeSql
 
         private readonly IElasticSearchFactory _elasticSearchFactory;
 
+        private readonly FreeSqlConnectionOptions _freeSqlConnectionOptions;
+
         protected ConcurrentDictionary<string, IFreeSql> Connections { get; }
 
-        public FreeSqlSession(IConfiguration configuration, IElasticSearchFactory elasticSearchFactory)
+        public FreeSqlSession(IConfiguration configuration, IElasticSearchFactory elasticSearchFactory, IOptions<FreeSqlConnectionOptions> options)
         {
+            if (options.Value == null) throw new ArgumentException("FreeSqlConnectionOptions is Null !");
+            _freeSqlConnectionOptions = options.Value;
             _configuration = configuration;
             _elasticSearchFactory = elasticSearchFactory;
             Connections = new ConcurrentDictionary<string, IFreeSql>();
@@ -71,10 +77,18 @@ namespace ShopWebGisFreeSql
         /// <returns></returns>
         private IFreeSql CreateConnection(string connectStringName)
         {
-            var freeSqlBuilder = new FreeSql.FreeSqlBuilder();
+            FreeSqlContextAction freeSqlContextAction = new FreeSqlContextAction(_configuration.GetConnectionString(connectStringName));
+            if (_freeSqlConnectionOptions.DefacultFreeSqlAction == null)
+            {
+                throw new ArgumentException("FreeSqlConnectionOptions 需要配置对应的数据库DataType!");
+            }
+            else
+            {
+                _freeSqlConnectionOptions.DefacultFreeSqlAction.Invoke(freeSqlContextAction);
+            }
+            var freeSqlBuilder = freeSqlContextAction.freeSqlBuilder;
             freeSqlBuilder.UseLogger(_elasticSearchFactory.GetLogger());
-            var connectString = _configuration.GetConnectionString(connectStringName);
-            return freeSqlBuilder.UseConnectionString(DataType.MySql, connectString).Build();
+            return freeSqlBuilder.Build();
         }
 
         /// <summary>
@@ -96,7 +110,7 @@ namespace ShopWebGisFreeSql
             {
 
             }
-            
+
             Connections.Clear();
         }
     }

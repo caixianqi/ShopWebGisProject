@@ -1,5 +1,6 @@
 using Autofac;
 using DotXxlJob.Core;
+using DotXxlJob.Core.Config;
 using FastLambda;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,11 +74,9 @@ namespace ShopWebGis
             services.Configure<RedisConfiguration>(Configuration.GetSection("RedisConfiguration"));
             services.Configure<EalsticSearchLogOption>(Configuration.GetSection("ElasticSearch"));
             services.ShopWebGisJwtSetup(Configuration); // JWT鉴权
-            services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
-            services.AddAutoRegistry(); // 自动注册
-            services.XxlJobServiceSetup();// XXLJob定时任务注册
+            services.Configure<XxlJobExecutorOptions>(Configuration.GetSection("xxlJob"));
+            services.XxlJobServiceSetup(Configuration);// XXLJob定时任务注册
             services.AddAutoMapper(Assembly.Load("ShopWebGisApplicationContract"));
-            //services.HangFireServiceSetup(Configuration);
             services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true);
             services.AddSingleton<IEvaluator, FastEvaluator>();
             services.DataSetup();

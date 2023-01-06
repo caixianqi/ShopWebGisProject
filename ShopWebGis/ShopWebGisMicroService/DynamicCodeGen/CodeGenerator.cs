@@ -31,7 +31,21 @@ namespace ShopWebGisMicroService.DynamicCodeGen
     public class CodeGenerator
     {
         DynamicCompiler compiler = new DynamicCompiler();
-        public  List<string> AssemblyNames = new List<string>();
-        public  List<string> UsingNames = new List<string>();
+        public List<string> AssemblyNames = new List<string>();
+        public List<string> UsingNames = new List<string>();
+
+        /// <summary>
+        /// 构造动态类
+        /// </summary>
+        /// <param name="type"></param>
+        public void build(Type type)
+        {
+            //if (!type.IsInterface)
+            //{
+
+            //}
+            var className = type.Name;
+
+        }
     }
 }

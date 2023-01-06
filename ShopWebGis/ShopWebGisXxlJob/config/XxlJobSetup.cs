@@ -24,6 +24,7 @@
 
 using DotXxlJob.Core;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShopWebGisXxlJob.Jobs;
 using System;
@@ -34,10 +35,12 @@ namespace ShopWebGisXxlJob.config
 {
     public static class XxlJobSetup
     {
-        public static void  XxlJobServiceSetup(this IServiceCollection services)
+        public static void  XxlJobServiceSetup(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddSingleton<IJobHandler, DemoJobHandler>();
             services.AddSingleton<IJobHandler, CrawlerJDGoodsClassJob>();
+            services.AddXxlJobExecutor(Configuration);// XXLJob执行器调度
+            services.AddAutoRegistry(); // 自动注册           
         }
 
         public static IApplicationBuilder UseXxlJobExecutor(this IApplicationBuilder @this)
