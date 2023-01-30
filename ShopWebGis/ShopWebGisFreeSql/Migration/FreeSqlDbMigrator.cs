@@ -57,6 +57,8 @@ namespace ShopWebGisFreeSql.Migration
             {
                 // 数据表迁移
                 var freeSql = _freeSqlSession.Get(item.Key);
+                // 设置aop,进行自定义特性的写入
+                freeSql.AddCustomAttributesAop();
                 foreach (var entityType in item.Value.EntityConfigs)
                 {
                     // 迁移表结构
@@ -73,8 +75,7 @@ namespace ShopWebGisFreeSql.Migration
                         }
                     }
                 }
-                // 设置aop,进行自定义特性的写入
-                freeSql.AddCustomAttributesAop();
+
             }
         }
     }

@@ -26,11 +26,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ShopWebData.config;
+using ShopWebData.Migration;
 using ShopWebGisDomain.ObservationData;
 using ShopWebGisDomain.User;
 using ShopWebGisDomainShare.Common;
 using ShopWebGisFreeSql.Aop;
 using ShopWebGisFreeSql.InterFace;
+using ShopWebGisFreeSql.Migration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,7 +56,7 @@ namespace ShopWebGisFreeSql.config
                 x.Config("Mysql").Entity<ObservationDataDO>();
             });
             services.AddSingleton<IFreesqlSession, FreeSqlSession>();
-
+            services.AddSingleton<IMigrator, FreeSqlDbMigrator>();
         }
 
 
