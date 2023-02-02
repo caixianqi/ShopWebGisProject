@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using ShopWebGis.Model;
+using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.CustomException;
 using System;
 using System.Collections.Generic;

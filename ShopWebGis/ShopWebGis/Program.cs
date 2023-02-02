@@ -19,6 +19,7 @@ namespace ShopWebGis
         
         public static void Main(string[] args)
         {
+            Environment.SetEnvironmentVariable("ASPNETCORE_HOSTINGSTARTUPASSEMBLIES", "SkyAPM.Agent.AspNetCore");
             SerilogSetup();
             try
             {

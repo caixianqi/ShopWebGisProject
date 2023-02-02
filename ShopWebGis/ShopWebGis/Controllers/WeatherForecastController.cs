@@ -202,7 +202,7 @@ namespace ShopWebGis.Controllers
         public void FreesqlTest1(string ttttt)
         {
             _logger.LogInformation("123");
-            var freeSql = _freesqlSession.Get("Mysql",FreeSql.DataType.MySql).Select<UserInfo>();
+            var freeSql = _freesqlSession.Get("Mysql").Select<UserInfo>();
             //_freesqlSession.Dispose();
             List<string> vs = new List<string>()
             {
