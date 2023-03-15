@@ -32,6 +32,7 @@ using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.Const;
 using ShopWebGisDomainShare.CustomException;
 using ShopWebGisDomainShare.Extension;
+using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -45,11 +46,10 @@ namespace Repository.Base
     public class Repository<TPrimaryKey, TEntity> : IRepository<TPrimaryKey, TEntity> where TEntity : EntityBase<TPrimaryKey>
     {
         private readonly DbContext _dbContext;
-        private DbSet<TEntity> _dbSet;
-        public Repository(IUnitOfWork unitOfWork)
+        private DbSet<TEntity> _dbSet => _dbContext.Set<TEntity>();
+        public Repository(ShopWebGisDbContext dbContext)
         {
-            _dbContext = unitOfWork.GetDbContext();
-            _dbSet = _dbContext.Set<TEntity>();
+            _dbContext = dbContext;
         }
 
         public virtual void AttachIfNot(TEntity entity)
@@ -79,7 +79,7 @@ namespace Repository.Base
 
         public async Task<List<TEntity>> GetAvailableListAsync()
         {
-            return await _dbSet.Where(x => x.isSoftDelete == true).ToListAsync();
+            return await _dbSet.Where(x => x.isSoftDelete == false).ToListAsync();
         }
 
         public async Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate)

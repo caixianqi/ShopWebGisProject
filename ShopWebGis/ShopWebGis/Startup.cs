@@ -38,6 +38,7 @@ using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using static ShopWebGis.Controllers.WeatherForecastController;
 
 namespace ShopWebGis
 {
@@ -91,7 +92,7 @@ namespace ShopWebGis
             });
             services.AddHttpContextAccessor();
             services.AddNacosAspNetCore(Configuration);// Nacos·þÎñ×¢²á
-
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

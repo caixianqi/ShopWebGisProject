@@ -32,13 +32,14 @@ namespace ShopWebGisMongoDB.Base
 {
     public abstract class ShopWebGisMongoDBContext<TEntity, ICollectionName>
     {
-        public IMongoCollection<TEntity> _mongoDBCollection;
-        public FindOptions<TEntity, TEntity> _mongoDBFindOptions;
+        protected IMongoCollection<TEntity> _mongoDBCollection;
+        protected FindOptions<TEntity, TEntity> _mongoDBFindOptions;
+        protected IMongoDatabase dataBase { get; }
         public ShopWebGisMongoDBContext(IShopWebGisDatabaseSettings shopWebGisDatabaseSettings)
         {
             var client = new MongoClient(shopWebGisDatabaseSettings.ConnectionString);
-            var database = client.GetDatabase(shopWebGisDatabaseSettings.DatabaseName);
-            _mongoDBCollection = database.GetCollection<TEntity>(typeof(ICollectionName).Name);
+            dataBase = client.GetDatabase(shopWebGisDatabaseSettings.DatabaseName);
+            _mongoDBCollection = dataBase.GetCollection<TEntity>(typeof(ICollectionName).Name);
             _mongoDBFindOptions = new FindOptions<TEntity, TEntity>();
         }
     }

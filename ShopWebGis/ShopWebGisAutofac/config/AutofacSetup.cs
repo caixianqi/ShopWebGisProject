@@ -74,7 +74,7 @@ namespace ShopWebGisDomainShare.Extension
 
             var ApplicationFile = Path.Combine(basePath, "ShopWebGisApplication.dll");
             var ApplicationFileServices = Assembly.LoadFile(ApplicationFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).PublicOnly().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).PublicOnly().AsImplementedInterfaces().InstancePerDependency();
         }
     }
 

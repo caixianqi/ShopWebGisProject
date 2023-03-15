@@ -22,11 +22,13 @@ using ShopWebGisMongoDB.Base;
 using ShopWebGisMongoDB.MongoDBCollection;
 using ShopWebGisMongoDB.MongoDBConfig;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,9 +51,10 @@ namespace ShopWebGis.Controllers
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test> _testimongoDBRepository;
         private readonly IMongoDBRepository<ObjectId, BsonDocument, test1> _test1imongoDBRepository;
         private readonly IFreesqlSession _freesqlSession;
+        private readonly IHttpClientFactory _httpClientFactory;
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<int, UserInfo> iUserInfoRepository, IDistributedCache distributedCache, IConfiguration configuration,
             IMongoDBRepository<ObjectId, BsonDocument, test> testMongoDBRepository, IMongoDBRepository<ObjectId, BsonDocument, test1> test1MongoDBRepository,
-            IFreesqlSession freesqlSession)
+            IFreesqlSession freesqlSession, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _iUserInfoRepository = iUserInfoRepository;
@@ -60,10 +63,11 @@ namespace ShopWebGis.Controllers
             _test1imongoDBRepository = test1MongoDBRepository;
             _freesqlSession = freesqlSession;
             _configuration = configuration;
+            _httpClientFactory = httpClientFactory;
         }
 
-        [HttpGet]
-        public async Task Get()
+        [HttpGet("etetet")]
+        public void Get()
         {
             //var client = new MongoClient(_shopWebGisDatabaseSettings.ConnectionString);
             //var database = client.GetDatabase(_shopWebGisDatabaseSettings.DatabaseName);
@@ -107,12 +111,12 @@ namespace ShopWebGis.Controllers
             //}
             //return "12";
             var content = "";
-            for (int i = 0; i < 50000; i++)
+            for (int i = 0; i < 50; i++)
             {
                 content += "123";
             }
-            var f2 = new StreamWriter("C:\\Users\\58330\\Desktop\\test.txt", true, Encoding.GetEncoding("gb2312"));
-            f2.WriteLineAsync(content);
+            
+            //f2.WriteLineAsync(content);
 
         }
 
@@ -194,25 +198,21 @@ namespace ShopWebGis.Controllers
             };
             Func<string> func = () => { return "123"; };
 
-
+            using (var client = _httpClientFactory.CreateClient())
+            {
+                var tt = client.GetAsync("http://localhost:5002/WeatherForecast/etetet");
+            }
             //test.SubTableSelect(expression, null);
         }
 
         [HttpGet("FreesqlTest1")]
-        public void FreesqlTest1(string ttttt)
+        public async Task FreesqlTest1(string ttttt)
         {
-            _logger.LogInformation("123");
-            var freeSql = _freesqlSession.Get("Mysql").Select<UserInfo>();
-            //_freesqlSession.Dispose();
-            List<string> vs = new List<string>()
+            using (var client = _httpClientFactory.CreateClient())
             {
-                "1232",
-                "41123123",
-                "34324"
-            };
-            
+                var tt= await client.GetAsync("http://localhost:5001/WeatherForecast");
+            }
         }
-
 
     }
 }

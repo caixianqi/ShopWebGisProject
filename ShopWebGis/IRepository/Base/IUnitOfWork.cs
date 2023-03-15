@@ -21,14 +21,16 @@
  *描述：工作单元接口
 
 /************************************************************************************/
+using IRepository.Base;
 using Microsoft.EntityFrameworkCore;
+using ShopWebGisDomain.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace IRepository
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IDisposable
     {
         DbContext GetDbContext();
 
@@ -36,5 +38,13 @@ namespace IRepository
 
         void CommitTran();
         void RollbackTran();
+
+        /// <summary>
+        /// 获取仓储
+        /// </summary>
+        /// <typeparam name="TPrimaryKey"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        IRepository<TPrimaryKey, TEntity> Repositorys<TPrimaryKey, TEntity>() where TEntity : EntityBase<TPrimaryKey>;
     }
 }
