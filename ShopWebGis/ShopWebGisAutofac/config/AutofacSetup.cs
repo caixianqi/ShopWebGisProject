@@ -23,10 +23,13 @@
 /************************************************************************************/
 
 using Autofac;
+using IRepository;
 using IRepository.Base;
 using Repository.Base;
 using ShopWebGisDomain.User;
 using ShopWebGisMongoDB.Base;
+using ShopWebJson;
+using ShopWebJson.Newtonsoft;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,13 +45,14 @@ namespace ShopWebGisDomainShare.Extension
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerLifetimeScope();//注册仓储
+            containerBuilder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>));//注册仓储
+            containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             //获取项目路径
             var basePath = AppContext.BaseDirectory;
 
             var RepositoryDllFile = Path.Combine(basePath, "Repository.dll");
             var RepositoryServices = Assembly.LoadFile(RepositoryDllFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(RepositoryServices).Where(x=>x.Name.EndsWith("")).AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterAssemblyTypes(RepositoryServices).Where(x => x.Name.EndsWith("")).AsImplementedInterfaces();
         }
     }
 
@@ -81,7 +85,7 @@ namespace ShopWebGisDomainShare.Extension
     /// <summary>
     /// Redis应用层注入
     /// </summary>
-    public class RedisCacheAutofacSetup: Autofac.Module
+    public class RedisCacheAutofacSetup : Autofac.Module
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
@@ -93,5 +97,11 @@ namespace ShopWebGisDomainShare.Extension
         }
     }
 
-   
+    public class NetJsonAutofacSetup : Autofac.Module
+    {
+        protected override void Load(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<NewtonsoftJsonSerializer>().As<IJsonSerializer>().PropertiesAutowired().InstancePerDependency();
+        }
+    }
 }

@@ -15,6 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.29" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="nacos-sdk-csharp-unofficial.AspNetCore" Version="0.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -25,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IRepository\IRepository.csproj" />
+    <ProjectReference Include="..\ShopCaching\ShopWebCaching.csproj" />
     <ProjectReference Include="..\ShopWebCore\ShopWebCore.csproj" />
     <ProjectReference Include="..\ShopWebData\ShopWebData.csproj" />
     <ProjectReference Include="..\ShopWebGisApplicationContract\ShopWebGisApplicationContract.csproj" />
@@ -59,6 +61,9 @@
     </None>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\launchSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\ShopWebGisMongoDB\ShopWebGisMongoDB.csproj" />
     <ProjectReference Include="..\ShopWebGisRedis\ShopWebGisRedis.csproj" />
+    <ProjectReference Include="..\ShopWebJson\ShopWebJson.csproj" />
   </ItemGroup>
 
   <ItemGroup>

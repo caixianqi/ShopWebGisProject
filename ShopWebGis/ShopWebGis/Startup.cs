@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using ShopWebCaching;
 using ShopWebData.config;
 using ShopWebGis.Filters;
 using ShopWebGis.HttApi.Host.Extension;
@@ -33,6 +34,7 @@ using ShopWebGisRedis.config;
 using ShopWebGisXxlJob.config;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Encodings.Web;
@@ -55,8 +57,12 @@ namespace ShopWebGis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.ShopWebGisRedisSetup(Configuration);
+            services.Configure<DistributedCacheOptions>(cacheOptions =>
+            {
+                cacheOptions.GlobalCacheEntryOptions.SlidingExpiration = TimeSpan.FromMinutes(20);
+            });
             services.ShopWebGisFreeSqlSetup(Configuration);
             services.AddSingleton<IElasticSearchFactory, ElasticSearchFactory>();// ES工厂接口
             services.ShopWebGisMongoDBConfigureServices(Configuration);
@@ -73,6 +79,11 @@ namespace ShopWebGis
             });
             services.Configure<Jwt>(Configuration.GetSection("Jwt"));
             services.Configure<RedisConfiguration>(Configuration.GetSection("RedisConfiguration"));
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "127.0.0.1:6379";
+                options.InstanceName = "App:";
+            });
             services.Configure<EalsticSearchLogOption>(Configuration.GetSection("ElasticSearch"));
             services.ShopWebGisJwtSetup(Configuration); // JWT鉴权
             services.Configure<XxlJobExecutorOptions>(Configuration.GetSection("xxlJob"));
@@ -134,10 +145,13 @@ namespace ShopWebGis
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterModule<RepositoryAutofacSetup>();
-            containerBuilder.RegisterModule<MongoDBRepositoryAutofacSetup>();
-            containerBuilder.RegisterModule<ApplicationAutofacSetup>();
-            containerBuilder.RegisterModule<RedisCacheAutofacSetup>();
+            var basePath = AppContext.BaseDirectory;
+            var assemblyFilePath = Path.Combine(basePath, "ShopWebGisAutofac.dll");
+            var assembly = Assembly.LoadFile(assemblyFilePath);//加载程序集
+            foreach (var type in assembly.GetInheritTypes<Autofac.Module>())
+            {
+                containerBuilder.RegisterModule(type);
+            }
         }
     }
 }

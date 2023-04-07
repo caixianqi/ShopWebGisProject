@@ -21,10 +21,12 @@
  *描述：Cache操作接口
 
 /************************************************************************************/
+using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ShopWebGisCache
@@ -108,5 +110,49 @@ namespace ShopWebGisCache
         /// <returns></returns>
         Task<bool> HashDeleteAsync(RedisKey redisKey, RedisValue hashField);
 
+        ///// <summary>
+        ///// 获取缓存值
+        ///// </summary>
+        ///// <typeparam name="TCacheItem"></typeparam>
+        ///// <typeparam name="TCacheKey"></typeparam>
+        ///// <param name="key"></param>
+        ///// <param name="cacheName"></param>
+        ///// <returns></returns>
+        //TCacheItem Get<TCacheItem, TCacheKey>(TCacheKey key, string cacheName) where TCacheItem : class;
+
+        ///// <summary>
+        ///// 异步获取缓存值
+        ///// </summary>
+        ///// <typeparam name="TCacheItem"></typeparam>
+        ///// <typeparam name="TCacheKey"></typeparam>
+        ///// <param name="key"></param>
+        ///// <param name="cacheName"></param>
+        ///// <param name="token"></param>
+        ///// <returns></returns>
+        //TCacheItem GetAsync<TCacheItem, TCacheKey>(TCacheKey key, string cacheName, CancellationToken token = default) where TCacheItem : class;
+
+        ///// <summary>
+        ///// 获取添加缓存值
+        ///// </summary>
+        ///// <typeparam name="TCacheItem"></typeparam>
+        ///// <typeparam name="TCacheKey"></typeparam>
+        ///// <param name="key"></param>
+        ///// <param name="factory"></param>
+        ///// <param name="cacheName"></param>
+        ///// <param name="optionsFactory"></param>
+        ///// <returns></returns>
+        //TCacheItem GetOrAdd<TCacheItem, TCacheKey>(TCacheKey key, Func<TCacheItem> factory, string cacheName, Func<DistributedCacheEntryOptions> optionsFactory = null);
+
+        ///// <summary>
+        ///// 异步获取添加缓存值
+        ///// </summary>
+        ///// <typeparam name="TCacheItem"></typeparam>
+        ///// <typeparam name="TCacheKey"></typeparam>
+        ///// <param name="key"></param>
+        ///// <param name="factory"></param>
+        ///// <param name="cacheName"></param>
+        ///// <param name="optionsFactory"></param>
+        ///// <returns></returns>
+        //TCacheItem GetOrAddAsync<TCacheItem, TCacheKey>(TCacheKey key, Func<TCacheItem> factory, string cacheName, Func<DistributedCacheEntryOptions> optionsFactory = null, CancellationToken token = default);
     }
 }

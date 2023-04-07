@@ -3,7 +3,7 @@
     "ServiceName": "ShopWebGis",
     "Namespace": "",
     "HeaderVersions": [
-      "sw8" //6.x以下的版本为sw6
+      "sw6" //6.x以下的版本为sw6
     ],
     "Sampling": {
       "SamplePer3Secs": -1,
@@ -15,7 +15,7 @@
     },
     "Transport": {
       "Interval": 3000,
-      "ProtocolVersion": "v8", //6.x以下的版本为v6
+      "ProtocolVersion": "v6", //6.x以下的版本为v6
       "QueueSize": 30000,
       "BatchSize": 3000,
       "gRPC": {
