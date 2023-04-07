@@ -32,13 +32,14 @@ namespace ShopWebGisDomainShare.Extension
 {
     public static class AssemblyExtension
     {
+
         /// <summary>
         /// 获取程序集下继承指定Type的类型
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="assembly">程序集</param>
-        /// <param name="args">构造参数</param>
-        /// <returns>返回指定的泛型类</returns>
+        /// <param name="assembly"></param>
+        /// <param name="args">构造函数参数</param>
+        /// <returns></returns>
         public static IEnumerable<T> GetInheritTypes<T>(this Assembly assembly, params object[] args) where T : class
         {
             return assembly.GetModules().SelectMany(module => module.GetTypes()).Where(type => type.IsSubclassOf(typeof(T))).Select(x => (T)Activator.CreateInstance(x, args));
