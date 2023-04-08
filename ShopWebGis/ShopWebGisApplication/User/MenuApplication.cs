@@ -42,9 +42,9 @@ namespace ShopWebGisApplication.User
     {
         private readonly IRepository<int, MenuInfo> _repository;
         private readonly IMapper _mapper;
-        public MenuApplication(IRepository<int, MenuInfo> repository, IMapper mapper)
+        public MenuApplication(IUnitOfWork iUnitOfWork, IMapper mapper)
         {
-            _repository = repository;
+            _repository = iUnitOfWork.Repositorys<int, MenuInfo>(); ;
             _mapper = mapper;
         }
         public async Task<int> AddMenu(MenuDto menuDto)

@@ -26,6 +26,8 @@ using Autofac;
 using IRepository;
 using IRepository.Base;
 using Repository.Base;
+using ShopWebCaching;
+using ShopWebCaching.Caching;
 using ShopWebGisDomain.User;
 using ShopWebGisMongoDB.Base;
 using ShopWebJson;
@@ -102,6 +104,16 @@ namespace ShopWebGisDomainShare.Extension
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<NewtonsoftJsonSerializer>().As<IJsonSerializer>().PropertiesAutowired().InstancePerDependency();
+        }
+    }
+
+    public class CachingAutofacSetup : Autofac.Module
+    {
+        protected override void Load(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<DistributedCacheKeyNormalizer>().As<IDistributedCacheKeyNormalizer>();
+            containerBuilder.RegisterType<DistributedCacheSerializer>().As<IDistributedCacheSerializer>();
+            containerBuilder.RegisterType<CommonDistributedCache>().As<ICommonDistributedCache>().PropertiesAutowired().SingleInstance();
         }
     }
 }

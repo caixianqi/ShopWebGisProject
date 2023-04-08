@@ -25,6 +25,7 @@
 using AutoMapper;
 using DotXxlJob.Core;
 using HtmlAgilityPack;
+using IRepository;
 using IRepository.Base;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -47,12 +48,12 @@ namespace ShopWebGisXxlJob.Jobs
         private readonly IConfiguration _configuration;
         private readonly IRepository<int, GoodClassification> _repository;
         private readonly IMapper _mapper;
-        public CrawlerJDGoodsClassJob(ILogger<CrawlerJDGoodsClassJob> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration, IRepository<int, GoodClassification> repository, IMapper mapper)
+        public CrawlerJDGoodsClassJob(ILogger<CrawlerJDGoodsClassJob> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration, IUnitOfWork iUnitOfWork, IMapper mapper)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
-            _repository = repository;
+            _repository = iUnitOfWork.Repositorys<int, GoodClassification>();
             _mapper = mapper;
         }
         public async override Task<Rtd> Execute(JobContext jobExecuteContext)

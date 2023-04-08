@@ -82,7 +82,12 @@ namespace Repository.Base
 
         public void Dispose()
         {
-            _dbTransaction.Dispose();
+            
+            if (_dbTransaction != null)
+            {
+                _dbTransaction.Dispose();
+            }
+            //垃圾回收
             _dbContext.Dispose();
             GC.SuppressFinalize(this);
         }

@@ -88,19 +88,26 @@ namespace ShopWebGisElasticSearch
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 request.Headers.Add("kbn-xsrf", "kibana");
                 httpClient.Timeout = TimeSpan.FromSeconds(1000);//超过一秒就不管
-                var response = await httpClient.SendAsync(request);
-                if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
+                try
                 {
-                    string data = await response.Content.ReadAsStringAsync();
-                    return data;
+                    var response = await httpClient.SendAsync(request);
+                    if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
+                    {
+                        string data = await response.Content.ReadAsStringAsync();
+                        return data;
+                    }
+                    else
+                    {
+                        return "";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return "";
+                    // 异常直接暂停程序？
+                    //throw;
                 }
             }
-
-
+            return "";
         }
 
         private async void PutMsg(LogModel logModel)

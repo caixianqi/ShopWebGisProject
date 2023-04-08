@@ -66,7 +66,7 @@ namespace ShopWebGisLogger.Adpter
             {
                 Level = Enum.GetName(typeof(LogLevel), LogLevel.Error),
                 Msg = msg,
-                Success = false,
+                Success = true,
                 Index = !string.IsNullOrWhiteSpace(index) ? index : _options.Value.Index
             });
 

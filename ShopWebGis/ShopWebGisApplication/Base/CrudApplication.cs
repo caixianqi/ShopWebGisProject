@@ -23,7 +23,9 @@
 /************************************************************************************/
 
 using AutoMapper;
+using IRepository;
 using IRepository.Base;
+using Repository.Base;
 using ShopWebGisApplicationContract.Base;
 using ShopWebGisDomain.Base;
 using ShopWebGisDomainShare.Common;
@@ -34,14 +36,14 @@ using System.Threading.Tasks;
 
 namespace ShopWebGisApplication.Base
 {
-    public class CrudApplication<TPrimaryKey, Entity, EntityDto> : ICrudApplication<TPrimaryKey, Entity, EntityDto> where Entity : class
+    public class CrudApplication<TPrimaryKey, Entity, EntityDto> : ICrudApplication<TPrimaryKey, Entity, EntityDto> where Entity : EntityBase<TPrimaryKey>
         where EntityDto : IEntityDto<TPrimaryKey>
     {
         private readonly IRepository<TPrimaryKey, Entity> _repository;
         private readonly IMapper _mapper;
-        public CrudApplication(IRepository<TPrimaryKey, Entity> repository, IMapper mapper)
+        public CrudApplication(IUnitOfWork iUnitOfWork, IMapper mapper)
         {
-            _repository = repository;
+            _repository = iUnitOfWork.Repositorys<TPrimaryKey, Entity>();
             _mapper = mapper;
         }
         public virtual async Task<int> CreateAsync(EntityDto entityDto)

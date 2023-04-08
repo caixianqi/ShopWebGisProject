@@ -8,7 +8,7 @@
 
  *命名空间：ShopWebCaching
 
- *文件名：  IDistributedCacheKeyNormalizer
+ *文件名：  IDistributedCacheSerializer
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人： 蔡显麒
 
- *创建时间：2023/4/5 0:03:31
+ *创建时间：2023/4/7 23:57:32
 
- *描述：
+ *描述：缓存序列化
 
 /************************************************************************************/
 using System;
@@ -27,13 +27,11 @@ using System.Text;
 
 namespace ShopWebCaching
 {
-    public interface IDistributedCacheKeyNormalizer
+    public interface IDistributedCacheSerializer
     {
-        /// <summary>
-        /// 生成标准形式的Key
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        string NormalizeKey(DistributedCacheKeyNormalizeArgs args);
+        byte []  Serialize<T>(T o);
+
+        T DeSerialize<T>(byte[] bytes);
+
     }
 }

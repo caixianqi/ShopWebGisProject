@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using ShopWebGisDomainShare.Common;
 using ShopWebGisDomainShare.CustomException;
+using ShopWebGisElasticSearch;
+using ShopWebGisLogger.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,11 @@ namespace ShopWebGis.Filters
     public class CustomerExceptionFilter : IAsyncExceptionFilter
     {
         private readonly ILogger<CustomerExceptionFilter> _logger;
-        public CustomerExceptionFilter(ILogger<CustomerExceptionFilter> logger)
+        private readonly IGisLogger _elasticlogger;
+        public CustomerExceptionFilter(ILogger<CustomerExceptionFilter> logger, IElasticSearchFactory elasticSearchFactory)
         {
             _logger = logger;
+            _elasticlogger = elasticSearchFactory.GetLogger();
         }
         public Task OnExceptionAsync(ExceptionContext context)
         {
@@ -33,15 +37,19 @@ namespace ShopWebGis.Filters
                     respnse.ResultCode = 200;
                     respnse.ErrorMessage = context.Exception.Message;
                     context.Result = new JsonResult(respnse);
+                    _logger.LogError(context.Exception.Message);
+                    _logger.LogError(context.Exception.Message);
                 }
                 else
                 {
-                    _logger.LogError(context.Exception, context.Exception.Message);
-                    // 记录到elasticsearch
+                    
+                    // 500未捕获的异常记录到ealsticsearch,并且打上Exception标识
                     respnse.ResultCode = 500;
                     respnse.ErrorMessage = "内部发生错误!";
                     context.Result = new JsonResult(respnse);
-
+                    _elasticlogger.LogException(context.Exception);
+                    _logger.LogError(context.Exception, context.Exception.Message);
+                    
                 }
 
             }

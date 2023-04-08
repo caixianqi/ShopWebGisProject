@@ -56,10 +56,10 @@ namespace ShopWebGisApplication.User
         private readonly IConfiguration _configuration;
         private readonly IUser _iuser;
         private readonly IUserCache _iuserCache;
-        public UserApplication(IMapper mapper, IRepository<int, UserInfo> userRepository, IOptions<Jwt> jwtConfig, IConfiguration configuration, IUser iuser, IUserCache userCache)
+        public UserApplication(IMapper mapper, IUnitOfWork iUnitOfWork, IOptions<Jwt> jwtConfig, IConfiguration configuration, IUser iuser, IUserCache userCache)
         {
             _mapper = mapper;
-            _userRepository = userRepository;
+            _userRepository = iUnitOfWork.Repositorys<int,UserInfo>();
             _jwtConfig = jwtConfig;
             _configuration = configuration;
             _iuser = iuser;

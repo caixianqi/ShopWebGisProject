@@ -23,6 +23,7 @@
 /************************************************************************************/
 
 
+using IRepository;
 using IRepository.Base;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisDomain.User;
@@ -36,9 +37,9 @@ namespace ShopWebGisApplication.User
     public class RoleApplication : IRoleApplication
     {
         private readonly IRepository<int, RoleInfo> _roleRepository;
-        public RoleApplication(IRepository<int, RoleInfo> repository)
+        public RoleApplication(IUnitOfWork iUnitOfWork)
         {
-            _roleRepository = repository;
+            _roleRepository = iUnitOfWork.Repositorys<int, RoleInfo>(); ;
         }
         public async Task<List<RoleInfo>> GetRoleList(string name)
         {

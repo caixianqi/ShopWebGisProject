@@ -23,6 +23,7 @@
 /************************************************************************************/
 
 using AutoMapper;
+using IRepository;
 using IRepository.Base;
 using ShopWebGisApplication.Base;
 using ShopWebGisApplicationContract.Shop;
@@ -40,9 +41,9 @@ namespace ShopWebGisApplication.Shop
     {
         private readonly IRepository<int, GoodClassification> _repository;
         private readonly IMapper _mapper;
-        public GoodClassifyApplication(IRepository<int, GoodClassification> repository, IMapper mapper) : base(repository, mapper)
+        public GoodClassifyApplication(IUnitOfWork iUnitOfWork, IMapper mapper) : base(iUnitOfWork, mapper)
         {
-            _repository = repository;
+            _repository = iUnitOfWork.Repositorys<int, GoodClassification>();
             _mapper = mapper;
         }
     }
