@@ -47,6 +47,15 @@ namespace ShopWebGisDomain.User
         /// </summary>
         public string UserName { get; set; }
 
+        [Required]
+        [StringLength(35)]
+        [Column("userloginid")]
+        [Comment("用户登录名")]
+        /// <summary>
+        /// 用户登录名
+        /// </summary>
+        public string UserLoginId { get; set; }
+
         [Comment("用户密码")]
         [Required]
         [Column("userpassword")]
@@ -63,6 +72,30 @@ namespace ShopWebGisDomain.User
         /// 用户号码
         /// </summary>
         public string UserPhone { get; set; }
+
+        [Comment("公开Id")]
+        [StringLength(100)]
+        [Column("openid")]
+        /// <summary>
+        /// OpenId
+        /// </summary>
+        public string OpenId { get; set; }
+
+        [Comment("注册方式")]
+        [StringLength(30)]
+        [Column("registrationtype")]
+        /// <summary>
+        /// 注册方式(手机号码/微信/支付宝/微博.....)
+        /// </summary>
+        public string RegistrationType { get; set; }
+
+        [Comment("用户头像")]
+        [Column("userheadportrait")]
+        /// <summary>
+        /// 注册方式(手机号码/微信/支付宝/微博.....)
+        /// </summary>
+        public string UserHeadPortrait { get; set; }
+
 
         /// <summary>
         /// 用户地址

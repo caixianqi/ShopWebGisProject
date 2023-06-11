@@ -80,12 +80,12 @@ namespace ShopWebGisApplication.User
             var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
             #endregion
             ComplexToken complexToken = new ComplexToken();
-            var user = await _userRepository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.UserName == userName);
+            var user = await _userRepository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.UserLoginId == userName);
             if (user == null)
             {
                 throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在!");
             }
-            if (user.isSoftDelete)
+            if (user.IsSoftDelete)
             {
                 throw new ShopWebGisCustomException(SystemConst.UserHasBeenDisabled);
             }
@@ -130,8 +130,8 @@ namespace ShopWebGisApplication.User
                 throw new ShopWebGisCustomException(response + validateResult.ToString());
             }
             #endregion
-            // 判断是否存在相同的用户名
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == userDto.UserName);
+            // 判断是否存在相同的用户登录名
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserLoginId == userDto.UserLoginId);
             if (user != null)
             {
                 throw new ShopWebGisCustomException(response + "用户已存在,请修改用户名,重新注册!");

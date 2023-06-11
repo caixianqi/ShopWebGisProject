@@ -79,12 +79,12 @@ namespace Repository.Base
 
         public async Task<List<TEntity>> GetAvailableListAsync()
         {
-            return await _dbSet.Where(x => x.isSoftDelete == false).ToListAsync();
+            return await _dbSet.Where(x => x.IsSoftDelete == false).ToListAsync();
         }
 
         public async Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var expression = predicate.Merge((x => x.isSoftDelete == false));
+            var expression = predicate.Merge((x => x.IsSoftDelete == false));
             return await _dbSet.Where(expression).ToListAsync();
         }
 
@@ -95,7 +95,7 @@ namespace Repository.Base
 
         public async Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 1, int pageSize = 20)
         {
-            var expression = predicate.Merge((x => x.isSoftDelete == false));
+            var expression = predicate.Merge((x => x.IsSoftDelete == false));
             return await _dbSet.Where(expression).OrderBy(x => x.Id).ToPagedListAsync(pageIndex, pageSize);
         }
 
@@ -184,6 +184,12 @@ namespace Repository.Base
             return await SaveAsync();
         }
 
+        public async Task<int> DeleteManyAsync(params TPrimaryKey[] ids)
+        {
+            var entities = _dbSet.Where(x => ids.Contains(x.Id));
+            _dbSet.RemoveRange(entities);
+            return await SaveAsync();
+        }
 
         public async Task<int> SoftDeleteAsync([NotNull] TPrimaryKey id)
         {
@@ -192,7 +198,7 @@ namespace Repository.Base
             {
                 throw new ShopWebGisCustomException($"{typeof(TEntity).Name}-{id}不存在,无法进行追踪禁用!");
             }
-            entity.isSoftDelete = true;
+            entity.IsSoftDelete = true;
             _dbSet.Update(entity);
             return await SaveAsync();
         }
@@ -202,7 +208,18 @@ namespace Repository.Base
             var entities = _dbSet.Where(predicate);
             foreach (var entity in entities)
             {
-                entity.isSoftDelete = true;
+                entity.IsSoftDelete = true;
+                _dbSet.Update(entity);
+            }
+            return await SaveAsync();
+        }
+
+        public async Task<int> SoftDeleteManyAsync(params TPrimaryKey[] ids)
+        {
+            var entities = _dbSet.Where(x=>ids.Contains(x.Id));
+            foreach (var entity in entities)
+            {
+                entity.IsSoftDelete = true;
                 _dbSet.Update(entity);
             }
             return await SaveAsync();

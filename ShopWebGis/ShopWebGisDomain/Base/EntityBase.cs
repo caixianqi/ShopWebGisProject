@@ -45,7 +45,7 @@ namespace ShopWebGisDomain.Base
         /// <summary>
         /// 是否删除
         /// </summary>
-        public bool isSoftDelete { get; set; } = false;
+        public bool IsSoftDelete { get; set; } = false;
 
         [Comment("创建用户Id")]
         [Column("createuserid")]

@@ -1,33 +1,35 @@
 /************************************************************************************
 
- * Copyright (c) 2022 All Rights Reserved.
+ * Copyright (c) 2023 All Rights Reserved.
 
  * CLR版本： 4.0.30319.42000
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisDomain.Base
+ *命名空间：ShopWebGisApplicationContract.System.Dto
 
- *文件名：  IEntityDto
+ *文件名：  DataDictionaryDto
 
  *版本号：  V1.0.0.0
 
  *当前的用户域：LAPTOP-CC5K5UTK
 
- *创建人： 蔡显麒
+ *创建人：  蔡显麒
 
- *创建时间：2022/7/26 11:29:15
+ *创建时间：2023/6/10 0:05:06
 
- *描述：标识为基础为增删改查应用层DTO泛型接口
+ *描述：数据字典Dto
 
 /************************************************************************************/
+
+using ShopWebGisDomain.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisDomain.Base
+namespace ShopWebGisApplicationContract.System.Dto
 {
-    public interface IEntityDto<TPrimaryKey>
+    public class DataDictionaryDto: IEntityDto<int>
     {
 
     }

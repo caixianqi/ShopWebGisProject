@@ -39,6 +39,11 @@ namespace ShopWebGisApplicationContract.User.Models
         public string UserName { get; set; }
 
         /// <summary>
+        /// 用户登录Id
+        /// </summary>
+        public string UserLoginId { get; set; }
+
+        /// <summary>
         /// 用户密码
         /// </summary>
         public string UserPassword { get; set; }
@@ -47,6 +52,7 @@ namespace ShopWebGisApplicationContract.User.Models
         /// 用户电话
         /// </summary>
         public string UserPhone { get; set; }
+
 
         /// <summary>
         /// 用户省份

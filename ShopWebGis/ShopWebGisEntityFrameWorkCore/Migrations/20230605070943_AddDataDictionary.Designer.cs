@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
 
 namespace ShopWebGisEntityFrameWorkCore.Migrations
 {
     [DbContext(typeof(ShopWebGisDbContext))]
-    partial class ShopWebGisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230605070943_AddDataDictionary")]
+    partial class AddDataDictionary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -419,18 +421,6 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         .HasColumnName("createusername")
                         .HasComment("创建用户名称");
 
-                    b.Property<string>("OpenId")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("openid")
-                        .HasComment("公开Id");
-
-                    b.Property<string>("RegistrationType")
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)")
-                        .HasColumnName("registrationtype")
-                        .HasComment("注册方式");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime")
                         .HasColumnName("updatetime")
@@ -445,18 +435,6 @@ namespace ShopWebGisEntityFrameWorkCore.Migrations
                         .HasColumnType("text")
                         .HasColumnName("updateusername")
                         .HasComment("更新操作用户名称");
-
-                    b.Property<string>("UserHeadPortrait")
-                        .HasColumnType("text")
-                        .HasColumnName("userheadportrait")
-                        .HasComment("用户头像");
-
-                    b.Property<string>("UserLoginId")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("varchar(35)")
-                        .HasColumnName("userloginid")
-                        .HasComment("用户登录名");
 
                     b.Property<string>("UserName")
                         .IsRequired()

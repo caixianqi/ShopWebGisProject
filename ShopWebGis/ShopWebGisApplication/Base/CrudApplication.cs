@@ -52,9 +52,29 @@ namespace ShopWebGisApplication.Base
             return await _repository.InsertAsync(menu);
         }
 
+        public virtual async Task<int> UpdateAsync(Entity entity)
+        {
+            return await _repository.UpdateAsync(entity);            
+        }
+
         public virtual async Task<int> DisableAsync(TPrimaryKey id)
         {
             return await _repository.SoftDeleteAsync(id);
+        }
+
+        public virtual async Task<int> DeleteAsync(TPrimaryKey id)
+        {
+            return await _repository.SoftDeleteAsync(id);
+        }
+
+        public virtual async Task<int> DisableManyAsync(params TPrimaryKey[] ids)
+        {
+            return await _repository.SoftDeleteManyAsync(ids);
+        }
+
+        public virtual async Task<int> DeleteManyAsync(params TPrimaryKey[] ids)
+        {
+            return await _repository.DeleteManyAsync(ids);
         }
 
         public virtual async Task<EntityDto> GetAsync(TPrimaryKey id)

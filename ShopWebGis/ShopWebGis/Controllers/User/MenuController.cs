@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopWebGisApplicationContract.User;
 using ShopWebGisApplicationContract.User.Models;
+using ShopWebGisDomain.User;
 using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,8 @@ using System.Threading.Tasks;
 namespace ShopWebGis.HttApi.Host.Controllers
 {
     [ApiController]
-    [Route("api/Menu")]
     [Authorize]
-    public class MenuController : ControllerBase
+    public class MenuController : CrudBaseController<int, MenuInfo, MenuDto>
     {
         private readonly IMenuApplication _menuApplication;
         public MenuController(IMenuApplication menuApplication)

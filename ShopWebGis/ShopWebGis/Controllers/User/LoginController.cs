@@ -31,6 +31,17 @@ namespace ShopWebGis.Controllers.Login
         }
 
         /// <summary>
+        /// 注册API
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost(nameof(Regisgter))]
+        public async Task<string> Regisgter(UserDto user)
+        {
+            return await _loginApplication.ShopWebGisRegister(user);
+        }
+
+        /// <summary>
         /// 登录API
         /// </summary>
         /// <param name="userName"></param>
@@ -41,18 +52,6 @@ namespace ShopWebGis.Controllers.Login
         public async Task<ComplexToken> Login([FromForm] string userName, [FromForm] string userPassWord)
         {
             return await _loginApplication.ShopWebGisILogin(userName, userPassWord);
-
-        }
-
-        /// <summary>
-        /// 注册API
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        [HttpPost(nameof(Regisgter))]
-        public async Task<string> Regisgter(UserDto user)
-        {
-            return await _loginApplication.ShopWebGisRegister(user);
         }
 
         [HttpGet(nameof(RefreshToken))]

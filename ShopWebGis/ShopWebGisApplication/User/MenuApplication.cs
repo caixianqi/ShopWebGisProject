@@ -88,6 +88,7 @@ namespace ShopWebGisApplication.User
              {
                  x.Name = menuDto.Name;
                  x.Sort = menuDto.Sort;
+                 x.Url = menuDto.Url;
              });
             return _mapper.Map<MenuInfo, MenuDto>(menu);
         }

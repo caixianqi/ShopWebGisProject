@@ -101,6 +101,8 @@ namespace IRepository.Base
         Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
 
 
+        Task<int> DeleteManyAsync(params TPrimaryKey[] ids);
+
 
         #endregion
 
@@ -113,6 +115,8 @@ namespace IRepository.Base
 
 
         Task<int> SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate);
+
+        Task<int> SoftDeleteManyAsync(params TPrimaryKey[] ids);
         #endregion
 
 

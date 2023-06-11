@@ -29,6 +29,6 @@ namespace ShopWebGisDomain.Base
 {
    public interface ISoftDelete
     {
-        public bool isSoftDelete { get; set; } 
+        public bool IsSoftDelete { get; set; } 
     }
 }

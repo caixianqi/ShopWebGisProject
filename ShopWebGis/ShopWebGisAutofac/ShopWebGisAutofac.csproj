@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\ShopCaching\ShopWebCaching.csproj" />
+    <ProjectReference Include="..\ShopWebGisApplication\ShopWebGisApplication.csproj" />
     <ProjectReference Include="..\ShopWebGisMongoDB\ShopWebGisMongoDB.csproj" />
     <ProjectReference Include="..\ShopWebGisRedis\ShopWebGisRedis.csproj" />
     <ProjectReference Include="..\ShopWebJson\ShopWebJson.csproj" />

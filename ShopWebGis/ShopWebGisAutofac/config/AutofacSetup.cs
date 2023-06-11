@@ -28,6 +28,8 @@ using IRepository.Base;
 using Repository.Base;
 using ShopWebCaching;
 using ShopWebCaching.Caching;
+using ShopWebGisApplication.Base;
+using ShopWebGisApplicationContract.Base;
 using ShopWebGisDomain.User;
 using ShopWebGisMongoDB.Base;
 using ShopWebJson;
@@ -80,7 +82,8 @@ namespace ShopWebGisDomainShare.Extension
 
             var ApplicationFile = Path.Combine(basePath, "ShopWebGisApplication.dll");
             var ApplicationFileServices = Assembly.LoadFile(ApplicationFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).PublicOnly().AsImplementedInterfaces().InstancePerDependency();
+            containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).PublicOnly().PropertiesAutowired().AsImplementedInterfaces().InstancePerDependency();
+            containerBuilder.RegisterGeneric(typeof(CrudApplication<,,>)).PropertiesAutowired().As(typeof(ICrudApplication<,,>));
         }
     }
 

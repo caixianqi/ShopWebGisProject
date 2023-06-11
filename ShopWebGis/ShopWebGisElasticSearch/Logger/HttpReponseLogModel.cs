@@ -51,7 +51,7 @@ namespace ShopWebGisElasticSearch.Logger
         /// <returns></returns>
         public override string ToString()
         {
-            return $"ReponseStatusCode:{ReponseStatusCode} ReponseBody:{ReponseBody} \nResponseTime: {ReponseTime} ms";
+            return $"ReponseStatusCode:{ReponseStatusCode}\nReponseBody:{ReponseBody} \nResponseTime: {ReponseTime} ms";
         }
     }
 }

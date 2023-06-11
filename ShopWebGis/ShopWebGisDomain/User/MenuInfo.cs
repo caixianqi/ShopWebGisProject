@@ -25,6 +25,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -54,6 +55,7 @@ namespace ShopWebGisDomain.User
         [Required]
         [Column("sort")]
         [Comment("排序")]
+        [DefaultValue(0)]
         public int Sort { get; set; }
 
         [Required]

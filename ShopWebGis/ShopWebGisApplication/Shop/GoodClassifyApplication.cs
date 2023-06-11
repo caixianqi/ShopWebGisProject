@@ -37,14 +37,19 @@ using System.Threading.Tasks;
 
 namespace ShopWebGisApplication.Shop
 {
-    public class GoodClassifyApplication : CrudApplication<int, GoodClassification, GoodClassificationDto>, IGoodClassifyApplication
+    public class GoodClassifyApplication : IGoodClassifyApplication
     {
         private readonly IRepository<int, GoodClassification> _repository;
         private readonly IMapper _mapper;
-        public GoodClassifyApplication(IUnitOfWork iUnitOfWork, IMapper mapper) : base(iUnitOfWork, mapper)
+        public GoodClassifyApplication(IUnitOfWork iUnitOfWork, IMapper mapper) 
         {
             _repository = iUnitOfWork.Repositorys<int, GoodClassification>();
             _mapper = mapper;
+        }
+
+        public Task<Page<GoodClassificationDto>> GetPageListAsync(int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace ShopWebTest
                 services.AddSingleton<IElasticSearchFactory, ElasticSearchFactory>();// ES工厂接口
                 services.AddHttpClient();
             }
-
+            var tt = Activator.CreateInstance(typeof(IElasticSearchFactory));
             serviceProvider = services.BuildServiceProvider();
 
         }
