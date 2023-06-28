@@ -16,11 +16,6 @@ namespace ShopWebGis.HttApi.Host.Controllers.CommodityManagement
     [Authorize]
     public class GoodClassifyController : CrudBaseController<int, GoodClassification, GoodClassificationDto>
     {
-        private readonly IGoodClassifyApplication _goodClassifyApplication;
-        public GoodClassifyController(IGoodClassifyApplication goodClassifyApplication)
-        {
-            _goodClassifyApplication = goodClassifyApplication;
-        }
-        
+      
     }
 }

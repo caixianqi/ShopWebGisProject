@@ -32,8 +32,11 @@ using ShopWebGisApplication.Base;
 using ShopWebGisApplicationContract.Base;
 using ShopWebGisDomain.User;
 using ShopWebGisMongoDB.Base;
+using ShopWebGuids;
 using ShopWebJson;
 using ShopWebJson.Newtonsoft;
+using ShopWebThread;
+using ShopWebThread.Thread;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,14 +52,14 @@ namespace ShopWebGisDomainShare.Extension
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>));//注册仓储
-            containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            containerBuilder.RegisterGeneric(typeof(Repository<,>)).As(typeof(IRepository<,>)).InstancePerLifetimeScope().PropertiesAutowired();//注册仓储
+            containerBuilder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope().PropertiesAutowired();
             //获取项目路径
-            var basePath = AppContext.BaseDirectory;
+            //var basePath = AppContext.BaseDirectory;
 
-            var RepositoryDllFile = Path.Combine(basePath, "Repository.dll");
-            var RepositoryServices = Assembly.LoadFile(RepositoryDllFile);//直接采用加载文件的方法
-            containerBuilder.RegisterAssemblyTypes(RepositoryServices).Where(x => x.Name.EndsWith("")).AsImplementedInterfaces();
+            //var RepositoryDllFile = Path.Combine(basePath, "Repository.dll");
+            //var RepositoryServices = Assembly.LoadFile(RepositoryDllFile);//直接采用加载文件的方法 
+            //containerBuilder.RegisterAssemblyTypes(RepositoryServices).PropertiesAutowired().Where(x => x.Name.EndsWith("")).AsImplementedInterfaces();
         }
     }
 
@@ -84,6 +87,7 @@ namespace ShopWebGisDomainShare.Extension
             var ApplicationFileServices = Assembly.LoadFile(ApplicationFile);//直接采用加载文件的方法
             containerBuilder.RegisterAssemblyTypes(ApplicationFileServices).PublicOnly().PropertiesAutowired().AsImplementedInterfaces().InstancePerDependency();
             containerBuilder.RegisterGeneric(typeof(CrudApplication<,,>)).PropertiesAutowired().As(typeof(ICrudApplication<,,>));
+
         }
     }
 
@@ -119,4 +123,22 @@ namespace ShopWebGisDomainShare.Extension
             containerBuilder.RegisterType<CommonDistributedCache>().As<ICommonDistributedCache>().PropertiesAutowired().SingleInstance();
         }
     }
+
+    public class GuidAutofacSetup : Autofac.Module
+    {
+        protected override void Load(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<SequentialGuidGenerator>().As<IGuidGenerator>();
+        }
+
+    }
+
+    public class ThreadAutofacSetup : Autofac.Module
+    {
+        protected override void Load(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<HttpContextCancellationTokenProvider>().As<ICancellationTokenProvider>();
+        }
+    }
+
 }

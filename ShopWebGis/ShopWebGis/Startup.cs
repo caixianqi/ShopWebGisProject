@@ -59,10 +59,11 @@ namespace ShopWebGis
         {
 
             services.ShopWebGisRedisSetup(Configuration);
-            services.Configure<DistributedCacheOptions>(cacheOptions =>
-            {
-                cacheOptions.GlobalCacheEntryOptions.SlidingExpiration = TimeSpan.FromMinutes(20);
-            });
+            // 设置全局缓存滑动,绝对时间
+            //services.Configure<DistributedCacheOptions>(cacheOptions =>
+            //{
+            //    cacheOptions.GlobalCacheEntryOptions.SlidingExpiration = TimeSpan.FromMinutes(20);
+            //}); 
             services.ShopWebGisFreeSqlSetup(Configuration);
             services.AddSingleton<IElasticSearchFactory, ElasticSearchFactory>();// ES工厂接口
             services.ShopWebGisMongoDBConfigureServices(Configuration);

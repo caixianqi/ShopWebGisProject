@@ -40,7 +40,7 @@ namespace ShopWebCaching
         /// <param name="key"></param>
         /// <param name="cacheName"></param>
         /// <returns></returns>
-        TCacheItem Get<TCacheItem, TCacheKey>(TCacheKey key, string cacheName) where TCacheItem : class;
+        TCacheItem Get<TCacheKey, TCacheItem>(TCacheKey key, string cacheName) where TCacheItem : class;
 
         /// <summary>
         /// 异步获取缓存值
@@ -51,7 +51,7 @@ namespace ShopWebCaching
         /// <param name="cacheName"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task<TCacheItem> GetAsync<TCacheItem, TCacheKey>(TCacheKey key,
+        Task<TCacheItem> GetAsync<TCacheKey, TCacheItem>(TCacheKey key,
             string cacheName,
             CancellationToken token = default
             ) where TCacheItem : class;
@@ -66,7 +66,7 @@ namespace ShopWebCaching
         /// <param name="cacheName"></param>
         /// <param name="optionsFactory"></param>
         /// <returns></returns>
-        TCacheItem GetOrAdd<TCacheItem, TCacheKey>(TCacheKey key,
+        TCacheItem GetOrAdd<TCacheKey, TCacheItem>(TCacheKey key,
             Func<TCacheItem> factory,
             string cacheName,
             Func<DistributedCacheEntryOptions> optionsFactory = null) where TCacheItem : class;
@@ -81,7 +81,7 @@ namespace ShopWebCaching
         /// <param name="cacheName"></param>
         /// <param name="optionsFactory"></param>
         /// <returns></returns>
-        Task<TCacheItem> GetOrAddAsync<TCacheItem, TCacheKey>(TCacheKey key,
+        Task<TCacheItem> GetOrAddAsync<TCacheKey, TCacheItem>(TCacheKey key,
             Func<TCacheItem> factory,
             string cacheName,
             Func<DistributedCacheEntryOptions> optionsFactory = null,

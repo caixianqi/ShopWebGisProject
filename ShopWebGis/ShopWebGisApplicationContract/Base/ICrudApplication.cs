@@ -21,6 +21,7 @@
  *描述：提供基本增删改查接口
 
 /************************************************************************************/
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ShopWebGisDomain.Base;
 using ShopWebGisDomainShare.Common;
 using System;
@@ -30,23 +31,23 @@ using System.Threading.Tasks;
 
 namespace ShopWebGisApplicationContract.Base
 {
-    public interface ICrudApplication<TPrimaryKey, Entity, EntityDto> where Entity : EntityBase<TPrimaryKey>
+    public interface ICrudApplication<TPrimaryKey, TEntity, EntityDto> where TEntity : EntityBase<TPrimaryKey>
         where EntityDto : IEntityDto<TPrimaryKey>
     {
         Task<Page<EntityDto>> GetPageListAsync(int pageIndex, int pageSize);
 
         Task<EntityDto> GetAsync(TPrimaryKey id);
 
-        Task<int> DisableAsync(TPrimaryKey id);
+        Task<EntityEntry<TEntity>> DisableAsync(TPrimaryKey id);
 
-        Task<int> CreateAsync(EntityDto entityDto);
+        Task<EntityEntry<TEntity>> CreateAsync(EntityDto entityDto);
 
-        Task<int> UpdateAsync(Entity entityDto);
+        Task<EntityEntry<TEntity>> UpdateAsync(TEntity entityDto);
 
-        Task<int> DeleteAsync(TPrimaryKey id);
+        Task<EntityEntry<TEntity>> DeleteAsync(TPrimaryKey id);
 
-        Task<int> DisableManyAsync(params TPrimaryKey[] ids);
+        Task DisableManyAsync(params TPrimaryKey[] ids);
 
-        Task<int> DeleteManyAsync(params TPrimaryKey[] ids);
+        Task DeleteManyAsync(params TPrimaryKey[] ids);
     }
 }

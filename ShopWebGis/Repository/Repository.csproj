@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IRepository\IRepository.csproj" />
     <ProjectReference Include="..\ShopWebGisEntityFrameWorkCore\ShopWebGisEntityFrameWorkCore.csproj" />
+    <ProjectReference Include="..\ShopWebThread\ShopWebThread.csproj" />
   </ItemGroup>
 
 </Project>

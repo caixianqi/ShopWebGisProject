@@ -141,7 +141,6 @@
   </el-container>
 </template>
 <script>
-import DataDictionaryItem from './DataDictionaryItem'
 export default {
   data() {
     return {
@@ -179,7 +178,6 @@ export default {
       },
     }
   },
-  components: { DataDictionaryItem },
   mounted() {},
   methods: {
     doQuery() {},

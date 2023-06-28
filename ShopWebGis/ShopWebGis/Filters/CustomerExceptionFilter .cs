@@ -38,7 +38,6 @@ namespace ShopWebGis.Filters
                     respnse.ErrorMessage = context.Exception.Message;
                     context.Result = new JsonResult(respnse);
                     _logger.LogError(context.Exception.Message);
-                    _logger.LogError(context.Exception.Message);
                 }
                 else
                 {

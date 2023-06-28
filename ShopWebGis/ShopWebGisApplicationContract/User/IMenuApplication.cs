@@ -37,21 +37,21 @@ namespace ShopWebGisApplicationContract.User
         /// </summary>
         /// <param name="menuDto"></param>
         /// <returns></returns>
-        Task<int> AddMenu(MenuDto menuDto);
+        Task AddMenu(MenuDto menuDto);
 
         /// <summary>
         /// 禁用菜单
         /// </summary>
         /// <param name="menuDto"></param>
         /// <returns></returns>
-        Task<int> DisableMenu(int Id);
+        Task DisableMenu(int Id);
 
         /// <summary>
         /// 删除菜单
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<int> DeleteMenu(int Id);
+        Task DeleteMenu(int Id);
 
         /// <summary>
         /// 获取菜单列表

@@ -25,6 +25,7 @@
 using AutoMapper;
 using IRepository;
 using IRepository.Base;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Repository.Base;
 using ShopWebGisApplicationContract.Base;
 using ShopWebGisDomain.Base;
@@ -36,57 +37,57 @@ using System.Threading.Tasks;
 
 namespace ShopWebGisApplication.Base
 {
-    public class CrudApplication<TPrimaryKey, Entity, EntityDto> : ICrudApplication<TPrimaryKey, Entity, EntityDto> where Entity : EntityBase<TPrimaryKey>
+    public class CrudApplication<TPrimaryKey, IEntity, EntityDto> : ICrudApplication<TPrimaryKey, IEntity, EntityDto> where IEntity : EntityBase<TPrimaryKey>
         where EntityDto : IEntityDto<TPrimaryKey>
     {
-        private readonly IRepository<TPrimaryKey, Entity> _repository;
+        private readonly IRepository<TPrimaryKey, IEntity> _repository;
         private readonly IMapper _mapper;
         public CrudApplication(IUnitOfWork iUnitOfWork, IMapper mapper)
         {
-            _repository = iUnitOfWork.Repositorys<TPrimaryKey, Entity>();
+            _repository = iUnitOfWork.Repositorys<TPrimaryKey, IEntity>();
             _mapper = mapper;
         }
-        public virtual async Task<int> CreateAsync(EntityDto entityDto)
+        public virtual async Task<EntityEntry<IEntity>> CreateAsync(EntityDto entityDto)
         {
-            var menu = _mapper.Map<EntityDto, Entity>(entityDto);
+            var menu = _mapper.Map<EntityDto, IEntity>(entityDto);
             return await _repository.InsertAsync(menu);
         }
 
-        public virtual async Task<int> UpdateAsync(Entity entity)
+        public virtual async Task<EntityEntry<IEntity>> UpdateAsync(IEntity entity)
         {
-            return await _repository.UpdateAsync(entity);            
+            return await _repository.UpdateAsync(entity);
         }
 
-        public virtual async Task<int> DisableAsync(TPrimaryKey id)
+        public virtual async Task<EntityEntry<IEntity>> DisableAsync(TPrimaryKey id)
         {
             return await _repository.SoftDeleteAsync(id);
         }
 
-        public virtual async Task<int> DeleteAsync(TPrimaryKey id)
+        public virtual async Task<EntityEntry<IEntity>> DeleteAsync(TPrimaryKey id)
         {
-            return await _repository.SoftDeleteAsync(id);
+            return await _repository.DeleteAsync(id);
         }
 
-        public virtual async Task<int> DisableManyAsync(params TPrimaryKey[] ids)
+        public virtual async Task DisableManyAsync(params TPrimaryKey[] ids)
         {
-            return await _repository.SoftDeleteManyAsync(ids);
+            await _repository.SoftDeleteManyAsync(ids);
         }
 
-        public virtual async Task<int> DeleteManyAsync(params TPrimaryKey[] ids)
+        public virtual async Task DeleteManyAsync(params TPrimaryKey[] ids)
         {
-            return await _repository.DeleteManyAsync(ids);
+            await _repository.DeleteManyAsync(ids);
         }
 
         public virtual async Task<EntityDto> GetAsync(TPrimaryKey id)
         {
             var entity = await _repository.FindAsync(id);
-            return _mapper.Map<Entity, EntityDto>(entity);
+            return _mapper.Map<IEntity, EntityDto>(entity);
         }
 
         public virtual async Task<Page<EntityDto>> GetPageListAsync(int pageIndex, int pageSize)
         {
             var datas = await _repository.GetAvailablePageListAsync(pageIndex, pageSize);
-            return _mapper.Map<Page<Entity>, Page<EntityDto>>(datas);
+            return _mapper.Map<Page<IEntity>, Page<EntityDto>>(datas);
         }
     }
 }

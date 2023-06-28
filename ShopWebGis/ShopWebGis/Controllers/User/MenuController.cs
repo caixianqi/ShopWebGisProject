@@ -38,9 +38,9 @@ namespace ShopWebGis.HttApi.Host.Controllers
         /// </summary>
         /// <param name="menuDto"></param>
         /// <returns></returns>
-        public async Task<int> AddMenu(MenuDto MenuDto)
+        public async Task AddMenu(MenuDto MenuDto)
         {
-            return await _menuApplication.AddMenu(MenuDto);
+            await _menuApplication.AddMenu(MenuDto);
         }
 
         [HttpDelete(nameof(DisableMenu))]
@@ -49,9 +49,9 @@ namespace ShopWebGis.HttApi.Host.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<int> DisableMenu(int Id)
+        public async Task DisableMenu(int Id)
         {
-            return await _menuApplication.DisableMenu(Id);
+            await _menuApplication.DisableMenu(Id);
         }
 
         [HttpPost(nameof(UpdateMenu))]

@@ -25,7 +25,7 @@
           >
             <el-table-column
               prop="name"
-              label="字典名称"
+              label="商品分类"
               width="180"
               header-align="center"
               align="center"

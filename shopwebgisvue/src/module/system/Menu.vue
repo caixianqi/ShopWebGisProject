@@ -130,7 +130,7 @@
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>
                           <el-tree
-                            :data="data"
+                            :data="tableData"
                             :props="defaultProps"
                             accordion
                             node-key="id"
@@ -196,7 +196,6 @@ export default {
       },
       loading: false,
       tableLoading: false,
-      data: [],
       defaultProps: {
         children: 'children',
         label: 'name',

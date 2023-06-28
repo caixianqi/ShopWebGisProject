@@ -33,11 +33,6 @@ namespace ShopWebGisApplicationContract.Shop
 {
     public interface IGoodClassifyApplication
     {
-        /// <summary>
-        /// 获取商品种类
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        Task<Page<GoodClassificationDto>> GetPageListAsync(int pageIndex, int pageSize);
+
     }
 }

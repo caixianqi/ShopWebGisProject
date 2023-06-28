@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       queryStr: '',
+      searchItemColumns: [], // 查询字典名称
     }
   },
   methods: {

@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopWebGisApplicationContract.System.Dto;
+using ShopWebGisDomain.Base;
 using ShopWebGisDomain.Models;
+using ShopWebGisDomainShare.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +17,10 @@ namespace ShopWebGis.HttApi.Host.Controllers.System
     [Authorize]
     public class DataDictionaryController: CrudBaseController<int, DataDictionary, DataDictionaryDto>
     {
-        public DataDictionaryController()
+        public DataDictionaryController(IUnitOfWork iUnitOfWork, IMapper mapper)
         {
-
+            
         }
+       
     }
 }

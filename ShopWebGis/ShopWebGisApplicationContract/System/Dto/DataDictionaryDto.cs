@@ -29,8 +29,24 @@ using System.Text;
 
 namespace ShopWebGisApplicationContract.System.Dto
 {
-    public class DataDictionaryDto: IEntityDto<int>
+    public class DataDictionaryDto : IEntityDto<int>
     {
 
+        /// <summary>
+        /// 字段名称
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 字段编码
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
+        /// 字段描述
+        /// </summary>
+        public string Description { get; set; }
+
+        public int Rank { get; set; }
     }
 }

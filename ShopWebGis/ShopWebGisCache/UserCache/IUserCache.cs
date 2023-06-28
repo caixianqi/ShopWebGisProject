@@ -34,14 +34,14 @@ namespace ShopWebGisCache.UserCache
         /// 限制登录次数
         /// </summary>
         ///  <param name="isMatch">是否用户名密码正确</param>
-        /// <param name="userName">用户名</param>
-        Task LimitLoginTimes(string userName);
+        /// <param name="id">登录Id</param>
+        Task LimitLoginTimes(int userId);
 
         /// <summary>
         /// 用户是否冻结
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Task<bool> UserIsFreeze(string userName);
+        Task<bool> UserIsFreeze(int userId);
     }
 }

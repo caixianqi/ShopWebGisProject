@@ -41,26 +41,28 @@ namespace ShopWebGisApplication.User
     public class MenuApplication : IMenuApplication
     {
         private readonly IRepository<int, MenuInfo> _repository;
+        private readonly IUnitOfWork _iunitOfWork;
         private readonly IMapper _mapper;
         public MenuApplication(IUnitOfWork iUnitOfWork, IMapper mapper)
         {
+            _iunitOfWork = iUnitOfWork;
             _repository = iUnitOfWork.Repositorys<int, MenuInfo>(); ;
             _mapper = mapper;
         }
-        public async Task<int> AddMenu(MenuDto menuDto)
+        public async Task AddMenu(MenuDto menuDto)
         {
             var menu = _mapper.Map<MenuDto, MenuInfo>(menuDto);
-            return await _repository.InsertAsync(menu);
+            await _repository.InsertAsync(menu);
         }
 
-        public async Task<int> DeleteMenu(int Id)
+        public async Task DeleteMenu(int Id)
         {
-            return await _repository.SoftDeleteAsync(Id);
+            await _repository.SoftDeleteAsync(Id);
         }
 
-        public async Task<int> DisableMenu(int Id)
+        public async Task DisableMenu(int Id)
         {
-            return await _repository.SoftDeleteAsync(Id);
+            await _repository.SoftDeleteAsync(Id);
         }
 
         public async Task<MenuDto> GetMenu(int Id)
@@ -90,7 +92,7 @@ namespace ShopWebGisApplication.User
                  x.Sort = menuDto.Sort;
                  x.Url = menuDto.Url;
              });
-            return _mapper.Map<MenuInfo, MenuDto>(menu);
+            return _mapper.Map<MenuInfo, MenuDto>(menu.Entity);
         }
 
         public async Task<IList<MenuDto>> GetTreeList(int parentId)

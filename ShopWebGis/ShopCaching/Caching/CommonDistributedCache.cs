@@ -89,7 +89,7 @@ namespace ShopWebCaching.Caching
             return _distributedCacheSerializer.DeSerialize<TCacheItem>(bytes);
         }
 
-        public TCacheItem Get<TCacheItem, TCacheKey>(TCacheKey key, string cacheName) where TCacheItem : class
+        public TCacheItem Get<TCacheKey, TCacheItem>(TCacheKey key, string cacheName) where TCacheItem : class
         {
             byte[] cachedBytes = default;
             try
@@ -106,7 +106,7 @@ namespace ShopWebCaching.Caching
             return ByteToCacheItem<TCacheItem>(cachedBytes);
         }
 
-        public async Task<TCacheItem> GetAsync<TCacheItem, TCacheKey>(TCacheKey key, string cacheName, CancellationToken token = default) where TCacheItem : class
+        public async Task<TCacheItem> GetAsync<TCacheKey, TCacheItem>(TCacheKey key, string cacheName, CancellationToken token = default) where TCacheItem : class
         {
             byte[] cachedBytes = default;
             try
@@ -151,9 +151,9 @@ namespace ShopWebCaching.Caching
             }
         }
 
-        public TCacheItem GetOrAdd<TCacheItem, TCacheKey>(TCacheKey key, Func<TCacheItem> factory, string cacheName, Func<Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions> optionsFactory = null) where TCacheItem : class
+        public TCacheItem GetOrAdd<TCacheKey, TCacheItem>(TCacheKey key, Func<TCacheItem> factory, string cacheName, Func<Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions> optionsFactory = null) where TCacheItem : class
         {
-            var value = Get<TCacheItem, TCacheKey>(key, cacheName);
+            var value = Get<TCacheKey, TCacheItem>(key, cacheName);
             if (value != null)
             {
                 return value;
@@ -164,9 +164,9 @@ namespace ShopWebCaching.Caching
             return value;
         }
 
-        public async Task<TCacheItem> GetOrAddAsync<TCacheItem, TCacheKey>(TCacheKey key, Func<TCacheItem> factory, string cacheName, Func<Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions> optionsFactory = null, CancellationToken token = default) where TCacheItem : class
+        public async Task<TCacheItem> GetOrAddAsync<TCacheKey, TCacheItem>(TCacheKey key, Func<TCacheItem> factory, string cacheName, Func<Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions> optionsFactory = null, CancellationToken token = default) where TCacheItem : class
         {
-            var value = await GetAsync<TCacheItem, TCacheKey>(key, cacheName, token);
+            var value = await GetAsync<TCacheKey, TCacheItem>(key, cacheName, token);
             if (value != null)
             {
                 return value;

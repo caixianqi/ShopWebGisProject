@@ -27,6 +27,8 @@ using ShopWebGisDomain.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace IRepository
 {
@@ -36,8 +38,16 @@ namespace IRepository
 
         void BeginTran();
 
-        void CommitTran();
+        Task BeginTranAsync(CancellationToken cancellationToken = default);
+
+        int CommitTran();
+
+
+        Task<int> CommitTranAsync(CancellationToken cancellationToken = default);
+
         void RollbackTran();
+
+        Task RollbackTranAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取仓储

@@ -29,10 +29,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using ShopWebGisDomain.Base;
 using ShopWebGisEntityFrameWorkCore.EntityFrameWorkCore;
+using ShopWebThread;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Repository.Base
 {
@@ -42,32 +45,23 @@ namespace Repository.Base
         private readonly ILogger _logger;
         private readonly IServiceProvider _serviceProvider;
         private Hashtable repositorys;
+        private readonly ICancellationTokenProvider _cancellationTokenProvider;
         private IDbContextTransaction _dbTransaction { get; set; }
-        public UnitOfWork(ShopWebGisDbContext dbContext, IServiceProvider serviceProvider, ILogger<UnitOfWork> logger)
+        public UnitOfWork(ShopWebGisDbContext dbContext, IServiceProvider serviceProvider, ILogger<UnitOfWork> logger, ICancellationTokenProvider cancellationTokenProvider)
         {
             _dbContext = dbContext;
             _serviceProvider = serviceProvider;
             _logger = logger;
+            _cancellationTokenProvider = cancellationTokenProvider;
         }
-        public void BeginTran()
+        public virtual void BeginTran()
         {
             _dbTransaction = _dbContext.Database.BeginTransaction();
         }
 
-        public void CommitTran()
+        public async Task BeginTranAsync(CancellationToken cancellationToken = default)
         {
-            try
-            {
-                if (_dbTransaction != null)
-
-                    _dbContext.Database.CommitTransaction();
-            }
-            catch (Exception ex)
-            {
-                RollbackTran();
-                _logger.LogError($"Commit 异常：{ex.InnerException}/r{ ex.Message}");
-                throw new Exception($"Commit 异常：{ex.InnerException}/r{ ex.Message}");
-            }
+            _dbTransaction = await _dbContext.Database.BeginTransactionAsync(_cancellationTokenProvider.FallbackToProvider(cancellationToken));
         }
 
         public DbContext GetDbContext()
@@ -80,9 +74,14 @@ namespace Repository.Base
             _dbContext.Database.RollbackTransaction();
         }
 
+        public async Task RollbackTranAsync(CancellationToken cancellationToken = default)
+        {
+            await _dbContext.Database.RollbackTransactionAsync(_cancellationTokenProvider.FallbackToProvider(cancellationToken));
+        }
+
         public void Dispose()
         {
-            
+
             if (_dbTransaction != null)
             {
                 _dbTransaction.Dispose();
@@ -106,6 +105,46 @@ namespace Repository.Base
             }
 
             return (IRepository<TPrimaryKey, TEntity>)repositorys[entityType.Name];
+        }
+
+        public int CommitTran()
+        {
+            var result = 0;
+            try
+            {
+                result = _dbContext.SaveChanges();
+                if (_dbTransaction != null)
+
+                    _dbContext.Database.CommitTransaction();
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+                RollbackTran();
+                _logger.LogError($"Commit 异常：{ex.InnerException}/r{ ex.Message}");
+                throw new Exception($"Commit 异常：{ex.InnerException}/r{ ex.Message}");
+            }
+            return result;
+        }
+
+        public async Task<int> CommitTranAsync(CancellationToken cancellationToken = default)
+        {
+            var result = 0;
+            try
+            {
+                result = await _dbContext.SaveChangesAsync(_cancellationTokenProvider.FallbackToProvider(cancellationToken));
+                if (_dbTransaction != null)
+
+                    await _dbContext.Database.CommitTransactionAsync(_cancellationTokenProvider.FallbackToProvider(cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+                RollbackTran();
+                _logger.LogError($"Commit 异常：{ex.InnerException}/r{ ex.Message}");
+                throw new Exception($"Commit 异常：{ex.InnerException}/r{ ex.Message}");
+            }
+            return await Task.FromResult(result); ;
         }
     }
 }

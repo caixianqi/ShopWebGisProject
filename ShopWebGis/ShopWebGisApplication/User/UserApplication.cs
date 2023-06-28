@@ -42,6 +42,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,10 +57,12 @@ namespace ShopWebGisApplication.User
         private readonly IConfiguration _configuration;
         private readonly IUser _iuser;
         private readonly IUserCache _iuserCache;
+        private readonly IUnitOfWork _unitOfWork;
         public UserApplication(IMapper mapper, IUnitOfWork iUnitOfWork, IOptions<Jwt> jwtConfig, IConfiguration configuration, IUser iuser, IUserCache userCache)
         {
             _mapper = mapper;
-            _userRepository = iUnitOfWork.Repositorys<int,UserInfo>();
+            _userRepository = iUnitOfWork.Repositorys<int, UserInfo>();
+            _unitOfWork = iUnitOfWork;
             _jwtConfig = jwtConfig;
             _configuration = configuration;
             _iuser = iuser;
@@ -80,7 +83,8 @@ namespace ShopWebGisApplication.User
             var md5Encryption = MD5Helper.Encrypt(rsaDecryption, _configuration["MD5Key"]);
             #endregion
             ComplexToken complexToken = new ComplexToken();
-            var user = await _userRepository.GetAllIncluding(x => x.Roles).FirstOrDefaultAsync(x => x.UserLoginId == userName);
+            Expression<Func<UserInfo, object>> expression = (x) => x.Roles;
+            var user = await _userRepository.GetAllIncluding(new Expression<Func<UserInfo, object>>[] { expression }).FirstOrDefaultAsync(x => x.UserLoginId == userName);
             if (user == null)
             {
                 throw new ShopWebGisCustomException($"{SystemConst.LoginFailed}用户不存在!");
@@ -91,11 +95,11 @@ namespace ShopWebGisApplication.User
             }
             if (user.UserPassword != md5Encryption)
             {
-                await _iuserCache.LimitLoginTimes(userName);
+                await _iuserCache.LimitLoginTimes(user.Id);
             }
             else
             {
-                await _iuserCache.UserIsFreeze(userName);
+                await _iuserCache.UserIsFreeze(user.Id);
             }
 
             var claims = new[] {
@@ -108,7 +112,7 @@ namespace ShopWebGisApplication.User
             var claimList = claims.ToList();
             foreach (var role in user.Roles)
             {
-                claimList.Add(new Claim(ClaimTypes.Role, role.RoleName));
+                claimList.Add(new Claim(ClaimTypes.Role, role.Id.ToString()));
             }
             return CreateToken(claimList.ToArray());
         }
@@ -161,6 +165,7 @@ namespace ShopWebGisApplication.User
             var payLoad = jwtSecurityTokenHandler.ReadJwtToken(token).Payload;
             if (payLoad.Exp < DateTimeOffset.Now.ToUnixTimeSeconds())
             {
+
                 throw new ShopWebGisCustomException("传入访问令牌格已过期，请重新登录!");
             }
             var claims = payLoad.Claims.ToArray();
@@ -226,9 +231,16 @@ namespace ShopWebGisApplication.User
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<int> DeleteUser(int id)
+        public async Task<int> DeleteUser(int id)
         {
-            return _userRepository.SoftDeleteAsync(id);
+            var result = 0;
+            using (_unitOfWork)
+            {
+                await _unitOfWork.BeginTranAsync();
+                await _userRepository.SoftDeleteAsync(id);
+                result = await _unitOfWork.CommitTranAsync();
+            }
+            return result;
         }
 
         /// <summary>
@@ -238,6 +250,7 @@ namespace ShopWebGisApplication.User
         /// <returns></returns>
         public async Task<UserDto> UpdateUser(UserUpdateDto userDto)
         {
+            var outputUser = new UserDto();
             #region rsa解析出明文，再用明文MD5比较
             var originalPassword = RSAMD5Decrypt(userDto.OriginalPassword);
             var newPassword = RSAMD5Decrypt(userDto.UserPassword);
@@ -254,11 +267,31 @@ namespace ShopWebGisApplication.User
                 }
             }
             #endregion
-            var user = await _userRepository.UpdateActionAsync(int.Parse(_iuser.Id), x =>
+            using (_unitOfWork)
             {
-                x.UserPassword = newPassword;
-            });
-            return _mapper.Map<UserInfo, UserDto>(user);
+                using (_unitOfWork.BeginTranAsync())
+                {
+                    try
+                    {
+
+                        var user = await _userRepository.UpdateActionAsync(int.Parse(_iuser.Id), x =>
+                        {
+                            x.UserPassword = newPassword;
+                        });
+                        outputUser = _mapper.Map<UserInfo, UserDto>(user.Entity);
+                        await _unitOfWork.CommitTranAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        await _unitOfWork.RollbackTranAsync();
+                        throw ex;
+                    }
+                }
+
+            }
+
+
+            return outputUser;
         }
 
         /// <summary>
@@ -266,10 +299,17 @@ namespace ShopWebGisApplication.User
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<int> DisableUser(int id)
+        public async Task<int> DisableUser(int id)
         {
-            var count = _userRepository.SoftDeleteAsync(id);
-            return count;
+            var result = 0;
+            using (_unitOfWork)
+            {
+                await _unitOfWork.BeginTranAsync();
+                await _userRepository.SoftDeleteAsync(id);
+                result = await _unitOfWork.CommitTranAsync();
+            }
+
+            return result;
         }
 
         private string RSAMD5Decrypt(string str)

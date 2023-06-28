@@ -1,14 +1,14 @@
 /************************************************************************************
 
- * Copyright (c) 2022 All Rights Reserved.
+ * Copyright (c) 2023 All Rights Reserved.
 
  * CLR版本： 4.0.30319.42000
 
  *机器名称：LAPTOP-CC5K5UTK
 
- *命名空间：ShopWebGisDomain.Order
+ *命名空间：ShopWebGisDomainShare.Const
 
- *文件名：  Order
+ *文件名：  Cache
 
  *版本号：  V1.0.0.0
 
@@ -16,9 +16,9 @@
 
  *创建人：  蔡显麒
 
- *创建时间：2022/12/25 22:13:57
+ *创建时间：2023/6/26 22:30:11
 
- *描述：订单
+ *描述：
 
 /************************************************************************************/
 
@@ -26,10 +26,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopWebGisDomain.Order
+namespace ShopWebGisDomainShare.Const
 {
-    public class Order :BasicModel<Guid>
+    public class Cache
     {
-       
+        public const string UserCacheName = "User";
     }
 }

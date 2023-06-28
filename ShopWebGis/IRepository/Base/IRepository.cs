@@ -21,6 +21,7 @@
  *描述：泛型仓储接口
 
 /************************************************************************************/
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ShopWebGisDomain.Base;
 using ShopWebGisDomain.config;
 using ShopWebGisDomainShare.Common;
@@ -30,6 +31,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IRepository.Base
@@ -44,64 +46,64 @@ namespace IRepository.Base
         /// <param name="entity"></param>
         void AttachIfNot(TEntity entity);
 
-        Task<int> SaveAsync();
+        Task<int> SaveAsync(CancellationToken cancellationToken = default);
+
+        IQueryable<TEntity> IQueryable { get; }
 
         /// <summary>
         /// 双表关联
         /// </summary>
         /// <param name="propertySelectors"></param>
         /// <returns></returns>
-        IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors);
+        IQueryable<TEntity> GetAllIncluding(Expression<Func<TEntity, object>>[] propertySelectors, CancellationToken cancellationToken = default);
 
+        Task<List<TEntity>> GetAvailableListAsync(CancellationToken cancellationToken = default);
 
-        Task<List<TEntity>> GetAvailableListAsync();
+        Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
-        Task<List<TEntity>> GetAvailableListAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 1, int pageSize = 20, CancellationToken cancellationToken = default);
 
-        Task<Page<TEntity>> GetAvailablePageListAsync(int pageIndex = 1, int pageSize = 20);
+        Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 1, int pageSize = 20, CancellationToken cancellationToken = default);
 
-        Task<Page<TEntity>> GetAvailablePageListAsync(Expression<Func<TEntity, bool>> predicate, int pageIndex = 1, int pageSize = 20);
+        Task<TEntity> FindAsync(TPrimaryKey id, CancellationToken cancellationToken = default);
 
-        Task<TEntity> FindAsync(TPrimaryKey id);
+        Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
-        Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate);
-
-        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
 
         #endregion
 
         #region Insert
 
-        Task<int> InsertAsync([NotNull] TEntity entity);
+        Task<EntityEntry<TEntity>> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
-        Task<int> InsertRangeAsync(IList<TEntity> list);
+        Task InsertRangeAsync(IList<TEntity> list, CancellationToken cancellationToken = default);
 
-        Task<TPrimaryKey> InsertAsyncReturnId([NotNull] TEntity entity);
 
         #endregion
 
         #region Update
 
 
-        Task<int> UpdateAsync(TEntity entity);
+        Task<EntityEntry<TEntity>> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
 
-        Task<int> UpdateRangeAsync(IList<TEntity> list);
+        Task UpdateRangeAsync(IList<TEntity> list, CancellationToken cancellationToken = default);
 
-        Task<TEntity> UpdateActionAsync(TPrimaryKey id, Action<TEntity> action);
+        Task<EntityEntry<TEntity>> UpdateActionAsync(TPrimaryKey id, Action<TEntity> action, CancellationToken cancellationToken = default);
 
         #endregion
 
         #region Delete
 
 
-        Task<int> DeleteAsync(TPrimaryKey id);
+        Task<EntityEntry<TEntity>> DeleteAsync(TPrimaryKey id, CancellationToken cancellationToken = default);
 
-        Task<int> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
+        Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
 
-        Task<int> DeleteManyAsync(params TPrimaryKey[] ids);
+        Task DeleteManyAsync(TPrimaryKey[] ids, CancellationToken cancellationToken = default);
 
 
         #endregion
@@ -111,28 +113,28 @@ namespace IRepository.Base
 
 
         // 软删除
-        Task<int> SoftDeleteAsync(TPrimaryKey id);
+        Task<EntityEntry<TEntity>> SoftDeleteAsync(TPrimaryKey id, CancellationToken cancellationToken = default);
 
 
-        Task<int> SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate);
+        Task SoftDeleteAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
-        Task<int> SoftDeleteManyAsync(params TPrimaryKey[] ids);
+        Task SoftDeleteManyAsync(TPrimaryKey[] ids, CancellationToken cancellationToken = default);
         #endregion
 
 
         #region Aggregates
 
 
-        Task<int> CountAsync();
+        Task<int> CountAsync(CancellationToken cancellationToken = default);
 
 
-        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
 
-        Task<long> LongCountAsync();
+        Task<long> LongCountAsync(CancellationToken cancellationToken = default);
 
 
-        Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         #endregion
     }
